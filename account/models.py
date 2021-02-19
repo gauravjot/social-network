@@ -1,5 +1,6 @@
 from django.db import models
 import datetime
+import pytz
 
 # Create your models here.
 class Person(models.Model):
@@ -10,8 +11,8 @@ class Person(models.Model):
     avatar = models.URLField()
     birthday = models.CharField(max_length=10)
     tagline = models.CharField(max_length=200)
-    created = models.DateTimeField(default=datetime.datetime.now())
-    updated = models.DateTimeField(default=datetime.datetime.now())
+    created = models.DateTimeField(default=datetime.datetime.now(tz=pytz.utc))
+    updated = models.DateTimeField(default=datetime.datetime.now(tz=pytz.utc))
 
     def __str__(self):
         return "id:"+str(self.pk) + ", " + self.first_name + " " + self.last_name+ ", " + self.email
@@ -19,7 +20,7 @@ class Person(models.Model):
 class Token(models.Model):
     token = models.CharField(max_length=100)
     account = models.IntegerField()
-    created = models.DateTimeField(default=datetime.datetime.now())
+    created = models.DateTimeField()
 
     def __str__(self):
         return "person_id: "+str(self.account)
