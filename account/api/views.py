@@ -1,4 +1,3 @@
-from django.shortcuts import render, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework import status
@@ -10,10 +9,6 @@ from account.models import Person
 
 import json
 import bcrypt
-
-# Create your views here.
-def Index(request):
-    return HttpResponse("Hello!")
 
 @api_view(['GET'])
 def personInfo(request, pk):
