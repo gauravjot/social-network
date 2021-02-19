@@ -1,6 +1,5 @@
 from django.db import models
-import datetime
-import pytz
+from django.utils import timezone
 
 # Create your models here.
 class Person(models.Model):
@@ -11,8 +10,8 @@ class Person(models.Model):
     avatar = models.URLField()
     birthday = models.CharField(max_length=10)
     tagline = models.CharField(max_length=200)
-    created = models.DateTimeField(default=datetime.datetime.now(tz=pytz.utc))
-    updated = models.DateTimeField(default=datetime.datetime.now(tz=pytz.utc))
+    created = models.DateTimeField(default=timezone.now)
+    updated = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return "id:"+str(self.pk) + ", " + self.first_name + " " + self.last_name+ ", " + self.email
