@@ -11,4 +11,4 @@ class Person(models.Model):
     tagline = models.CharField(max_length=200)
 
     def __str__(self):
-        return [self.first_name + " " + self.last_name, self.email]
+        return str(self.first_name + " " + self.last_name+ ", " + self.email)
