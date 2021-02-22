@@ -1,4 +1,5 @@
-import React, {Component, useState} from 'react'
+import React, {useState} from 'react'
+import axios from 'axios'
 
 import InputField from '../../utils/InputField'
 
@@ -9,15 +10,39 @@ function SignUp() {
     const [birthday, setBirthday] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState(true);
+    const [apiResponse, setAPIResponse] = useState();
+
+    var email_error = false;
 
     const handleSignUp = () => {
-        console.log(first_name);
-        console.log(last_name);
-        console.log(email);
-        console.log(password);
-        console.log(confirmPassword)
-        console.log(birthday);
-      };
+        let data = {};
+        data['first_name'] = first_name;
+        data['last_name'] = last_name;
+        data['email'] = email;
+        data['password'] = password;
+        data['birthday'] = birthday;
+        if (confirmPassword) {
+            let config = { headers: {
+                'Content-Type': 'application/json',}
+            }
+            axios.post('http://localhost:8000/api/person/signup',JSON.stringify(data), config)
+                .then(function (response) {
+                    let token = response.data.token;
+                    // We got the token, yay!
+                  }).catch(function (error) {
+                    email_error = true;
+                    let error_data = error.response.data;
+                    let error_type, error_msg;
+                    for (var k in error_data) {
+                        error_type = k;
+                        error_msg = error_data[k];
+                        break;
+                    }
+                    let output_error = error_type + ": " + error_msg;
+                    setAPIResponse(<div class="fw-bold text-uppercase text-danger text-sm">{output_error}</div>);
+                  });
+        }    
+    };
 
     const handleFirstName = ({ target }) => {
         setFirstName(target.value);
@@ -52,7 +77,7 @@ function SignUp() {
             <div className="mx-4 mt-5 fs-3 p-2">
                 <span>Join Us Now!</span>
             </div>
-            <div className="mb-4 p-2 mx-4">
+            <div className="p-2 mx-4">
                 <span>Already a member? <a href="#" className="text-decoration-none">Sign in</a></span>
             </div>
             <div className="row g-3 mb-5 mx-4">
@@ -73,6 +98,7 @@ function SignUp() {
                         name="last_name"
                         type="text" />
                 </div>
+                {apiResponse}
                 <div className="col-12">
                     <InputField
                         label="Email:"

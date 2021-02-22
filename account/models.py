@@ -7,9 +7,9 @@ class Person(models.Model):
     last_name = models.CharField(max_length=30)
     email = models.EmailField(max_length=254, unique=True)
     password = models.CharField(max_length=100)
-    avatar = models.URLField()
+    avatar = models.URLField(default="")
     birthday = models.CharField(max_length=10)
-    tagline = models.CharField(max_length=200)
+    tagline = models.CharField(max_length=200, default="")
     created = models.DateTimeField(default=timezone.now)
     updated = models.DateTimeField(default=timezone.now)
 

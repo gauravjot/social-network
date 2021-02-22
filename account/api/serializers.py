@@ -10,6 +10,8 @@ class PersonSerializer(serializers.ModelSerializer):
             'email': {'write_only':True},
             'created': {'required':False},
             'updated': {'required':False},
+            'avatar': {'required':False},
+            'tagline': {'required':False},
         }
 
 class TokenSerializer(serializers.ModelSerializer):
