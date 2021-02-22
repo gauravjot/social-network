@@ -1,8 +1,13 @@
 import IntroPanel from './IntroPanel'
 import SignUp from './SignUp'
+import {Helmet} from 'react-helmet'
 
 function Index() {
     return (
+    <section>
+    <Helmet>
+        <title>Welcome to socialnetwork!</title>
+    </Helmet>
       <div id="home" className="my-5 pt-3">
           <div className="row">
             <div className="col-lg-7 col-md-5 col-sm-12">
@@ -17,6 +22,7 @@ function Index() {
             </div>
         </div>
       </div>
+      </section>
     );
   }
   

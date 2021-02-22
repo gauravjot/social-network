@@ -1,7 +1,9 @@
-import React, {useState} from 'react'
+import React, {useState, useRef} from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom';
 
 import InputField from '../../utils/InputField'
+import {isValidDate} from '../../utils/CheckValidDate'
 
 function SignUp() {
     const [first_name, setFirstName] = useState("");
@@ -12,9 +14,22 @@ function SignUp() {
     const [confirmPassword, setConfirmPassword] = useState(true);
     const [apiResponse, setAPIResponse] = useState();
 
-    var email_error = false;
-
+    const handleFirstName = ({ target }) => {setFirstName(target.value)};
+    const handleLastName = ({ target }) => {setLastName(target.value)};
+    const handleEmail = ({ target }) => {setEmail(target.value)};
+    const handlePassword = ({ target }) => {setPassword(target.value)};
+    const handleBirthday = ({ target }) => {setBirthday(target.value)};
+    const handleConfirmPassword = ({ target }) => {
+        if (password === target.value) {setConfirmPassword(true)} else {setConfirmPassword(false)}
+    };
+    let btnRef = useRef();
     const handleSignUp = () => {
+        if(btnRef.current){
+            btnRef.current.setAttribute("disabled", "disabled");
+        }
+
+        setAPIResponse("");
+
         let data = {};
         data['first_name'] = first_name;
         data['last_name'] = last_name;
@@ -25,50 +40,40 @@ function SignUp() {
             let config = { headers: {
                 'Content-Type': 'application/json',}
             }
-            axios.post('http://localhost:8000/api/person/signup',JSON.stringify(data), config)
+            if (isValidDate(birthday)) {
+                axios.post('http://localhost:8000/api/person/signup',JSON.stringify(data), config)
                 .then(function (response) {
                     let token = response.data.token;
                     // We got the token, yay!
-                  }).catch(function (error) {
-                    email_error = true;
-                    let error_data = error.response.data;
-                    let error_type, error_msg;
-                    for (var k in error_data) {
-                        error_type = k;
-                        error_msg = error_data[k];
-                        break;
+                })
+                .catch(function (error) {
+                    let output_error;
+                    try {
+                        let error_data = error.response.data;
+                        let error_type, error_msg;
+                        for (var k in error_data) {
+                            error_type = k;
+                            error_msg = error_data[k];
+                            break;
+                        }
+                        output_error = error_type.replace("_"," ") + ": " + error_msg;
+                    } catch (error) {
+                        output_error = "error: sorry ,we are unable to serve your request."
                     }
-                    let output_error = error_type + ": " + error_msg;
+                    if(btnRef.current){
+                        btnRef.current.removeAttribute("disabled");
+                    }
                     setAPIResponse(<div class="fw-bold text-uppercase text-danger text-sm">{output_error}</div>);
-                  });
+                });
+            }
+            else {
+                setAPIResponse(<div class="fw-bold text-uppercase text-danger text-sm">error: Too young, has to be over age 13 :(</div>);
+                if(btnRef.current){
+                    btnRef.current.removeAttribute("disabled");
+                }
+            }
+            
         }    
-    };
-
-    const handleFirstName = ({ target }) => {
-        setFirstName(target.value);
-    };
-
-    const handleLastName = ({ target }) => {
-        setLastName(target.value);
-    };
-
-    const handleEmail = ({ target }) => {
-        setEmail(target.value);
-    };
-
-    const handlePassword = ({ target }) => {
-        setPassword(target.value);
-    };
-
-    const handleConfirmPassword = ({ target }) => {
-        if (password === target.value) {
-            setConfirmPassword(true)
-        }
-        else { setConfirmPassword(false) }
-    };
-
-    const handleBirthday = ({ target }) => {
-        setBirthday(target.value);
     };
 
 
@@ -77,10 +82,10 @@ function SignUp() {
             <div className="mx-4 mt-5 fs-3 p-2">
                 <span>Join Us Now!</span>
             </div>
-            <div className="p-2 mx-4">
-                <span>Already a member? <a href="#" className="text-decoration-none">Sign in</a></span>
+            <div className="p-2 mx-4 mb-3">
+                <span>Already a member? <Link to={'/login'} className="text-decoration-none">Sign in</Link></span>
             </div>
-            <div className="row g-3 mb-5 mx-4">
+            <div className="row g-3 mb-3 mx-4">
                 <div className="col-12">
                     <span className="text-sm text-muted">All fields are mandatory.</span>
                 </div>
@@ -98,7 +103,6 @@ function SignUp() {
                         name="last_name"
                         type="text" />
                 </div>
-                {apiResponse}
                 <div className="col-12">
                     <InputField
                         label="Email:"
@@ -128,14 +132,16 @@ function SignUp() {
                         label="Birthday:"
                         onChange={handleBirthday}
                         name="birthday"
-                        type="text"
-                        placeholder="MM-DD-YYYY" />
+                        type="date"
+                        placeholder="YYYY-MM-DD" />
                 </div>
                 <div className="col-12">
                     <div className="p-2"></div>
                     <div className="d-grid gap-2">
-                        <button type="submit" onClick={handleSignUp} className="btn btn-primary text-sm fw-bold py-3">Let's Go!</button>
+                        <button type="submit" ref={btnRef} onClick={handleSignUp} className="btn btn-primary text-sm fw-bold py-3">Let's Go!</button>
                     </div>
+                    <div className="p-2"></div>
+                    {apiResponse}
                 </div>
             </div>
             <br/>
