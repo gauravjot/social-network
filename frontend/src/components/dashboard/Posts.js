@@ -1,16 +1,18 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import axios from 'axios';
 
 function Posts() {
     const token = useSelector(state => state.token);
     const [apiResponse, setAPIResponse] = useState();
+    const [posts, setPosts] = useState("");
 
-    let config = { headers: {
-        'Content-Type': 'application/json',
-        Authorization: token,   
-    }}
-    axios.post('http://localhost:8000/api/person/posts',JSON.stringify(data), config)
+    useEffect(() => {
+        let config = { headers: {
+            'Content-Type': 'application/json',
+            Authorization: token,   
+        }}
+        axios.post('http://localhost:8000/api/person/posts',{}, config)
             .then(function (response) {
                 // Posts
             })
@@ -24,14 +26,12 @@ function Posts() {
                 }
                 let output_error = error_type.replace("_"," ") + ": " + error_msg;
                 setAPIResponse(<span className="fw-bold px-4 text-uppercase text-danger text-sm pb-2">{output_error}</span>);
-                if(btnRef.current){
-                    btnRef.current.removeAttribute("disabled");
-                }
             });
+    },[posts])
 
     return(
         <section>
-
+            {apiResponse}
         </section>
         );
 }
