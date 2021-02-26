@@ -1,3 +1,4 @@
+import React from 'react'
 import logo from '../../assets/images/logo.png'
 import connections from '../../assets/images/connections.png'
 

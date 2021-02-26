@@ -1,3 +1,4 @@
+import React from 'react'
 import IntroPanel from './IntroPanel'
 import SignUp from './SignUp'
 import {Helmet} from 'react-helmet'
