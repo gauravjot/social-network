@@ -1,20 +1,40 @@
-import React, {useState, useEffect} from 'react';
-import {useSelector} from 'react-redux';
+import React, { Component } from 'react';
+import {connect} from 'react-redux';
 import axios from 'axios';
+import TimelinePost from './post/TimelinePost';
 
-function Posts() {
-    const token = useSelector(state => state.token);
-    const [apiResponse, setAPIResponse] = useState();
-    const [posts, setPosts] = useState("");
+const mapStateToProps = state => ({
+            token: state.token
+});
 
-    useEffect(() => {
+class Posts extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {posts: [], apiResponse: ""};
+        console.log("constructor");
+    }
+
+    async getPosts() {
+        let posts =[];
+        let apiResponse;
+        const token = this.props.token;
         let config = { headers: {
             'Content-Type': 'application/json',
             Authorization: token,   
-        }}
-        axios.get('http://localhost:8000/api/person/posts',{}, config)
+        }};
+        await axios.get('http://localhost:8000/api/person/posts', config)
             .then(function (response) {
                 // Posts
+                try {
+                    posts = response.data;
+                    console.log(posts);
+                    apiResponse = "";
+                }
+                catch(err){
+                    console.log(err);
+                    apiResponse = <span className="fw-bold px-4 text-uppercase text-danger text-sm pb-2">Unexpected error.</span>;
+                }
             })
             .catch(function (error) {
                 let error_data = error.response.data;
@@ -25,15 +45,31 @@ function Posts() {
                     break;
                 }
                 let output_error = error_type.replace("_"," ") + ": " + error_msg;
-                setAPIResponse(<span className="fw-bold px-4 text-uppercase text-danger text-sm pb-2">{output_error}</span>);
+                apiResponse = <span className="fw-bold px-4 text-uppercase text-danger text-sm pb-2">{output_error}</span>;
             });
-    },[posts])
+        this.setState({posts: posts, apiResponse: apiResponse})
+    }
 
-    return(
-        <section>
-            {apiResponse}
+    componentDidMount() {
+        if (this.state.posts.length == 0) {
+            (async () => {
+                await this.getPosts();    
+            })();        
+        }
+        console.log("cdm");
+    }
+
+    render() {
+        console.log("render");
+        return(<section>
+            {this.state.apiResponse}
+            {this.state.posts.map((post, index) => (
+                <div key={index}>
+                    <TimelinePost post={post}/>
+                </div>
+            ))}
         </section>
-        );
+        )};
 }
 
-export default Posts;
+export default connect(mapStateToProps)(Posts);
