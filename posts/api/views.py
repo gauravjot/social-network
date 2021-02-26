@@ -15,6 +15,9 @@ from datetime import datetime
 # Create your views here.
 @api_view(['GET'])
 def personPosts(request, pk):
+    return __personPosts(pk)
+
+def __personPosts(pk):
     person_id = pk
     data = Posts.objects.filter(person=person_id)
     postsSerializer = PostsSerializer(data, many=True)
@@ -50,6 +53,15 @@ def postOperations(request, pk):
         return deletePost(request, pk)
     return Response(errorResponse("unable to complete request"),status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+@api_view(['GET'])
+def getPosts(request):
+    person_token = request.headers['Authorization'].split()[-1]
+    try:
+        person_id = Token.objects.get(token=person_token).account
+        return __personPosts(person_id)
+    except Token.DoesNotExist:
+        return Response(errorResponse("Session expired, Please log in again!"),status=status.HTTP_400_BAD_REQUEST)
+
 # Returns one specific post where pk is post id
 def getPost(post_key):
     try:
@@ -58,6 +70,7 @@ def getPost(post_key):
         return Response(data=postsSerializer.data,status=status.HTTP_200_OK)
     except Posts.DoesNotExist:
         return Response(errorResponse("Post not found!"),status=status.HTTP_404_NOT_FOUND)
+
 
 # Like or unlike a post
 def likePost(request, post_key):
