@@ -12,7 +12,7 @@ function Posts() {
             'Content-Type': 'application/json',
             Authorization: token,   
         }}
-        axios.post('http://localhost:8000/api/person/posts',{}, config)
+        axios.get('http://localhost:8000/api/person/posts',{}, config)
             .then(function (response) {
                 // Posts
             })

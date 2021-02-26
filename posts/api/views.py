@@ -29,7 +29,10 @@ def __personPosts(pk):
 # create new post, auth required
 @api_view(['POST'])
 def newPost(request):
-    person_token = request.headers['Authorization'].split()[-1]
+    try:
+        person_token = request.headers['Authorization'].split()[-1]
+    except KeyError:
+        return Response(errorResponse("Unauthorized."),status=status.HTTP_401_UNAUTHORIZED)
     try:
         person_id = Token.objects.get(token=person_token).account
         postsSerializer = PostsSerializer(data={**request.data,**{'person':person_id}})
@@ -55,7 +58,10 @@ def postOperations(request, pk):
 
 @api_view(['GET'])
 def getPosts(request):
-    person_token = request.headers['Authorization'].split()[-1]
+    try:
+        person_token = request.headers['Authorization'].split()[-1]
+    except KeyError:
+        return Response(errorResponse("Unauthorized."),status=status.HTTP_401_UNAUTHORIZED)
     try:
         person_id = Token.objects.get(token=person_token).account
         return __personPosts(person_id)
