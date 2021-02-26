@@ -1,10 +1,16 @@
-import React, {useState, useRef} from 'react'
-import logo from '../../assets/images/logo.png'
-import InputField from '../../utils/InputField'
-import {Helmet} from 'react-helmet'
-import axios from 'axios'
+import React, {useState, useRef} from 'react';
+import logo from '../../assets/images/logo.png';
+import InputField from '../../utils/InputField';
+import {Helmet} from 'react-helmet';
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { updateToken } from '../../actions';
+import { useHistory } from 'react-router-dom';
 
 function LogIn() {
+    const dispatch = useDispatch();
+    const history = useHistory();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [apiResponse, setAPIResponse] = useState();
@@ -26,7 +32,8 @@ function LogIn() {
             .then(function (response) {
                 let token = response.data.token;
                 // We got the token, yay!
-                setAPIResponse(<div>{token}</div>)
+                dispatch(updateToken(token));
+                history.push("/dashboard")
             })
             .catch(function (error) {
                 let error_data = error.response.data;
@@ -37,7 +44,7 @@ function LogIn() {
                     break;
                 }
                 let output_error = error_type.replace("_"," ") + ": " + error_msg;
-                setAPIResponse(<div class="fw-bold text-uppercase text-danger text-sm pb-2">{output_error}</div>);
+                setAPIResponse(<div className="fw-bold text-uppercase text-danger text-sm pb-2">{output_error}</div>);
                 if(btnRef.current){
                     btnRef.current.removeAttribute("disabled");
                 }
