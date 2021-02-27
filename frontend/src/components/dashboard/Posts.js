@@ -7,7 +7,6 @@ class Posts extends Component {
     constructor(props) {
         super(props);
         this.state = {posts: [], apiResponse: ""};
-        console.log("constructor");
     }
 
     async getPosts() {
@@ -23,7 +22,6 @@ class Posts extends Component {
                 // Posts
                 try {
                     posts = response.data;
-                    console.log(posts);
                     apiResponse = "";
                 }
                 catch(err){
@@ -51,11 +49,9 @@ class Posts extends Component {
                 await this.getPosts();    
             })();        
         }
-        console.log("cdm");
     }
 
     render() {
-        console.log("render");
         return(<section>
             {this.state.apiResponse}
             {this.state.posts.map((post, index) => (
