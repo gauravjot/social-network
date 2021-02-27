@@ -75,7 +75,8 @@ def login(request):
                 account=user.id,
                 created=datetime.now(pytz.utc)
             ).save()
-    return Response(data=tokenResponse(token),status=status.HTTP_202_ACCEPTED)
+        personSerializer = PersonSerializer(user)
+    return Response(data={**tokenResponse(token),**personSerializer.data},status=status.HTTP_202_ACCEPTED)
 
 @api_view(['DELETE'])
 def logout(request):
