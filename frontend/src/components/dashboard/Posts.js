@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
 import axios from 'axios';
 import TimelinePost from './post/TimelinePost';
-
-const mapStateToProps = state => ({
-            token: state.token
-});
 
 class Posts extends Component {
 
@@ -72,4 +67,4 @@ class Posts extends Component {
         )};
 }
 
-export default connect(mapStateToProps)(Posts);
+export default Posts;

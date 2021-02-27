@@ -3,7 +3,7 @@ import React from 'react';
 const TimelinePost = ({post}) => {
     console.log(post);
     return (
-        <div>{post.person}</div>
+        <div>{post.post_text}</div>
     );
 };
 

@@ -4,7 +4,7 @@ import InputField from '../../utils/InputField';
 import {Helmet} from 'react-helmet';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { updateToken } from '../../actions';
+import { setUser } from '../../redux/actions';
 import { useHistory } from 'react-router-dom';
 
 function LogIn() {
@@ -30,9 +30,8 @@ function LogIn() {
         }
         axios.post('http://localhost:8000/api/person/login',JSON.stringify(data), config)
             .then(function (response) {
-                let token = response.data.token;
                 // We got the token, yay!
-                dispatch(updateToken(token));
+                dispatch(setUser(response.data));
                 history.push("/dashboard")
             })
             .catch(function (error) {

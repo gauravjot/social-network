@@ -1,10 +1,8 @@
 import React, {useState, useRef} from 'react';
 import TextArea from '../../utils/TextArea';
-import {useSelector} from 'react-redux';
 import axios from 'axios';
 
-function CreatePost() {
-    const token = useSelector(state => state.token);
+function CreatePost({token}) {
     const [postText, setPostText] = useState("");
     const [apiResponse, setAPIResponse] = useState();
 
