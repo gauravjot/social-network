@@ -18,7 +18,12 @@ from secrets import token_hex
 @api_view(['GET'])
 def personInfo(request, pk):
     try:
-        data = Person.objects.get(pk=pk)
+        if (type(pk) is int):
+            data = Person.objects.get(pk=pk)
+        elif (type(pk) is str):
+            data = Person.objects.get(slug=pk)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
         personSerializer = PersonSerializer(data)
         return Response(personSerializer.data, status=status.HTTP_200_OK)
     except Person.DoesNotExist:
@@ -77,6 +82,8 @@ def login(request):
             ).save()
     return Response(data={**tokenResponse(token),**PersonSerializer(user).data},status=status.HTTP_202_ACCEPTED)
 
+# Log Out function, requires token
+# -----------------------------------------------
 @api_view(['DELETE'])
 def logout(request):
     token = request.headers['Authorization'].split()[-1]

@@ -35,7 +35,7 @@ def newPost(request):
         return Response(errorResponse("Unauthorized."),status=status.HTTP_401_UNAUTHORIZED)
     try:
         person_id = Token.objects.get(token=person_token).account
-        postsSerializer = PostsSerializer(data={**request.data,**{'person':person_id}})
+        postsSerializer = PostsSerializer(data={**request.data,**{'person_id':person_id}})
         if (postsSerializer.is_valid()):
             postsSerializer.save()
             return Response(data=postsSerializer.validated_data, status=status.HTTP_201_CREATED)
@@ -56,8 +56,9 @@ def postOperations(request, pk):
         return deletePost(request, pk)
     return Response(errorResponse("unable to complete request"),status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+# Returns post of a logged in user, requires token
 @api_view(['GET'])
-def getPosts(request):
+def getLoggedInUserPosts(request):
     try:
         person_token = request.headers['Authorization'].split()[-1]
     except KeyError:
@@ -136,6 +137,5 @@ def deletePost(request, post_key):
 
 # Helper Functions
 # -----------------------------------------------
-
 def errorResponse(message):
     return json.loads('{"error": ["' + message + '"]}')

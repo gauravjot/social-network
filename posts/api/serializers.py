@@ -4,7 +4,7 @@ from posts.models import Posts
 class PostsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Posts
-        fields = ['id', 'person','post_text','post_image','likes', 'created', 'updated']
+        fields = ['id', 'person_id','post_text','post_image','likes', 'created', 'updated']
         extra_kwargs = {
             'created': {'required':False},
             'updated': {'required':False},
