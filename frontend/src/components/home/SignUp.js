@@ -1,11 +1,17 @@
 import React, {useState, useRef} from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../redux/actions';
+import { useHistory } from 'react-router-dom';
 
 import InputField from '../../utils/InputField'
 import {isValidDate} from '../../utils/CheckValidDate'
 
 function SignUp() {
+    const dispatch = useDispatch();
+    const history = useHistory();
+    
     const [first_name, setFirstName] = useState("");
     const [last_name, setLastName] = useState("");
     const [email, setEmail] = useState("");
@@ -43,8 +49,8 @@ function SignUp() {
             if (isValidDate(birthday)) {
                 axios.post('http://localhost:8000/api/person/signup',JSON.stringify(data), config)
                 .then(function (response) {
-                    let token = response.data.token;
-                    // We got the token, yay!
+                    dispatch(setUser(response.data));
+                    history.push("/dashboard")
                 })
                 .catch(function (error) {
                     let output_error;
