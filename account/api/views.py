@@ -39,7 +39,7 @@ def signup(request):
         # -- user data & hash password
         req_dict = request.data
         req_dict['password'] = hashPwd(req_dict['password'])
-        req_dict['slug'] = req_dict['first_name'].lower().split()[-1] + " " + str(randrange(1111,9999))
+        req_dict['slug'] = req_dict['first_name'].lower().split()[-1] + str(randrange(1111,9999))
         personSerializer = PersonSerializer(data=req_dict)
         # -- check if data is without bad actors
         if personSerializer.is_valid():
