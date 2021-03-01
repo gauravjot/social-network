@@ -44,7 +44,7 @@ function CreatePost({token}) {
         <section>
             <div>
             <TextArea
-                label="What's on your mind?"
+                placeholder="What's on your mind?"
                 onChange={handlePostText}
                 name="post_text"
                 value={postText}
