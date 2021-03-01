@@ -19,7 +19,7 @@ def personPosts(request, pk):
 
 def __personPosts(pk):
     person_id = pk
-    data = Posts.objects.filter(person=person_id)
+    data = Posts.objects.filter(person_id=person_id)
     postsSerializer = PostsSerializer(data, many=True)
     if postsSerializer.data:
         return Response(data=postsSerializer.data,status=status.HTTP_200_OK)
