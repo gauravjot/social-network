@@ -1,9 +1,13 @@
 from django.db import models
 from django.utils import timezone
-from random import randrange
+
 
 # Create your models here.
 class Person(models.Model):
+
+    def __default_person_friends():
+        return dict(persons=[])
+
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     email = models.EmailField(max_length=254, unique=True)
@@ -11,7 +15,7 @@ class Person(models.Model):
     avatar = models.URLField(default="")
     birthday = models.CharField(max_length=10)
     tagline = models.CharField(max_length=200, default="")
-    slug = models.CharField(max_length=100,default=randrange(10000000,99999999), unique=True)
+    slug = models.CharField(max_length=100, unique=True)
     created = models.DateTimeField(default=timezone.now)
     updated = models.DateTimeField(default=timezone.now)
 
