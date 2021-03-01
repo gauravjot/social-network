@@ -1,66 +1,54 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import TimelinePost from './post/TimelinePost';
+import { useDispatch, useSelector } from 'react-redux';
+import { setPosts } from "../../redux/actions"
 
-class Posts extends Component {
+function Posts({token}) {
 
-    constructor(props) {
-        super(props);
-        this.state = {posts: [], apiResponse: ""};
-    }
+    let posts = useSelector(state => state.posts.posts);
+    const dispatch = useDispatch();
 
-    async getPosts() {
-        let posts =[];
-        let apiResponse;
-        const token = this.props.token;
+    const getPosts = () => {
+        let _posts = [];
         let config = { headers: {
             'Content-Type': 'application/json',
             Authorization: token,   
         }};
-        await axios.get('http://localhost:8000/api/person/posts', config)
+        axios.get('http://localhost:8000/api/person/posts', config)
             .then(function (response) {
-                // Posts
                 try {
-                    posts = response.data;
-                    apiResponse = "";
+                    _posts = response.data;
+                    dispatch(setPosts(_posts));
                 }
                 catch(err){
                     console.log(err);
-                    apiResponse = <span className="fw-bold px-4 text-uppercase text-danger text-sm pb-2">Unexpected error.</span>;
                 }
             })
-            .catch(function (error) {
-                let error_data = error.response.data;
-                let error_type, error_msg;
-                for (var k in error_data) {
-                    error_type = k;
-                    error_msg = error_data[k];
-                    break;
-                }
-                let output_error = error_type.replace("_"," ") + ": " + error_msg;
-                apiResponse = <span className="fw-bold px-4 text-uppercase text-danger text-sm pb-2">{output_error}</span>;
+            .catch(function (err) {
+                console.log(err);
             });
-        this.setState({posts: posts, apiResponse: apiResponse})
+        return _posts;
     }
 
-    componentDidMount() {
-        if (this.state.posts.length == 0) {
-            (async () => {
-                await this.getPosts();    
-            })();        
+    useEffect(() => {
+        if (posts === undefined) {
+            posts = getPosts();
         }
-    }
+    },[posts])
 
-    render() {
-        return(<section>
-            {this.state.apiResponse}
-            {this.state.posts.map((post, index) => (
-                <div key={index}>
-                    <TimelinePost post={post}/>
-                </div>
+    return (posts != undefined) ? 
+            (<section>
+                {posts.map((post, index) => (
+                    <div key={index}>
+                        <TimelinePost post={post}/>
+                    </div>
             ))}
-        </section>
-        )};
+            </section>) : (
+            <div>
+                Sorry, but we do not have any posts to serve yet.
+            </div>
+        );
 }
 
 export default Posts;
