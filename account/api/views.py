@@ -51,7 +51,7 @@ def signup(request):
                 account=Person.objects.get(email=req_dict['email']).id,
                 created=datetime.now(pytz.utc)
                 ).save()
-            return Response(data=tokenResponse(token),status=status.HTTP_201_CREATED)
+            return Response(data={**tokenResponse(token),**personSerializer.data},status=status.HTTP_201_CREATED)
         else:
             return Response(data=personSerializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
