@@ -12,3 +12,16 @@ export const logoutUser = () => {
         type: actions.LOGOUT_USER
     }
 }
+
+export const setPosts = (posts) => {
+    return {
+        type: actions.SET_POSTS,
+        payload: posts
+    }
+}
+
+export const removeAllPosts = () => {
+    return {
+        type: actions.REMOVE_ALL_POSTS,
+    }
+}
