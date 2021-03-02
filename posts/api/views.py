@@ -35,7 +35,7 @@ def newPost(request):
         return Response(errorResponse("Unauthorized."),status=status.HTTP_401_UNAUTHORIZED)
     try:
         person_id = Token.objects.get(token=person_token).account
-        postsSerializer = PostsSerializer(data={**request.data,**{'person_id':person_id}})
+        postsSerializer = PostsSerializer(data={**request.data,**{'person_id':person_id,'created':datetime.now().timestamp(),'updated':datetime.now().timestamp()}})
         if (postsSerializer.is_valid()):
             postsSerializer.save()
             return Response(data=postsSerializer.validated_data, status=status.HTTP_201_CREATED)
