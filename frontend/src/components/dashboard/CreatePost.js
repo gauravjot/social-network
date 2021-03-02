@@ -43,12 +43,12 @@ function CreatePost({token}) {
     return(
         <section>
             <div>
-            <TextArea
-                placeholder="What's on your mind?"
-                onChange={handlePostText}
-                name="post_text"
-                value={postText}
-                />
+                <TextArea
+                    placeholder="What's on your mind?"
+                    onChange={handlePostText}
+                    name="post_text"
+                    value={postText}
+                    />
             </div>
             <div className="mt-3">
                 <button type="submit" ref={btnRef} onClick={handleMakePost} className="btn btn-primary fw-bold">Create Post</button>

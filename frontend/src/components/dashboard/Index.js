@@ -31,10 +31,13 @@ function Dashboard() {
             <title>Dashboard</title>
         </Helmet>
         <div className="row">
-            <div className="col-lg-4">
+            <div className="col-lg-3 px-3">
                 <LeftSidebar logOut={logOut}/>
             </div>
-            <div className="col-lg-8">
+            <div className="col-lg-9 px-3">
+                <div className="pt-4">
+                    <span className="fs-4">Your Feed</span>
+                </div>
                 <CreatePost token={token}/>
                 <Posts token={token}/>
             </div>

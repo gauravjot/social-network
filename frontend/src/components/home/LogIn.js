@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../redux/actions';
 import { useHistory } from 'react-router-dom';
+import { BACKEND_SERVER_DOMAIN } from "../../settings"
 
 function LogIn() {
     const dispatch = useDispatch();
@@ -18,32 +19,23 @@ function LogIn() {
     const handleEmail = ({ target }) => {setEmail(target.value)};
     const handlePassword = ({ target }) => {setPassword(target.value)};
     let btnRef = useRef();
+
     const handleLogIn = () => {
         if(btnRef.current){
             btnRef.current.setAttribute("disabled", "disabled");
         }
-        let data = {};
-        data['email'] = email;
-        data['password'] = password;
         let config = { headers: {
             'Content-Type': 'application/json',}
         }
-        axios.post('http://localhost:8000/api/person/login',JSON.stringify(data), config)
+        axios.post(BACKEND_SERVER_DOMAIN + '/api/person/login',
+                    JSON.stringify({'email':email, 'password': password}),
+                    config)
             .then(function (response) {
-                // We got the token, yay!
                 dispatch(setUser(response.data));
                 history.push("/dashboard")
             })
             .catch(function (error) {
-                let error_data = error.response.data;
-                let error_type, error_msg;
-                for (var k in error_data) {
-                    error_type = k;
-                    error_msg = error_data[k];
-                    break;
-                }
-                let output_error = error_type.replace("_"," ") + ": " + error_msg;
-                setAPIResponse(<div className="fw-bold text-uppercase text-danger text-sm pb-2">{output_error}</div>);
+                setAPIResponse(<div className="fw-bold text-uppercase text-danger text-sm pb-2">{error.response.data.error}</div>);
                 if(btnRef.current){
                     btnRef.current.removeAttribute("disabled");
                 }

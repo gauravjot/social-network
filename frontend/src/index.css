@@ -18,10 +18,6 @@ code {
   width:250px;
 }
 
-.dashboard-logo {
-  max-width:100%;
-}
-
 .home-image {
   text-align:center;
 }
@@ -66,16 +62,33 @@ code {
   background-color:rgba(178,34,34,0.2);
 }
 
+.btn-light {
+  background-color:rgba(0,0,0,0);
+  border:0px;
+}
+.btn-light:hover {
+  background-color:#f1f1f1;
+}
+
+.btn-light:active {
+  background-color:#f1f1f1;
+}
 
 /* Dashboard */
-.sidebar-user-window{
+
+.dashboard-logo {
+  width:80%;
+  max-width:20rem;
+}
+
+.sidebar-user-window, .post-user-window{
   flex-direction: row;
 }
 
 .sidebar-user-window-avatar {
 }
 
-.sidebar-user-window-user {
+.sidebar-user-window-user, .post-user-window-user {
   vertical-align:top;
 }
 
@@ -88,7 +101,7 @@ code {
 .sidebar-window-items {
   border:0px solid #ffffff;
   padding:1rem 1.5rem;
-  margin:0.2rem 0.5rem 0rem 0.5rem;
+  margin:0.2rem 0.5rem 0rem 0rem;
   font-weight:600;
   background:#ffffff;
   text-align: inherit;
@@ -101,4 +114,49 @@ code {
 
 .sidebar-window-items i {
   margin-right: 0.5rem;
+}
+
+.collapsing, .show {
+  display:block !important;
+}
+
+/* Timeline Post */
+.post {
+  display: block;
+  border-bottom: 1px #f4f4f4 solid;
+}
+
+.post-image {
+  width:100%;
+  max-height:75vh;
+  object-fit: cover;
+}
+
+.post-user-window-user {
+  width:100%;
+}
+
+.post i {
+  /* font-awesome icons */
+  margin-right: 0.4rem;
+  font-size:1.1rem;
+  vertical-align:middle;
+}
+
+.like-fa {
+  vertical-align: initial !important;
+}
+
+.post-options {
+  font-weight: 500;
+  text-align: left;
+}
+
+@media only screen and (max-width: 600px) {
+  .post-options {
+    text-align: center;
+  }
+  .post-options a span {
+    font-size:0.8rem;
+  }
 }

@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 
 import InputField from '../../utils/InputField'
 import {isValidDate} from '../../utils/CheckValidDate'
+import { BACKEND_SERVER_DOMAIN } from "../../settings"
 
 function SignUp() {
     const dispatch = useDispatch();
@@ -47,7 +48,7 @@ function SignUp() {
                 'Content-Type': 'application/json',}
             }
             if (isValidDate(birthday)) {
-                axios.post('http://localhost:8000/api/person/signup',JSON.stringify(data), config)
+                axios.post(BACKEND_SERVER_DOMAIN + '/api/person/signup',JSON.stringify(data), config)
                 .then(function (response) {
                     dispatch(setUser(response.data));
                     history.push("/dashboard")

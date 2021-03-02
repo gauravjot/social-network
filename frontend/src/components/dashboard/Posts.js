@@ -3,6 +3,7 @@ import axios from 'axios';
 import TimelinePost from './post/TimelinePost';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPosts } from "../../redux/actions"
+import { BACKEND_SERVER_DOMAIN } from '../../settings'
 
 function Posts({token}) {
 
@@ -10,36 +11,37 @@ function Posts({token}) {
     const dispatch = useDispatch();
 
     const getPosts = () => {
-        let _posts = [];
         let config = { headers: {
             'Content-Type': 'application/json',
             Authorization: token,   
         }};
-        axios.get('http://localhost:8000/api/person/posts', config)
+        axios.get(BACKEND_SERVER_DOMAIN + '/api/person/posts', config)
             .then(function (response) {
-                try {
-                    _posts = response.data;
-                    dispatch(setPosts(_posts));
-                }
-                catch(err){
-                    console.log(err);
-                }
+                dispatch(setPosts(response.data));
             })
             .catch(function (err) {
-                console.log(err);
+                console.log(err.response.data);
             });
-        return _posts;
     }
 
     useEffect(() => {
         if (posts === undefined) {
-            posts = getPosts();
+            // posts does not exist in app state
+            getPosts();
+        } else if (typeof(posts) == "object") {
+            // posts exist in app state
+            if (Object.values(posts).length <= 0) {
+                // if posts is empty
+                getPosts();
+            }
         }
-    },[posts])
+        // if post exists in state and not empty then we just use
+        // state data rather than making network request
+    },[])
 
     return (posts != undefined) ? 
             (<section>
-                {posts.map((post, index) => (
+                {posts.slice().reverse().map((post, index) => (
                     <div key={index}>
                         <TimelinePost post={post}/>
                     </div>
