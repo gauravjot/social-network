@@ -1,9 +1,10 @@
 from django.db import models
-from django.utils import timezone
+import datetime
 
 
 # Create your models here.
 class Person(models.Model):
+    current_time = datetime.datetime.now().timestamp()
 
     def __default_person_friends():
         return dict(persons=[])
@@ -16,8 +17,8 @@ class Person(models.Model):
     birthday = models.CharField(max_length=10)
     tagline = models.CharField(max_length=200, default="")
     slug = models.CharField(max_length=100, unique=True)
-    created = models.DateTimeField(default=timezone.now)
-    updated = models.DateTimeField(default=timezone.now)
+    created = models.FloatField(default=current_time)
+    updated = models.FloatField(default=current_time)
 
     def __str__(self):
         return "id:"+str(self.pk) + ", " + self.first_name + " " + self.last_name+ ", " + self.email
