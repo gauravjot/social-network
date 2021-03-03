@@ -22,8 +22,8 @@ from helpers.error_messages import UNAUTHORIZED, INVALID_TOKEN
 @api_view(['GET'])
 def getFriends(request):
     person_id = getPersonID(request)
-    # If person_id is not print that means we have errored
-    if type(person_id) is not int:
+    # If person_id type is Response that means we have errored
+    if type(person_id) is Response:
         return person_id
 
     try:
@@ -42,8 +42,8 @@ def getFriends(request):
 @api_view(['GET'])
 def getFriendRequests(request):
     person_id = getPersonID(request)
-    # If person_id is not print that means we have errored
-    if type(person_id) is not int:
+    # If person_id type is Response that means we have errored
+    if type(person_id) is Response:
         return person_id
     
     data = FriendRequest.objects.filter(to_user=person_id)
@@ -69,8 +69,8 @@ def sendFriendRequest(request):
     if request.method == 'POST':
         # only need 'to_user' field in post request
         person_id = getPersonID(request)
-        # If person_id is not print that means we have errored
-        if type(person_id) is not int:
+        # If person_id type is Response that means we have errored
+        if type(person_id) is Response:
             return person_id
 
         req_dict = request.data
@@ -103,8 +103,8 @@ def sendFriendRequest(request):
 @api_view(['PUT'])
 def acceptFriendRequest(request):
     person_id = getPersonID(request)
-    # If person_id is not print that means we have errored
-    if type(person_id) is not int:
+    # If person_id type is Response that means we have errored
+    if type(person_id) is Response:
         return person_id
 
     print(request.data)
@@ -138,8 +138,8 @@ def acceptFriendRequest(request):
 @api_view(['DELETE'])
 def deleteFriendRequest(request):
     person_id = getPersonID(request)
-    # If person_id is not print that means we have errored
-    if type(person_id) is not int:
+    # If person_id type is Response that means we have errored
+    if type(person_id) is Response:
         return person_id
 
     friend_request = FriendRequest.objects.get(id=request.data['id'])
@@ -153,8 +153,8 @@ def deleteFriendRequest(request):
 @api_view(['GET'])
 def getFriendSuggestions(request):
     person_id = getPersonID(request)
-    # If person_id is not print that means we have errored
-    if type(person_id) is not int:
+    # If person_id type is Response that means we have errored
+    if type(person_id) is Response:
         return person_id
     
     # We have some friends
