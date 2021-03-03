@@ -39,8 +39,8 @@ function Posts({token}) {
         // state data rather than making network request
     },[])
 
-    return (posts != undefined) ? 
-            (<section>
+    return (posts !== undefined) ? 
+            (<section className="timeline-posts">
                 {posts.slice().reverse().map((post, index) => (
                     <div key={index}>
                         <TimelinePost post={post}/>

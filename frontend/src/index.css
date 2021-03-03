@@ -14,6 +14,10 @@ code {
     monospace;
 }
 
+.fw-med {
+  font-weight: 500;
+}
+
 .home-logo {
   width:250px;
 }
@@ -52,6 +56,10 @@ code {
   font-size: 0.8rem;
 }
 
+.text-sml {
+  font-size: 0.9rem;
+}
+
 .card-effect {
   border-radius: 1rem;
   border:1px rgba(0,0,0,0) solid;
@@ -74,7 +82,8 @@ code {
   background-color:#f1f1f1;
 }
 
-/* Dashboard */
+/* Dashboard ---------------------------------------------------- */
+/* -------------------------------------------------------------- */
 
 .dashboard-logo {
   width:80%;
@@ -151,6 +160,44 @@ code {
   font-weight: 500;
   text-align: left;
 }
+.rightsidebar-title {
+  padding:2.5rem 0 1rem 0;
+}
+
+.leftsidebar {
+  position: fixed;
+  border-right:0px #eaeaea solid;
+  height:100vh;
+}
+
+
+
+
+
+
+
+
+@media only screen and (max-width: 1400px) {
+  .leftsidebar {
+    width:17.3em;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .leftsidebar {
+    width:14.3em;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .leftsidebar {
+    position: relative;
+    border-right:0px #eaeaea solid;
+    height:auto;
+    width:100%;
+  }
+}
+
 
 @media only screen and (max-width: 600px) {
   .post-options {

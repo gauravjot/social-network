@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React from 'react';
 import {useSelector} from 'react-redux';
 import logo from '../../assets/images/logo.png';
@@ -5,7 +6,7 @@ import logo from '../../assets/images/logo.png';
 function LeftSidebar({logOut}) {
     const user = useSelector(state => state.user)
     return (
-        <section>
+        <section className="leftsidebar">
             <div>
                 <nav className="navbar navbar-light py-3">
                     <div className="container-fluid p-0">

@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { logoutUser, removeAllPosts } from '../../redux/actions';
 
 import LeftSidebar from './LeftSidebar'
+import RightSidebar from './rightsidebar/RightSidebar'
 import CreatePost from './CreatePost';
 import Posts from './Posts';
 
@@ -34,12 +35,15 @@ function Dashboard() {
             <div className="col-lg-3 px-3">
                 <LeftSidebar logOut={logOut}/>
             </div>
-            <div className="col-lg-9 px-3">
+            <div className="col-lg-6 px-4">
                 <div className="pt-4">
                     <span className="fs-4">Your Feed</span>
                 </div>
                 <CreatePost token={token}/>
                 <Posts token={token}/>
+            </div>
+            <div className="col-lg-3 d-none d-lg-block px-3">
+                <RightSidebar />
             </div>
         </div>
         </section>
