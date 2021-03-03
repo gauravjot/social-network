@@ -15,16 +15,17 @@ from friends.models import Friend, FriendRequest
 import json
 from helpers.api_error_response import errorResponse
 import random
+from helpers.error_messages import UNAUTHORIZED, INVALID_TOKEN
 
 # Get user friends
 # -----------------------------------------------
 @api_view(['GET'])
 def getFriends(request):
-    try:
-        token = request.headers['Authorization'].split()[-1]
-    except KeyError:
-        return Response(errorResponse("Unauthorized."),status=status.HTTP_401_UNAUTHORIZED)
-    person_id = Token.objects.get(token=token).account
+    person_id = getPersonID(request)
+    # If person_id is not print that means we have errored
+    if type(person_id) is not int:
+        return person_id
+
     try:
         data = Friend.objects.filter(Q(user_a=person_id) | Q(user_b=person_id))
         friends = [entry.user_a if entry.user_a is not person_id else entry.user_b for entry in data]
@@ -40,12 +41,10 @@ def getFriends(request):
 # -----------------------------------------------
 @api_view(['GET'])
 def getFriendRequests(request):
-    try:
-        token = request.headers['Authorization'].split()[-1]
-    except KeyError:
-        return Response(errorResponse("Unauthorized."),status=status.HTTP_401_UNAUTHORIZED)
-    
-    person_id = Token.objects.get(token=token).account
+    person_id = getPersonID(request)
+    # If person_id is not print that means we have errored
+    if type(person_id) is not int:
+        return person_id
     
     data = FriendRequest.objects.filter(to_user=person_id)
     friendrequests = []
@@ -69,13 +68,12 @@ def getFriendRequests(request):
 def sendFriendRequest(request):
     if request.method == 'POST':
         # only need 'to_user' field in post request
-        try:
-            token = request.headers['Authorization'].split()[-1]
-        except KeyError:
-            return Response(errorResponse("Unauthorized."),status=status.HTTP_401_UNAUTHORIZED)
-        
+        person_id = getPersonID(request)
+        # If person_id is not print that means we have errored
+        if type(person_id) is not int:
+            return person_id
+
         req_dict = request.data
-        person_id = Token.objects.get(token=token).account
 
         # Can't send oneself the friend request
         if req_dict['to_user'] != person_id:
@@ -104,64 +102,60 @@ def sendFriendRequest(request):
 # -----------------------------------------------
 @api_view(['PUT'])
 def acceptFriendRequest(request):
+    person_id = getPersonID(request)
+    # If person_id is not print that means we have errored
+    if type(person_id) is not int:
+        return person_id
+
+    print(request.data)
     try:
-        person_token = request.headers['Authorization'].split()[-1]
-    except KeyError:
-        return Response(errorResponse("Unauthorized."),status=status.HTTP_401_UNAUTHORIZED)
-    try:
-        person_id = Token.objects.get(token=person_token).account
-        print(request.data)
-        try:
-            friend_request = FriendRequest.objects.get(id=request.data['id'])
-            # Check if person responding to the request is the person request is sent to
-            if friend_request.to_user == person_id:
-                friendSerilizer = FriendSerializer(data=
-                        {'user_a':friend_request.from_user, 
-                        'user_b': person_id,
-                        'since':datetime.now().timestamp()})
-                if friendSerilizer.is_valid():
-                    friendSerilizer.save()
-                    friend_request.delete()
-                    # Let's check if users had cross friend requested each other
-                    # in that case we need to delete the other request as well
-                    res = Response(data=friendSerilizer.data,status=status.HTTP_200_OK)
-                    try:
-                        duplicate_request= FriendRequest.objects.get(from_user=person_id)
-                        duplicate_request.delete()
-                    except FriendRequest.DoesNotExist:
-                        return res
+        friend_request = FriendRequest.objects.get(id=request.data['id'])
+        # Check if person responding to the request is the person request is sent to
+        if friend_request.to_user == person_id:
+            friendSerilizer = FriendSerializer(data=
+                    {'user_a':friend_request.from_user, 
+                    'user_b': person_id,
+                    'since':datetime.now().timestamp()})
+            if friendSerilizer.is_valid():
+                friendSerilizer.save()
+                friend_request.delete()
+                # Let's check if users had cross friend requested each other
+                # in that case we need to delete the other request as well
+                res = Response(data=friendSerilizer.data,status=status.HTTP_200_OK)
+                try:
+                    duplicate_request= FriendRequest.objects.get(from_user=person_id)
+                    duplicate_request.delete()
+                except FriendRequest.DoesNotExist:
                     return res
-            return Response(errorResponse("Unable to accept friend request."),status=status.HTTP_400_BAD_REQUEST)
-        except FriendRequest.DoesNotExist:
-            return Response(errorResponse("Friend request is invalid."),status=status.HTTP_400_BAD_REQUEST)
-    except Token.DoesNotExist:
-        return Response(errorResponse("Session expired, Please log in again!"),status=status.HTTP_400_BAD_REQUEST)
+                return res
+        return Response(errorResponse("Unable to accept friend request."),status=status.HTTP_400_BAD_REQUEST)
+    except FriendRequest.DoesNotExist:
+        return Response(errorResponse("Friend request is invalid."),status=status.HTTP_400_BAD_REQUEST)
 
 
 # Log Out function, requires token
 # -----------------------------------------------
 @api_view(['DELETE'])
 def deleteFriendRequest(request):
-    try:
-        token = request.headers['Authorization'].split()[-1]
-        person_id = Token.objects.get(token=token).account
-    except [KeyError, Token.DoesNotExist]:
-        return Response(errorResponse("Unauthorized."),status=status.HTTP_401_UNAUTHORIZED)
+    person_id = getPersonID(request)
+    # If person_id is not print that means we have errored
+    if type(person_id) is not int:
+        return person_id
+
     friend_request = FriendRequest.objects.get(id=request.data['id'])
     if (friend_request.from_user == person_id or friend_request.to_user == person_id):
         friend_request.delete()
         return Response(data=json.loads('{"action": "success"}'),status=status.HTTP_200_OK)
-    return Response(errorResponse("Unauthorized."),status=status.HTTP_401_UNAUTHORIZED)
+    return Response(errorResponse("Bad Request."),status=status.HTTP_400_BAD_REQUEST)
 
 # Friend Suggestions for user
 # -----------------------------------------------
 @api_view(['GET'])
 def getFriendSuggestions(request):
-    try:
-        token = request.headers['Authorization'].split()[-1]
-        person_id = Token.objects.get(token=token).account
-    except [KeyError, Token.DoesNotExist]:
-        return Response(errorResponse("Unauthorized."),status=status.HTTP_401_UNAUTHORIZED)
+    person_id = getPersonID(request)
+    # If person_id is not print that means we have errored
+    if type(person_id) is not int:
+        return person_id
     
     # We have some friends
     friends = Friend.objects.filter(Q(user_a=person_id) | Q(user_b=person_id))
@@ -184,3 +178,13 @@ def getFriendSuggestions(request):
 
 # Helper Functions
 # -----------------------------------------------
+def getPersonID(request):
+    try:
+        token = request.headers['Authorization'].split()[-1]
+    except [KeyError, Token.DoesNotExist]:
+        return Response(errorResponse(UNAUTHORIZED),status=status.HTTP_401_UNAUTHORIZED)
+    try:
+        person_id = Token.objects.get(token=token).account
+    except Token.DoesNotExist:
+        return Response(errorResponse(INVALID_TOKEN),status=status.HTTP_400_BAD_REQUEST)
+    return person_id
