@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
     'account',
     'posts',
+    'friends',
     'rest_framework',
     'corsheaders',
 ]
