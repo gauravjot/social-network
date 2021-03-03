@@ -184,7 +184,6 @@ def getPersonID(request):
     except [KeyError, Token.DoesNotExist]:
         return Response(errorResponse(UNAUTHORIZED),status=status.HTTP_401_UNAUTHORIZED)
     try:
-        person_id = Token.objects.get(token=token).account
+        return Token.objects.get(token=token).account
     except Token.DoesNotExist:
         return Response(errorResponse(INVALID_TOKEN),status=status.HTTP_400_BAD_REQUEST)
-    return person_id
