@@ -12,4 +12,4 @@ class Posts(models.Model):
     updated = models.FloatField(default=datetime.datetime.now().timestamp())
 
     def __str__(self):
-        return "post id:"+str(self.pk) + ", by person: " + str(self.person)
+        return "Post "+str(self.pk) + ", by " + str(self.person_id)
