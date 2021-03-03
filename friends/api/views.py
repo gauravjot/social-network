@@ -67,7 +67,7 @@ def getFriendRequests(request):
 @csrf_exempt
 def sendFriendRequest(request):
     if request.method == 'POST':
-        # only need 'to_user' field in post request
+        # REQUIRED: 'to_user' field in request
         person_id = getPersonID(request)
         # If person_id type is Response that means we have errored
         if type(person_id) is Response:
@@ -76,18 +76,22 @@ def sendFriendRequest(request):
         req_dict = request.data
 
         # Can't send oneself the friend request
-        if req_dict['to_user'] != person_id:
+        if req_dict['to_user'] == person_id:
             return Response(errorResponse("Cannot send friend request to yourself."),status=status.HTTP_400_BAD_REQUEST)
+
+        # Check if person we are sending request to exist
+        if not Person.objects.filter(pk=req_dict['to_user']).exists():
+            return Response(errorResponse("Person does not exist."),status=status.HTTP_400_BAD_REQUEST)
 
         # Check if a friend request from a same use to same user has already been made
         try:
-            FriendRequest.objects.get(from_user=person_id)
+            FriendRequest.objects.get(Q(from_user=person_id) & Q(to_user=req_dict['to_user']))
             return Response(errorResponse("Friend request is already sent."),status=status.HTTP_400_BAD_REQUEST)
         except FriendRequest.DoesNotExist:
             # Check if these people are already friends
             try:
                 Friend.objects.get(Q(user_a=person_id) & Q(user_b=req_dict['to_user']) | Q(user_a=req_dict['to_user']) & Q(user_b=person_id))
-                return Response(errorResponse("You are already friends with the person."),status=status.HTTP_400_BAD_REQUEST)
+                return Response(errorResponse("Already friends."),status=status.HTTP_400_BAD_REQUEST)
             except Friend.DoesNotExist:
                 req_dict['from_user'] = person_id
                 req_dict['since'] = datetime.now().timestamp()
@@ -164,6 +168,16 @@ def getFriendSuggestions(request):
     # and then excluding myself too
     friends_ids = [a.user_b if a.user_a is person_id else a.user_a for a in friends]
     friends_ids.append(person_id)
+
+    # Apend people we have already sent friend request into friends_ids to avoid those suggestions
+    try:
+        fr = FriendRequest.objects.get(Q(from_user=person_id) | Q(to_user=person_id))
+        if fr.to_user == person_id:
+            friends_ids.append(fr.from_user)
+        else:
+            friends_ids.append(fr.to_user)
+    except FriendRequest.DoesNotExist:
+        pass
 
     persons = list(Person.objects.filter(~Q(id__in=friends_ids)))
     if len(persons) > 0:
