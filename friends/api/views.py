@@ -153,6 +153,8 @@ def deleteFriendRequest(request):
         return Response(data=json.loads('{"action": "success"}'),status=status.HTTP_200_OK)
     return Response(errorResponse("Unauthorized."),status=status.HTTP_401_UNAUTHORIZED)
 
+# Friend Suggestions for user
+# -----------------------------------------------
 @api_view(['GET'])
 def getFriendSuggestions(request):
     try:
