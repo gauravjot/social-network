@@ -2,6 +2,7 @@
 __pycache__/
 .env/
 migrations/
+/media
 
 # dependencies
 /node_modules
