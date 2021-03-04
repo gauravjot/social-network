@@ -15,14 +15,18 @@ function SignUp() {
     
     const [first_name, setFirstName] = useState("");
     const [last_name, setLastName] = useState("");
+    const [avatar, setAvatar] = useState();
     const [email, setEmail] = useState("");
     const [birthday, setBirthday] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState(true);
     const [apiResponse, setAPIResponse] = useState();
+    const [tagline, setTagline] = useState("");
 
     const handleFirstName = ({ target }) => {setFirstName(target.value)};
     const handleLastName = ({ target }) => {setLastName(target.value)};
+    const handleAvatar = ({target}) => {setAvatar(target.files[0])};
+    const handleTagline = ({target}) => {setTagline(target.value)};
     const handleEmail = ({ target }) => {setEmail(target.value)};
     const handlePassword = ({ target }) => {setPassword(target.value)};
     const handleBirthday = ({ target }) => {setBirthday(target.value)};
@@ -37,18 +41,20 @@ function SignUp() {
 
         setAPIResponse("");
 
-        let data = {};
-        data['first_name'] = first_name;
-        data['last_name'] = last_name;
-        data['email'] = email;
-        data['password'] = password;
-        data['birthday'] = birthday;
+        var formData = new FormData();
+        formData.append('first_name', first_name);
+        formData.append('last_name', last_name);
+        formData.append('email', email);
+        formData.append('tagline', tagline);
+        formData.append('password', password);
+        formData.append('birthday', birthday);
+        formData.append('avatar', avatar);
         if (confirmPassword) {
             let config = { headers: {
-                'Content-Type': 'application/json',}
+                'Content-Type': 'multipart/form-data',}
             }
             if (isValidDate(birthday)) {
-                axios.post(BACKEND_SERVER_DOMAIN + '/api/person/signup',JSON.stringify(data), config)
+                axios.post(BACKEND_SERVER_DOMAIN + '/api/person/signup',formData, config)
                 .then(function (response) {
                     dispatch(setUser(response.data));
                     history.push("/dashboard")
@@ -96,6 +102,10 @@ function SignUp() {
                 <div className="col-12">
                     <span className="text-sm text-muted">All fields are mandatory.</span>
                 </div>
+                <div className="col-12">
+                    <label className="form-label">Profile Picture:</label>
+                    <input className="d-block" type="file" name="avatar" onChange={handleAvatar}/>
+                </div>
                 <div className="col-md-6">
                     <InputField
                         label="First Name:"
@@ -112,11 +122,27 @@ function SignUp() {
                 </div>
                 <div className="col-12">
                     <InputField
+                        label="Tagline:"
+                        onChange={handleTagline}
+                        name="tagline"
+                        type="text"
+                        placeholder="I do cool stuff." />
+                </div>
+                <div className="col-md-6">
+                    <InputField
                         label="Email:"
                         onChange={handleEmail}
                         name="email"
                         type="email"
                         placeholder="you@company.com" />
+                </div>
+                <div className="col-md-6">
+                    <InputField
+                        label="Birthday:"
+                        onChange={handleBirthday}
+                        name="birthday"
+                        type="date"
+                        placeholder="YYYY-MM-DD" />
                 </div>
                 <div className="col-md-6">
                     <InputField
@@ -133,14 +159,6 @@ function SignUp() {
                             name="confirm_password"
                             type="password" />
                     </div>
-                </div>
-                <div className="col-12">
-                    <InputField
-                        label="Birthday:"
-                        onChange={handleBirthday}
-                        name="birthday"
-                        type="date"
-                        placeholder="YYYY-MM-DD" />
                 </div>
                 <div className="col-12">
                     <div className="p-2"></div>

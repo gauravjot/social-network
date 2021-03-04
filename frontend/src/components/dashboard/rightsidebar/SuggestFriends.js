@@ -51,11 +51,11 @@ export default function SuggestFriends() {
                     <div key={index}>
                         <div className="sidebar-user-window py-3 d-flex">
                             <div className="sidebar-user-window-avatar">
-                                <img src={person.avatar} className="" width="50rem" height="50rem" />
+                                <img src={BACKEND_SERVER_DOMAIN + person.avatar} className="rounded" width="50rem" height="50rem" />
                             </div>
-                            <div className="sidebar-user-window-user px-3 fw-med">
-                                <div>{person.first_name} {person.last_name}</div>
-                                <div className="text-sm">{user.tagline}</div>
+                            <div className="sidebar-user-window-user px-3">
+                                <div className="fw-med">{person.first_name} {person.last_name}</div>
+                                <div className="text-sm">{person.tagline}</div>
                                 <div className="mt-3">
                                     <button onClick={() => sendFriendRequest(person.id)}
                                         className="btn btn-sm btn-outline-primary"

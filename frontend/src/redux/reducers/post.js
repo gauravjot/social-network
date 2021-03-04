@@ -8,7 +8,7 @@ import * as actions from '../actions/actionTypes';
 // created: payload.created,
 // updated: payload.updated
 
-const postReducer = (state={posts:[]}, action) => {
+const postReducer = (state={posts:undefined}, action) => {
     const { type, payload } = action;
     switch(type){
         case actions.REMOVE_ALL_POSTS:

@@ -2,6 +2,7 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
 import logo from '../../assets/images/logo.png';
+import { BACKEND_SERVER_DOMAIN } from '../../settings'
 
 function LeftSidebar({logOut}) {
     const user = useSelector(state => state.user)
@@ -24,7 +25,7 @@ function LeftSidebar({logOut}) {
             </div>
             <div className="sidebar-user-window my-3 mb-3 d-flex">
                 <div className="sidebar-user-window-avatar">
-                    <img src={user.avatar} className="rounded-circle rounded-box-shadow" width="70rem" height="70rem" />
+                    <img src={BACKEND_SERVER_DOMAIN + user.avatar} className="rounded-circle rounded-box-shadow" width="70rem" height="70rem" />
                 </div>
                 <div className="sidebar-user-window-user px-3">
                     <div className="fs-5">{user.first_name} {user.last_name}</div>

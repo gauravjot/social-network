@@ -21,6 +21,7 @@ function Posts({token}) {
             })
             .catch(function (err) {
                 console.log(err.response.data);
+                posts = [];
             });
     }
 
