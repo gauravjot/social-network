@@ -8,6 +8,7 @@ import { BACKEND_SERVER_DOMAIN } from '../../settings'
 function Posts({token}) {
 
     let posts = useSelector(state => state.posts.posts);
+    let friends = useSelector(state => state.friends);
     const dispatch = useDispatch();
 
     const getPosts = () => {
@@ -15,7 +16,7 @@ function Posts({token}) {
             'Content-Type': 'application/json',
             Authorization: token,   
         }};
-        axios.get(BACKEND_SERVER_DOMAIN + '/api/person/posts', config)
+        axios.get(BACKEND_SERVER_DOMAIN + '/api/posts', config)
             .then(function (response) {
                 dispatch(setPosts(response.data));
             })
@@ -44,7 +45,7 @@ function Posts({token}) {
             (<section className="timeline-posts">
                 {posts.slice().reverse().map((post, index) => (
                     <div key={index}>
-                        <TimelinePost post={post}/>
+                        <TimelinePost post={post} friends={friends}/>
                     </div>
             ))}
             </section>) : (

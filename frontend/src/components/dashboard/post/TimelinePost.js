@@ -1,17 +1,35 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import { useSelector } from "react-redux";
 import { timeSince } from '../../../utils/timesince'
+import { BACKEND_SERVER_DOMAIN } from "../../../settings";
 
-const TimelinePost = ({post}) => {
+const TimelinePost = ({post, friends}) => {
+    const user = useSelector((state) => state.user);
+    const [author, setAuthor] = useState("");
+
+    useEffect(()=> {
+        if (user.id == post.person_id) {
+            setAuthor(user);
+        } else {
+            for (var i=0; i<friends.length; i++) {
+                if (friends[i].id == post.person_id) {
+                    setAuthor(friends[i])
+                    break;
+                }
+            }
+        }
+    },[])
+
     return (
         <div className="post py-4">
             <div className="post-user-window my-3 mb-3 d-flex">
                 <div>
-                    <img src="" className="rounded-circle" width="50rem" height="50rem" />
+                    <img src={BACKEND_SERVER_DOMAIN + author.avatar} className="rounded-circle" width="40rem" height="40rem" />
                 </div>
                 <div className="post-user-window-user px-3">
-                    <div className="fs-5">{post.person_id}</div>
+                    <h6>{author.first_name} {author.last_name}</h6>
                     <div className="text-sm">{timeSince(post.created)}</div>
                 </div>
                 <div>
