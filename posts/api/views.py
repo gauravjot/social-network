@@ -117,10 +117,13 @@ def likePost(request, post_key):
     if type(person_id) is Response:
         return person_id
     post = Posts.objects.get(pk=post_key)
-    if person_id in post.likes['persons']:
-        post.likes['persons'].remove(person_id)
+    if post.likes:
+        if person_id in post.likes['persons']:
+            post.likes['persons'].remove(person_id)
+        else:
+            post.likes['persons'].append(person_id)
     else:
-        post.likes['persons'].append(person_id)
+        post.likes = dict(persons=[(person_id)])
     post.save()
     return Response(json.loads('{"action":"success"}'),status=status.HTTP_200_OK)
 
