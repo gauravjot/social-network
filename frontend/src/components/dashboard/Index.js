@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Helmet } from "react-helmet";
 import { useHistory } from "react-router-dom";
-import { logoutUser, removeAllPosts } from "../../redux/actions";
+import { logoutUser, removeAllPosts, emptyFriends } from "../../redux/actions";
 
 import LeftSidebar from "./LeftSidebar";
 import RightSidebar from "./rightsidebar/RightSidebar";
@@ -23,6 +23,7 @@ function Dashboard() {
     const logOut = () => {
         dispatch(logoutUser());
         dispatch(removeAllPosts());
+        dispatch(emptyFriends());
         history.push("/login");
     };
 
