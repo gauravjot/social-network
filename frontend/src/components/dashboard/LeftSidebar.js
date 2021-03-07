@@ -1,11 +1,27 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React from "react";
-import { useSelector } from "react-redux";
+import {Link, useHistory} from 'react-router-dom';
+import { useSelector, useDispatch } from "react-redux";
 import logo from "../../assets/images/logo.png";
 import { BACKEND_SERVER_DOMAIN } from "../../settings";
+import { logoutUser, removeAllPosts, emptyFriends } from "../../redux/actions";
 
-function LeftSidebar({ logOut }) {
+function LeftSidebar() {
+    const dispatch = useDispatch();
+    const history = useHistory();
     const user = useSelector((state) => state.user);
+
+    if (Object.keys(user).length === 0) {
+        history.push("/login");
+    }
+
+    const logOut = () => {
+        dispatch(logoutUser());
+        dispatch(removeAllPosts());
+        dispatch(emptyFriends());
+        history.push("/login");
+    };
+
     return (
         <section className="leftsidebar">
             <nav className="navbar navbar-light">
@@ -46,20 +62,20 @@ function LeftSidebar({ logOut }) {
                 id="navbarToggleExternalContent"
             >
                 <div className="list-group">
-                    <button className="rounded-pill">
+                    <Link to="/dashboard" className="rounded-pill">
                         <i className="fas fa-home"></i> Home
-                    </button>
+                    </Link>
                     <button className="rounded-pill">
                         <i className="far fa-user"></i> Profile
                     </button>
                     <button className="rounded-pill">
                         <i className="far fa-bell"></i> Notifications
                     </button>
+                    <Link to="/friends" className="rounded-pill">
+                        <i class="fas fa-user-friends"></i> Friends
+                    </Link>
                     <button className="rounded-pill">
                         <i className="far fa-thumbs-up"></i> Liked Posts
-                    </button>
-                    <button className="rounded-pill">
-                        <i className="fas fa-cog"></i> Settings
                     </button>
                     <button className="rounded-pill" onClick={logOut}>
                         <i className="fas fa-sign-out-alt"></i> Logout
