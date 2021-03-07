@@ -1,0 +1,251 @@
+// Bootstrap
+$theme-colors: (
+    "primary": #325bd6,
+    "danger": #ff4136,
+    //success, info
+);
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+// Overwrites
+@function theme-color($key: "primary") {
+    @return map-get($theme-colors, $key);
+}
+
+$clr-black: #000000;
+$clr-white: #ffffff;
+$clr-text: #656565;
+
+$clr-primary: theme-color("primary");
+
+body {
+    line-height: 1.5;
+    background: $clr-white;
+    color: $clr-text;
+    font-family: sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+        "Helvetica Neue";
+}
+
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5, h6 {
+    line-height: 1.2;
+    color: $clr-black;
+    margin: 0;
+}
+
+a {
+    color:$clr-primary;
+
+    &:hover {
+        color:darken($clr-primary, 10%);
+        text-decoration: underline !important;
+    }
+}
+
+// Helper classes
+.text-sm {
+    font-size: 0.8rem;
+}
+
+.text-sml {
+    font-size: 0.9rem;
+}
+
+.fw-med {
+    font-weight: 500;
+}
+
+.form-label {
+    font-size: 0.95rem;
+}
+
+.card-effect {
+    border-radius: 1rem;
+    border: 1px rgba($clr-primary, 0) solid;
+    box-shadow: 0 0 100px 20px rgba($clr-primary, 0.1);
+}
+
+.error-bg input,
+.error-bg input:focus {
+    background-color: rgba(theme-color('danger'), 0.2);
+}
+
+// Components
+
+.intro-panel {
+    .logo {
+        width: 250px;
+    }
+
+    .img {
+        text-align: center;
+    }
+
+    h2 {
+        line-height: 3rem;
+        font-weight: 700;
+        color: $clr-text;
+        letter-spacing: 0.06rem;
+    }
+
+    .img-preview {
+        width: auto;
+        max-width: 100%;
+        height: 50vh;
+        object-fit: cover;
+    }
+}
+
+.signup {
+    .tos-text-signup {
+        background-color: rgba($clr-primary, 0.15);
+        text-align: center;
+        font-weight: 500;
+        border-radius: 0 0 1rem 1rem;
+        margin: 1rem -1px -1px -1px !important;
+    }
+
+    .card {
+        padding-top: 1rem;
+
+        & > * {
+            margin: 1rem 0 0 0;
+            padding: 0rem 1.3rem;
+        }
+    }
+}
+
+.login {
+    padding: 0 0.5rem;
+
+    & > div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin-top: -2rem;
+
+        .logo {
+            width: 250px;
+            padding: 0rem 0.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .row {
+            margin: 0;
+
+            & > div {
+                padding: 0.5rem 1rem;
+            }
+            & > div:last-child {
+                margin-top: 2rem;
+            }
+            & > div:first-child {
+                padding-top: 2rem;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    }
+}
+
+.dashboard {
+
+    & > .row > * {
+        margin: 1rem 0;
+    }
+    .leftsidebar {
+        padding: 0 0.5rem;
+        margin-bottom: 1.5rem;
+
+        & > * {
+            margin-bottom: 1rem;
+        }
+
+        .container-fluid {
+            padding: 0;
+        }
+
+        .logo {
+            width: 80%;
+            max-width: 16rem;
+        }
+
+        .d-flex {
+            gap: 1rem;
+            padding-top: 0rem;
+
+            & > div {
+                margin: 0.2rem 0;
+            }
+        }
+
+        .menu {
+            padding:0;
+
+            & > div > button {
+                border: 0px solid $clr-white;
+                padding: 1rem 1.5rem;
+                margin: 0.2rem 0.5rem 0rem 0rem;
+                font-weight: 600;
+                background: $clr-white;
+                text-align: inherit;
+
+                & > i {
+                    font-size: 1.2rem;
+                    margin-right: 1rem;
+                }
+
+                &:hover {
+                    background: rgba($clr-primary, 0.2);
+                    color: $clr-primary;
+                }
+            }
+
+            
+        }
+
+        .collapsing,
+        .show {
+            display: block !important;
+        }
+    }
+
+    .rightsidebar {
+        & > section {
+            margin-bottom:1.5rem;
+
+            & > h4 {
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        & > .friend-requests, & > .suggest-friends {
+            .d-flex {
+                gap: 1rem;
+                margin:1.5rem 0;
+    
+                & > div {
+                    margin: 0.2rem 0;
+                }
+                & > div > .text-sm {
+                    margin-bottom:0.5rem;
+                }
+                & > div > h6 {
+                    margin-bottom: 0.1rem;
+                }
+            }
+        }
+    }
+}

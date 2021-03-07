@@ -43,22 +43,20 @@ function LogIn() {
     };
 
     return (
-        <section>
+        <section className="login">
         <Helmet>
             <title>Log In to socialnetwork!</title>
         </Helmet>
-        <div id="home" className="my-5 pt-3">
-            <div className="col-lg-5 col-md-12 col-sm-12 mt-3 m-auto">
-                <img src={logo} className="home-logo mx-2"/>
-                <div className="card card-effect mx-3 mt-5">
-                    <div className="row px-5 py-3">
+        <div>
+            <div className="col-lg-5 col-md-12 col-sm-12">
+                <img src={logo} className="logo"/>
+                <div className="card card-effect">
+                    <div className="row">
                         <div className="col-12">
-                            <div className="fs-3 pt-4 pb-3 mb-3">
-                                <span>Log in</span>
-                            </div>
+                            <h3>Log in</h3>
                             {apiResponse}
                         </div>
-                        <div className="col-12 mb-2">
+                        <div className="col-12">
                             <InputField
                                 label="Email:"
                                 onChange={handleEmail}
@@ -66,7 +64,7 @@ function LogIn() {
                                 type="email"
                                 placeholder="you@company.com" />
                         </div>
-                        <div className="col-12 mb-2">
+                        <div className="col-12">
                             <InputField
                                 label="Password:"
                                 onChange={handlePassword}
@@ -74,15 +72,10 @@ function LogIn() {
                                 type="password" />
                         </div>
                         <div className="col-12">
-                            <div className="p-2"></div>
-                            <div className="d-grid gap-2">
-                                <button type="submit" ref={btnRef} onClick={handleLogIn} className="btn btn-primary text-sm fw-bold py-3">Log in!</button>
-                            </div>
+                            <button type="submit" ref={btnRef} onClick={handleLogIn} className="btn btn-primary text-sm fw-bold py-3">Log in!</button>
                         </div>
                         <div className="col-12">
-                            <div className="pt-3 pb-3 mt-5">
-                                <span>or would you like to <a href="#" className="text-decoration-none">Reset Password</a> or <a href="/" className="text-decoration-none">Sign Up</a></span>
-                            </div>
+                            <span>or would you like to <a href="#" className="text-decoration-none">Reset Password</a> or <a href="/" className="text-decoration-none">Sign Up</a></span>
                         </div>
                     </div>
                 </div>

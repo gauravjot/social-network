@@ -44,30 +44,27 @@ export default function SuggestFriends() {
             });
     }
 
-    return (
-        <section>
-            <div className="rightsidebar-title fs-4">Friend Suggestions</div>
+    return suggestions ? (
+        <section className="suggest-friends">
+            <h4>Friend Suggestions</h4>
             {suggestions.map((person, index) => (
-                    <div key={index}>
-                        <div className="sidebar-user-window py-3 d-flex">
-                            <div className="sidebar-user-window-avatar">
-                                <img src={BACKEND_SERVER_DOMAIN + person.avatar} className="rounded" width="50rem" height="50rem" />
-                            </div>
-                            <div className="sidebar-user-window-user px-3">
-                                <div className="fw-med">{person.first_name} {person.last_name}</div>
+                    <div className="d-flex" key={index}>
+                            <img src={BACKEND_SERVER_DOMAIN + person.avatar} className="rounded" width="50rem" height="50rem" />
+                            
+                            <div>
+                                <h6>{person.first_name} {person.last_name}</h6>
                                 <div className="text-sm">{person.tagline}</div>
-                                <div className="mt-3">
                                     <button onClick={() => sendFriendRequest(person.id)}
                                         className="btn btn-sm btn-outline-primary"
                                         disabled={(Object.values(clickedButtons).indexOf(person.id) !== -1)}>
                                             {(Object.values(sentRequests).indexOf(person.id) !== -1) ? 
                                                 'Request Sent' : 'Add as Friend'}
                                     </button>
-                                </div>
                             </div>
-                        </div>
                     </div>
             ))}
         </section>
+    ) : (
+        <div></div>
     )
 }
