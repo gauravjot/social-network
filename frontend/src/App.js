@@ -1,6 +1,7 @@
 import Index from './components/home/Index';
 import LogIn from './components/home/LogIn';
 import Dashboard from './components/dashboard/Index';
+import Friends from './components/dashboard/friends/Friends';
 import {
   Route,
   Redirect,
@@ -13,6 +14,7 @@ function App() {
     <Router>
       <div className="container">
         <Switch>
+          <Route path='/friends' exact component={Friends} />
           <Route path='/dashboard' exact component={Dashboard} />
           <Route path='/login' exact component={LogIn} />
           <Route path='/' exact component={Index} />

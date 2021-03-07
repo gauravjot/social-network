@@ -119,6 +119,10 @@ function SignUp() {
                     btnRef.current.removeAttribute("disabled");
                 }
             }
+        } else {
+            if (btnRef.current) {
+                btnRef.current.removeAttribute("disabled");
+            }
         }
     };
 
