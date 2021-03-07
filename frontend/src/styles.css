@@ -10655,6 +10655,11 @@ a:hover {
   background-color: rgba(255, 65, 54, 0.2);
 }
 
+.btn-light:focus {
+  -webkit-box-shadow: 0 0 0 0 #ffffff;
+          box-shadow: 0 0 0 0 #ffffff;
+}
+
 .intro-panel .logo {
   width: 250px;
 }
@@ -10821,5 +10826,54 @@ a:hover {
 
 .dashboard .rightsidebar > .friend-requests .d-flex > div > h6, .dashboard .rightsidebar > .friend-requests .d-flex > div > .h6, .dashboard .rightsidebar > .suggest-friends .d-flex > div > h6, .dashboard .rightsidebar > .suggest-friends .d-flex > div > .h6 {
   margin-bottom: 0.1rem;
+}
+
+.dashboard .timeline-posts {
+  margin: 2.5rem 0.5rem;
+}
+
+.dashboard .timeline-posts .post {
+  margin: 2.5rem 0;
+}
+
+.dashboard .timeline-posts .post .d-flex {
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.dashboard .timeline-posts .post p {
+  color: #454545;
+}
+
+.dashboard .timeline-posts .post .row {
+  margin-top: 0.3rem;
+}
+
+.dashboard .timeline-posts .post .row div > button {
+  font-size: 0.9rem;
+  padding: 0.3rem 0.65rem 0.3rem 0;
+  color: #454545;
+}
+
+.dashboard .timeline-posts .post .row div > button > i {
+  margin-right: 0.2rem;
+}
+
+.dashboard .timeline-posts .post .row div > .btn-light-accent {
+  color: #325bd6;
+}
+
+.dashboard .timeline-posts .post .row div > .btn-light-accent:hover {
+  color: #5d7ddf;
+}
+
+.dashboard .timeline-posts .post::after {
+  content: '';
+  width: 80%;
+  background: #f1f1f1;
+  height: 1px;
+  display: block;
+  margin: auto;
+  margin-top: 1.25rem;
 }
 /*# sourceMappingURL=styles.css.map */

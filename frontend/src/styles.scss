@@ -14,6 +14,7 @@ $theme-colors: (
 $clr-black: #000000;
 $clr-white: #ffffff;
 $clr-text: #656565;
+$clr-post-text: #454545;
 
 $clr-primary: theme-color("primary");
 
@@ -77,6 +78,10 @@ a {
 .error-bg input,
 .error-bg input:focus {
     background-color: rgba(theme-color('danger'), 0.2);
+}
+
+.btn-light:focus {
+    box-shadow: 0 0 0 0 #ffffff;
 }
 
 // Components
@@ -245,6 +250,55 @@ a {
                 & > div > h6 {
                     margin-bottom: 0.1rem;
                 }
+            }
+        }
+    }
+
+    .timeline-posts{
+        margin:2.5rem 0.5rem;
+        .post {
+            margin:2.5rem 0;
+
+            .d-flex {
+                margin-bottom: 1rem;
+                gap:1rem;
+            }
+
+            p {
+                color:$clr-post-text;
+            }
+
+            .row {
+                margin-top: 0.3rem;
+
+                div > button {
+                    font-size: 0.9rem;
+                    padding:0.3rem 0.65rem 0.3rem 0;
+                    color: $clr-post-text;
+
+                    & > i {
+                        margin-right: 0.2rem;
+                    }
+                }
+
+                div > .btn-light-accent{
+                    color: $clr-primary;
+                
+                    &:hover {
+                        color: lighten($clr-primary,10%);
+                    }
+                }
+            }
+
+
+            &::after {
+                content:'';
+                width:80%;
+                background: #f1f1f1;
+                height: 1px;
+                display: block;
+                margin:auto;
+                margin-top: 1.25rem;
             }
         }
     }

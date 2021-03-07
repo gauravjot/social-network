@@ -45,7 +45,7 @@ function Posts({token}) {
             (<section className="timeline-posts">
                 {posts.slice().reverse().map((post, index) => (
                     <div key={index}>
-                        <TimelinePost post={post} friends={friends}/>
+                        <TimelinePost post={post} friends={friends} token={token}/>
                     </div>
             ))}
             </section>) : (
