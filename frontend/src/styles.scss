@@ -2,6 +2,7 @@
 $theme-colors: (
     "primary": #325bd6,
     "danger": #ff4136,
+    "success": #28a745,
     //success, info
 );
 @import "../node_modules/bootstrap/scss/bootstrap";
@@ -50,6 +51,10 @@ a {
         color:darken($clr-primary, 10%);
         text-decoration: underline !important;
     }
+}
+
+.btn-outline-success:hover, .btn-outline-danger:hover {
+    color: #ffffff;
 }
 
 // Helper classes
@@ -170,62 +175,6 @@ a {
     & > .row > * {
         margin: 1rem 0;
     }
-    .leftsidebar {
-        padding: 0 0.5rem;
-        margin-bottom: 1.5rem;
-
-        & > * {
-            margin-bottom: 1rem;
-        }
-
-        .container-fluid {
-            padding: 0;
-        }
-
-        .logo {
-            width: 80%;
-            max-width: 16rem;
-        }
-
-        .d-flex {
-            gap: 1rem;
-            padding-top: 0rem;
-
-            & > div {
-                margin: 0.2rem 0;
-            }
-        }
-
-        .menu {
-            padding:0;
-
-            & > div > button {
-                border: 0px solid $clr-white;
-                padding: 1rem 1.5rem;
-                margin: 0.2rem 0.5rem 0rem 0rem;
-                font-weight: 600;
-                background: $clr-white;
-                text-align: inherit;
-
-                & > i {
-                    font-size: 1.2rem;
-                    margin-right: 1rem;
-                }
-
-                &:hover {
-                    background: rgba($clr-primary, 0.2);
-                    color: $clr-primary;
-                }
-            }
-
-            
-        }
-
-        .collapsing,
-        .show {
-            display: block !important;
-        }
-    }
 
     .rightsidebar {
         & > section {
@@ -233,23 +182,6 @@ a {
 
             & > h4 {
                 margin-bottom: 1.5rem;
-            }
-        }
-
-        & > .friend-requests, & > .suggest-friends {
-            .d-flex {
-                gap: 1rem;
-                margin:1.5rem 0;
-    
-                & > div {
-                    margin: 0.2rem 0;
-                }
-                & > div > .text-sm {
-                    margin-bottom:0.5rem;
-                }
-                & > div > h6 {
-                    margin-bottom: 0.1rem;
-                }
             }
         }
     }
@@ -262,6 +194,9 @@ a {
             .d-flex {
                 margin-bottom: 1rem;
                 gap:1rem;
+                & > img {
+                    object-fit: contain;
+                }
             }
 
             p {
@@ -303,3 +238,152 @@ a {
         }
     }
 }
+
+.leftsidebar {
+    padding: 0 0.5rem;
+    margin-bottom: 1.5rem;
+
+    & > * {
+        margin-bottom: 1rem;
+    }
+
+    .container-fluid {
+        padding: 0;
+    }
+
+    .logo {
+        width: 80%;
+        max-width: 16rem;
+    }
+
+    .d-flex {
+        gap: 1rem;
+        padding-top: 0rem;
+
+        & > img {
+            object-fit: contain;
+        }
+
+        & > div {
+            margin: 0.2rem 0;
+        }
+    }
+
+    .menu {
+        padding:0;
+
+        & > div > button, & > div > a {
+            border: 0px solid $clr-white;
+            padding: 1rem 1.5rem;
+            margin: 0.2rem 0.5rem 0rem 0rem;
+            font-weight: 600;
+            background: $clr-white;
+            text-align: inherit;
+            color:$clr-post-text;
+            text-decoration: none;
+
+            & > i {
+                font-size: 1.2rem;
+                margin-right: 1rem;
+            }
+
+            &:hover {
+                background: rgba($clr-primary, 0.2);
+                color: $clr-primary;
+                text-decoration: none !important;
+            }
+        }
+
+        
+    }
+
+    .collapsing,
+    .show {
+        display: block !important;
+    }
+}
+
+.friends {
+
+    & > .row > * {
+        margin: 1rem 0;
+    }
+
+    h4 {
+        margin-bottom: 1rem;
+    }
+
+    .friends-list .friendlistitem {
+        width:80%;
+
+        & > .avatar {
+            margin-bottom: 1rem;
+            padding: 50%;
+            position: relative;
+    
+            & > img {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                object-fit: contain;
+            }
+        
+            &::before, &::after {
+                padding:50% 0;
+            }
+        }
+
+        h6 {
+            margin-top: 0.2rem;
+        }
+
+        .text-sm {
+            margin-top: 0.1rem;
+        }
+    }
+
+    @include media-breakpoint-down(lg) { 
+        .friends-list .friendlistitem {
+            display:flex;
+            gap:1rem;
+            width:100%;
+
+            & > .avatar {
+                margin-bottom: 0rem;
+                padding: 0%;
+                position: initial;
+                & >img {
+                    width:5rem;
+                    height:5rem;
+                    position: initial;
+                }
+            }
+        }
+     }
+}
+
+.friend-requests, .suggest-friends {
+    .d-flex {
+        gap: 1rem;
+        margin:1.5rem 0;
+
+        & > img {
+            object-fit: contain;
+        }
+
+        & > div {
+            margin: 0.2rem 0;
+        }
+        & > div > .text-sm {
+            margin-bottom:0.5rem;
+        }
+        & > div > h6 {
+            margin-bottom: 0.1rem;
+        }
+    }
+}
+

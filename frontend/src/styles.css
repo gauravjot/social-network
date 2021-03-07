@@ -20,6 +20,7 @@
   --bs-gray-dark: #343a40;
   --bs-primary: #325bd6;
   --bs-danger: #ff4136;
+  --bs-success: #28a745;
   --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
@@ -3206,6 +3207,47 @@ fieldset:disabled .btn {
   border-color: #ff4136;
 }
 
+.btn-success {
+  color: #000;
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+.btn-success:hover {
+  color: #000;
+  background-color: #48b461;
+  border-color: #3eb058;
+}
+
+.btn-check:focus + .btn-success, .btn-success:focus {
+  color: #000;
+  background-color: #48b461;
+  border-color: #3eb058;
+  -webkit-box-shadow: 0 0 0 0.25rem rgba(34, 142, 59, 0.5);
+          box-shadow: 0 0 0 0.25rem rgba(34, 142, 59, 0.5);
+}
+
+.btn-check:checked + .btn-success,
+.btn-check:active + .btn-success, .btn-success:active, .btn-success.active,
+.show > .btn-success.dropdown-toggle {
+  color: #000;
+  background-color: #53b96a;
+  border-color: #3eb058;
+}
+
+.btn-check:checked + .btn-success:focus,
+.btn-check:active + .btn-success:focus, .btn-success:active:focus, .btn-success.active:focus,
+.show > .btn-success.dropdown-toggle:focus {
+  -webkit-box-shadow: 0 0 0 0.25rem rgba(34, 142, 59, 0.5);
+          box-shadow: 0 0 0 0.25rem rgba(34, 142, 59, 0.5);
+}
+
+.btn-success:disabled, .btn-success.disabled {
+  color: #000;
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
 .btn-outline-primary {
   color: #325bd6;
   border-color: #325bd6;
@@ -3271,6 +3313,40 @@ fieldset:disabled .btn {
 
 .btn-outline-danger:disabled, .btn-outline-danger.disabled {
   color: #ff4136;
+  background-color: transparent;
+}
+
+.btn-outline-success {
+  color: #28a745;
+  border-color: #28a745;
+}
+
+.btn-outline-success:hover {
+  color: #000;
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+.btn-check:focus + .btn-outline-success, .btn-outline-success:focus {
+  -webkit-box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.5);
+          box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.5);
+}
+
+.btn-check:checked + .btn-outline-success,
+.btn-check:active + .btn-outline-success, .btn-outline-success:active, .btn-outline-success.active, .btn-outline-success.dropdown-toggle.show {
+  color: #000;
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+.btn-check:checked + .btn-outline-success:focus,
+.btn-check:active + .btn-outline-success:focus, .btn-outline-success:active:focus, .btn-outline-success.active:focus, .btn-outline-success.dropdown-toggle.show:focus {
+  -webkit-box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.5);
+          box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.5);
+}
+
+.btn-outline-success:disabled, .btn-outline-success.disabled {
+  color: #28a745;
   background-color: transparent;
 }
 
@@ -4855,6 +4931,16 @@ fieldset:disabled .btn {
   color: #7a1f1a;
 }
 
+.alert-success {
+  color: #186429;
+  background-color: #d4edda;
+  border-color: #bfe5c7;
+}
+
+.alert-success .alert-link {
+  color: #135021;
+}
+
 @-webkit-keyframes progress-bar-stripes {
   0% {
     background-position-x: 1rem;
@@ -5207,6 +5293,22 @@ fieldset:disabled .btn {
   color: #fff;
   background-color: #992720;
   border-color: #992720;
+}
+
+.list-group-item-success {
+  color: #186429;
+  background-color: #d4edda;
+}
+
+.list-group-item-success.list-group-item-action:hover, .list-group-item-success.list-group-item-action:focus {
+  color: #186429;
+  background-color: #bfd5c4;
+}
+
+.list-group-item-success.list-group-item-action.active {
+  color: #fff;
+  background-color: #186429;
+  border-color: #186429;
 }
 
 .btn-close {
@@ -6262,6 +6364,14 @@ fieldset:disabled .btn {
   color: #ff675e;
 }
 
+.link-success {
+  color: #28a745;
+}
+
+.link-success:hover, .link-success:focus {
+  color: #53b96a;
+}
+
 .ratio {
   position: relative;
   width: 100%;
@@ -6641,6 +6751,10 @@ fieldset:disabled .btn {
 
 .border-danger {
   border-color: #ff4136 !important;
+}
+
+.border-success {
+  border-color: #28a745 !important;
 }
 
 .border-white {
@@ -7480,6 +7594,10 @@ fieldset:disabled .btn {
   color: #ff4136 !important;
 }
 
+.text-success {
+  color: #28a745 !important;
+}
+
 .text-white {
   color: #fff !important;
 }
@@ -7526,6 +7644,10 @@ fieldset:disabled .btn {
 
 .bg-danger {
   background-color: #ff4136 !important;
+}
+
+.bg-success {
+  background-color: #28a745 !important;
 }
 
 .bg-body {
@@ -10627,6 +10749,10 @@ a:hover {
   text-decoration: underline !important;
 }
 
+.btn-outline-success:hover, .btn-outline-danger:hover {
+  color: #ffffff;
+}
+
 .text-sm {
   font-size: 0.8rem;
 }
@@ -10748,84 +10874,12 @@ a:hover {
   margin: 1rem 0;
 }
 
-.dashboard .leftsidebar {
-  padding: 0 0.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.dashboard .leftsidebar > * {
-  margin-bottom: 1rem;
-}
-
-.dashboard .leftsidebar .container-fluid, .dashboard .leftsidebar .container-sm, .dashboard .leftsidebar .container-md, .dashboard .leftsidebar .container-lg, .dashboard .leftsidebar .container-xl, .dashboard .leftsidebar .container-xxl {
-  padding: 0;
-}
-
-.dashboard .leftsidebar .logo {
-  width: 80%;
-  max-width: 16rem;
-}
-
-.dashboard .leftsidebar .d-flex {
-  gap: 1rem;
-  padding-top: 0rem;
-}
-
-.dashboard .leftsidebar .d-flex > div {
-  margin: 0.2rem 0;
-}
-
-.dashboard .leftsidebar .menu {
-  padding: 0;
-}
-
-.dashboard .leftsidebar .menu > div > button {
-  border: 0px solid #ffffff;
-  padding: 1rem 1.5rem;
-  margin: 0.2rem 0.5rem 0rem 0rem;
-  font-weight: 600;
-  background: #ffffff;
-  text-align: inherit;
-}
-
-.dashboard .leftsidebar .menu > div > button > i {
-  font-size: 1.2rem;
-  margin-right: 1rem;
-}
-
-.dashboard .leftsidebar .menu > div > button:hover {
-  background: rgba(50, 91, 214, 0.2);
-  color: #325bd6;
-}
-
-.dashboard .leftsidebar .collapsing,
-.dashboard .leftsidebar .show {
-  display: block !important;
-}
-
 .dashboard .rightsidebar > section {
   margin-bottom: 1.5rem;
 }
 
 .dashboard .rightsidebar > section > h4, .dashboard .rightsidebar > section > .h4 {
   margin-bottom: 1.5rem;
-}
-
-.dashboard .rightsidebar > .friend-requests .d-flex, .dashboard .rightsidebar > .suggest-friends .d-flex {
-  gap: 1rem;
-  margin: 1.5rem 0;
-}
-
-.dashboard .rightsidebar > .friend-requests .d-flex > div, .dashboard .rightsidebar > .suggest-friends .d-flex > div {
-  margin: 0.2rem 0;
-}
-
-.dashboard .rightsidebar > .friend-requests .d-flex > div > .text-sm, .dashboard .rightsidebar > .suggest-friends .d-flex > div > .text-sm {
-  margin-bottom: 0.5rem;
-}
-
-.dashboard .rightsidebar > .friend-requests .d-flex > div > h6, .dashboard .rightsidebar > .friend-requests .d-flex > div > .h6, .dashboard .rightsidebar > .suggest-friends .d-flex > div > h6, .dashboard .rightsidebar > .suggest-friends .d-flex > div > .h6 {
-  margin-bottom: 0.1rem;
 }
 
 .dashboard .timeline-posts {
@@ -10839,6 +10893,11 @@ a:hover {
 .dashboard .timeline-posts .post .d-flex {
   margin-bottom: 1rem;
   gap: 1rem;
+}
+
+.dashboard .timeline-posts .post .d-flex > img {
+  -o-object-fit: contain;
+     object-fit: contain;
 }
 
 .dashboard .timeline-posts .post p {
@@ -10875,5 +10934,152 @@ a:hover {
   display: block;
   margin: auto;
   margin-top: 1.25rem;
+}
+
+.leftsidebar {
+  padding: 0 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.leftsidebar > * {
+  margin-bottom: 1rem;
+}
+
+.leftsidebar .container-fluid, .leftsidebar .container-sm, .leftsidebar .container-md, .leftsidebar .container-lg, .leftsidebar .container-xl, .leftsidebar .container-xxl {
+  padding: 0;
+}
+
+.leftsidebar .logo {
+  width: 80%;
+  max-width: 16rem;
+}
+
+.leftsidebar .d-flex {
+  gap: 1rem;
+  padding-top: 0rem;
+}
+
+.leftsidebar .d-flex > img {
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+.leftsidebar .d-flex > div {
+  margin: 0.2rem 0;
+}
+
+.leftsidebar .menu {
+  padding: 0;
+}
+
+.leftsidebar .menu > div > button, .leftsidebar .menu > div > a {
+  border: 0px solid #ffffff;
+  padding: 1rem 1.5rem;
+  margin: 0.2rem 0.5rem 0rem 0rem;
+  font-weight: 600;
+  background: #ffffff;
+  text-align: inherit;
+  color: #454545;
+  text-decoration: none;
+}
+
+.leftsidebar .menu > div > button > i, .leftsidebar .menu > div > a > i {
+  font-size: 1.2rem;
+  margin-right: 1rem;
+}
+
+.leftsidebar .menu > div > button:hover, .leftsidebar .menu > div > a:hover {
+  background: rgba(50, 91, 214, 0.2);
+  color: #325bd6;
+  text-decoration: none !important;
+}
+
+.leftsidebar .collapsing,
+.leftsidebar .show {
+  display: block !important;
+}
+
+.friends > .row > * {
+  margin: 1rem 0;
+}
+
+.friends h4, .friends .h4 {
+  margin-bottom: 1rem;
+}
+
+.friends .friends-list .friendlistitem {
+  width: 80%;
+}
+
+.friends .friends-list .friendlistitem > .avatar {
+  margin-bottom: 1rem;
+  padding: 50%;
+  position: relative;
+}
+
+.friends .friends-list .friendlistitem > .avatar > img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+.friends .friends-list .friendlistitem > .avatar::before, .friends .friends-list .friendlistitem > .avatar::after {
+  padding: 50% 0;
+}
+
+.friends .friends-list .friendlistitem h6, .friends .friends-list .friendlistitem .h6 {
+  margin-top: 0.2rem;
+}
+
+.friends .friends-list .friendlistitem .text-sm {
+  margin-top: 0.1rem;
+}
+
+@media (max-width: 991.98px) {
+  .friends .friends-list .friendlistitem {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+  }
+  .friends .friends-list .friendlistitem > .avatar {
+    margin-bottom: 0rem;
+    padding: 0%;
+    position: initial;
+  }
+  .friends .friends-list .friendlistitem > .avatar > img {
+    width: 5rem;
+    height: 5rem;
+    position: initial;
+  }
+}
+
+.friend-requests .d-flex, .suggest-friends .d-flex {
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.friend-requests .d-flex > img, .suggest-friends .d-flex > img {
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+.friend-requests .d-flex > div, .suggest-friends .d-flex > div {
+  margin: 0.2rem 0;
+}
+
+.friend-requests .d-flex > div > .text-sm, .suggest-friends .d-flex > div > .text-sm {
+  margin-bottom: 0.5rem;
+}
+
+.friend-requests .d-flex > div > h6, .friend-requests .d-flex > div > .h6, .suggest-friends .d-flex > div > h6, .suggest-friends .d-flex > div > .h6 {
+  margin-bottom: 0.1rem;
 }
 /*# sourceMappingURL=styles.css.map */
