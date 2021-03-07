@@ -16,10 +16,12 @@ const TimelinePost = ({post, friends, token}) => {
         if (user.id == post.person_id) {
             setAuthor(user);
         } else {
-            for (var i=0; i<friends.length; i++) {
-                if (friends[i].id == post.person_id) {
-                    setAuthor(friends[i])
-                    break;
+            if (friends !== null) {
+                for (var i=0; i<friends.length; i++) {
+                    if (friends[i].id == post.person_id) {
+                        setAuthor(friends[i])
+                        break;
+                    }
                 }
             }
         }
