@@ -52,8 +52,8 @@ function LogIn() {
                     )
                     .then(res => {
                         dispatch(setFriends(res.data))
+                        history.push("/dashboard");
                     })
-                history.push("/dashboard");
             })
             .catch(function (error) {
                 setAPIResponse(
