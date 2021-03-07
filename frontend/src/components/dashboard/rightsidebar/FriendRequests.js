@@ -77,7 +77,7 @@ export default function FriendRequests() {
                             onClick={() =>
                                 acceptFriendRequest(person.request_id)
                             }
-                            className="btn btn-sm btn-outline-primary"
+                            className="btn btn-sm btn-outline-success"
                             disabled={
                                 Object.values(clickedButtons).indexOf(
                                     person.request_id
@@ -99,7 +99,7 @@ export default function FriendRequests() {
                                 onClick={() =>
                                     declineFriendRequest(person.request_id)
                                 }
-                                className="btn btn-sm btn-outline-danger mx-3"
+                                className="btn btn-sm btn-outline-danger ms-3"
                             >
                                 Decline
                             </button>
