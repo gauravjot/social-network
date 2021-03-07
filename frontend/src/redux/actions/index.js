@@ -25,3 +25,16 @@ export const removeAllPosts = () => {
         type: actions.REMOVE_ALL_POSTS,
     }
 }
+
+export const setFriends = (friends) => {
+    return {
+        type: actions.SET_FRIENDS,
+        payload: friends
+    }
+}
+
+export const emptyFriends = () => {
+    return {
+        type: actions.EMPTY_FRIENDS,
+    }
+}
