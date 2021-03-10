@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { setUser, setFriends } from "../../redux/actions";
 import { useHistory } from "react-router-dom";
 import { BACKEND_SERVER_DOMAIN } from "../../settings";
+import { Link } from "react-router-dom";
 
 function LogIn() {
     const dispatch = useDispatch();
@@ -41,19 +42,21 @@ function LogIn() {
             )
             .then(function (response) {
                 dispatch(setUser(response.data));
-                let config = { headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: response.data.token,   
-                }};
+                let config = {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: response.data.token,
+                    },
+                };
                 axios
-                    .get(
-                        BACKEND_SERVER_DOMAIN + "/api/friends",
-                        config
-                    )
-                    .then(res => {
-                        dispatch(setFriends(res.data))
+                    .get(BACKEND_SERVER_DOMAIN + "/api/friends", config)
+                    .then((res) => {
+                        dispatch(setFriends(res.data));
                         history.push("/dashboard");
                     })
+                    .catch(function(error) {
+                        history.push("/dashboard");
+                    });
             })
             .catch(function (error) {
                 setAPIResponse(
@@ -72,61 +75,37 @@ function LogIn() {
             <Helmet>
                 <title>Log In to socialnetwork!</title>
             </Helmet>
-            <div>
+            <div className="container">
                 <div className="col-lg-5 col-md-12 col-sm-12">
                     <img src={logo} className="logo" />
-                    <div className="card card-effect">
-                        <div className="row">
-                            <div className="col-12">
-                                <h3>Log in</h3>
-                                {apiResponse}
-                            </div>
-                            <div className="col-12">
-                                <InputField
-                                    label="Email:"
-                                    onChange={handleEmail}
-                                    name="email"
-                                    type="email"
-                                    placeholder="you@company.com"
-                                />
-                            </div>
-                            <div className="col-12">
-                                <InputField
-                                    label="Password:"
-                                    onChange={handlePassword}
-                                    name="password"
-                                    type="password"
-                                />
-                            </div>
-                            <div className="col-12">
-                                <button
-                                    type="submit"
-                                    ref={btnRef}
-                                    onClick={handleLogIn}
-                                    className="btn btn-primary text-sm fw-bold py-3"
-                                >
-                                    Log in!
-                                </button>
-                            </div>
-                            <div className="col-12">
-                                <span>
-                                    or would you like to{" "}
-                                    <a
-                                        href="#"
-                                        className="text-decoration-none"
-                                    >
-                                        Reset Password
-                                    </a>{" "}
-                                    or{" "}
-                                    <a
-                                        href="/"
-                                        className="text-decoration-none"
-                                    >
-                                        Sign Up
-                                    </a>
-                                </span>
-                            </div>
-                        </div>
+                    <div className="card">
+                        <h3>Log in</h3>
+                        {apiResponse}
+                        <InputField
+                            label="Email:"
+                            onChange={handleEmail}
+                            name="email"
+                            type="email"
+                            placeholder="you@company.com"
+                        />
+                        <InputField
+                            label="Password:"
+                            onChange={handlePassword}
+                            name="password"
+                            type="password"
+                        />
+                        <button
+                            type="submit"
+                            ref={btnRef}
+                            onClick={handleLogIn}
+                            className="btn btn-primary"
+                        >
+                            Log in!
+                        </button>
+                        <span>
+                            or would you like to <Link to="#">Reset Password</Link>{" "}
+                            or <Link to="/">Sign Up</Link>
+                        </span>
                     </div>
                 </div>
             </div>

@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setUser } from "../../redux/actions";
+import { setUser, setFriends } from "../../redux/actions";
 import { useHistory } from "react-router-dom";
 
 import InputField from "../../utils/InputField";
@@ -82,7 +82,21 @@ function SignUp() {
                     )
                     .then(function (response) {
                         dispatch(setUser(response.data));
-                        history.push("/dashboard");
+                        let config = {
+                            headers: {
+                                "Content-Type": "application/json",
+                                Authorization: response.data.token,
+                            },
+                        };
+                        axios
+                            .get(BACKEND_SERVER_DOMAIN + "/api/friends", config)
+                            .then((res) => {
+                                dispatch(setFriends(res.data));
+                                history.push("/dashboard");
+                            })
+                            .catch(function(error) {
+                                history.push("/dashboard");
+                            });
                     })
                     .catch(function (error) {
                         let output_error;
@@ -128,20 +142,15 @@ function SignUp() {
 
     return (
         <section className="signup">
-            <div className="card card-effect">
+            <div className="card">
                 <h3>Join Us Now!</h3>
                 <div>
-                    Already a member?{" "}
-                    <Link to={"/login"} className="text-decoration-none">
-                        Sign in
-                    </Link>
+                    Already a member? <Link to={"/login"}>Sign in</Link>
+                </div>
+                <div className="text-sm text-muted">
+                    All fields are mandatory.
                 </div>
                 <div className="row g-3">
-                    <div className="col-12">
-                        <span className="text-sm text-muted">
-                            All fields are mandatory.
-                        </span>
-                    </div>
                     <div className="col-12">
                         <label className="form-label">Profile Picture:</label>
                         <input
@@ -200,6 +209,7 @@ function SignUp() {
                             onChange={handlePassword}
                             name="password"
                             type="password"
+                            placeholder="a strong password"
                         />
                     </div>
                     <div className="col-md-6">
@@ -213,30 +223,21 @@ function SignUp() {
                         </div>
                     </div>
                     <div className="col-12">
-                        <div className="p-2"></div>
-                        <div className="d-grid gap-2">
-                            <button
-                                type="submit"
-                                ref={btnRef}
-                                onClick={handleSignUp}
-                                className="btn btn-primary text-sm fw-bold py-3"
-                            >
-                                Let's Go!
-                            </button>
-                        </div>
-                        <div className="p-2"></div>
+                        <button
+                            type="submit"
+                            ref={btnRef}
+                            onClick={handleSignUp}
+                            className="btn btn-primary"
+                        >
+                            Let's Go!
+                        </button>
                         {apiResponse}
                     </div>
                 </div>
                 <div className="text-muted text-sm tos-text-signup py-3">
                     By clicking the button above, you agree to our{" "}
-                    <a href="#" className="text-decoration-none">
-                        terms of use
-                    </a>{" "}
-                    and{" "}
-                    <a href="#" className="text-decoration-none">
-                        privacy policies
-                    </a>
+                    <a href="#">terms of use</a> and{" "}
+                    <a href="#">privacy policies</a>
                 </div>
             </div>
         </section>

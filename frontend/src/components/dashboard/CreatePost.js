@@ -1,8 +1,8 @@
 import React, {useState, useRef} from 'react';
-import TextArea from '../../utils/TextArea';
 import axios from 'axios';
+import { BACKEND_SERVER_DOMAIN } from "../../settings";
 
-function CreatePost({token}) {
+function CreatePost({avatar, token}) {
     const [postText, setPostText] = useState("");
     const [apiResponse, setAPIResponse] = useState();
 
@@ -22,7 +22,7 @@ function CreatePost({token}) {
             .then(function (response) {
                 // Post has been made successfully
                 setPostText("");
-                setAPIResponse(<span className="fw-bold text-uppercase px-4 text-success text-sm pb-2">Post has been made successfully</span>);
+                setAPIResponse(<span className="fw-bold text-uppercase text-success text-sm">Post has been made successfully</span>);
                 btnRef.current.removeAttribute("disabled");
             })
             .catch(function (error) {
@@ -34,27 +34,23 @@ function CreatePost({token}) {
                     break;
                 }
                 let output_error = error_type.replace("_"," ") + ": " + error_msg;
-                setAPIResponse(<span className="fw-bold px-4 text-uppercase text-danger text-sm pb-2">{output_error}</span>);
+                setAPIResponse(<span className="fw-bold text-uppercase text-danger text-sm">{output_error}</span>);
                 if(btnRef.current){
                     btnRef.current.removeAttribute("disabled");
                 }
             });
     }
     return(
-        <section>
-            <div>
-                <TextArea
-                    placeholder="What's on your mind?"
-                    onChange={handlePostText}
-                    name="post_text"
-                    value={postText}
-                    />
+        <section className="create-post">
+            <h6>Post Something</h6>
+            <div className="d-flex">
+                <img className="rounded-circle" src={BACKEND_SERVER_DOMAIN+avatar} alt="profile-picture"/>
+                <textarea placeholder="What's on your mind?" rows="1" onChange={handlePostText} name="post_text" value={postText}></textarea>
+                <button><i className="far fa-image"></i></button>
             </div>
-            <div className="mt-3">
-                <button type="submit" ref={btnRef} onClick={handleMakePost} className="btn btn-primary fw-bold">Create Post</button>
-                {apiResponse}
+            <div className="submit-btn">
+                <button className="btn btn-primary btn-sm" type="submit" ref={btnRef} onClick={handleMakePost}>Create Post</button> {apiResponse}
             </div>
-            
         </section>
         );
 }

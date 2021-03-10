@@ -55,42 +55,40 @@ export default function SuggestFriends() {
     };
 
     return suggestions ? (
-        <div>
-            <h4>Friend Suggestions</h4>
-            <section className="suggest-friends">
-                {suggestions.map((person, index) => (
-                    <div className="d-flex" key={index}>
-                        <img
-                            src={BACKEND_SERVER_DOMAIN + person.avatar}
-                            className="rounded"
-                            width="50rem"
-                            height="50rem"
-                        />
-
-                        <div>
-                            <h6>
+        <div className="card">
+            <h6>Friend Suggestions</h6>
+            {suggestions.map((person, index) => (
+                <div className="d-flex user" key={index}>
+                    <img
+                        className="rounded-circle"
+                        src={BACKEND_SERVER_DOMAIN + person.avatar}
+                        alt="profile picture"
+                    />
+                    <div>
+                        <h6>
+                            <a href="#">
                                 {person.first_name} {person.last_name}
-                            </h6>
-                            <div className="text-sm">{person.tagline}</div>
-                            <button
-                                onClick={() => sendFriendRequest(person.id)}
-                                className="btn btn-sm btn-outline-primary"
-                                disabled={
-                                    Object.values(clickedButtons).indexOf(
-                                        person.id
-                                    ) !== -1
-                                }
-                            >
-                                {Object.values(sentRequests).indexOf(
+                            </a>
+                        </h6>
+                        <span>{person.tagline}</span>
+                        <button
+                            onClick={() => sendFriendRequest(person.id)}
+                            className="btn btn-sm btn-outline-primary"
+                            disabled={
+                                Object.values(clickedButtons).indexOf(
                                     person.id
                                 ) !== -1
-                                    ? "Request Sent"
-                                    : "Add as Friend"}
-                            </button>
-                        </div>
+                            }
+                        >
+                            {Object.values(sentRequests).indexOf(person.id) !==
+                            -1
+                                ? "Request Sent"
+                                : "Add as Friend"}
+                        </button>
                     </div>
-                ))}
-            </section>
+                </div>
+            ))}
+            <button className="card-btn">Find more Friends</button>
         </div>
     ) : (
         <div></div>

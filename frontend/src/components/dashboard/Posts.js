@@ -49,8 +49,8 @@ function Posts({token}) {
                     </div>
             ))}
             </section>) : (
-            <div>
-                Sorry, but we do not have any posts to serve yet.
+            <div className="sorry">
+                Sorry, but we could not have any posts for you yet. Add friends or post something to get started!
             </div>
         );
 }

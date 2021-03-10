@@ -1,87 +1,75 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React from "react";
-import {Link, useHistory} from 'react-router-dom';
-import { useSelector, useDispatch } from "react-redux";
-import logo from "../../assets/images/logo.png";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { BACKEND_SERVER_DOMAIN } from "../../settings";
-import { logoutUser, removeAllPosts, emptyFriends } from "../../redux/actions";
 
-function LeftSidebar() {
-    const dispatch = useDispatch();
-    const history = useHistory();
+function LeftSidebar({active=1}) {
     const user = useSelector((state) => state.user);
-
-    if (Object.keys(user).length === 0) {
-        history.push("/login");
-    }
-
-    const logOut = () => {
-        dispatch(logoutUser());
-        dispatch(removeAllPosts());
-        dispatch(emptyFriends());
-        history.push("/login");
-    };
 
     return (
         <section className="leftsidebar">
-            <nav className="navbar navbar-light">
-                <div className="container-fluid">
-                    <img src={logo} className="logo" />
-                    <div className="d-block d-lg-none">
-                        <button
-                            className="navbar-toggler"
-                            type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#navbarToggleExternalContent"
-                            aria-controls="navbarToggleExternalContent"
-                            aria-expanded="false"
-                            aria-label="Toggle navigation"
-                        >
-                            <span className="navbar-toggler-icon"></span>
-                        </button>
-                    </div>
-                </div>
-            </nav>
-            <h4>Welcome,</h4>
-            <div className="d-flex">
+            <div className="d-flex user">
                 <img
+                    className="rounded-circle"
                     src={BACKEND_SERVER_DOMAIN + user.avatar}
-                    className="rounded-circle rounded-box-shadow"
-                    width="70rem"
-                    height="70rem"
+                    alt="profile picture"
                 />
                 <div>
-                    <h5>
+                    <h6>
                         {user.first_name} {user.last_name}
-                    </h5>
-                    <div className="text-sm">{user.tagline}</div>
+                    </h6>
+                    <span>{user.tagline}</span>
                 </div>
             </div>
-            <div
-                className=" menu collapse d-none d-lg-block"
-                id="navbarToggleExternalContent"
-            >
-                <div className="list-group">
-                    <Link to="/dashboard" className="rounded-pill">
-                        <i className="fas fa-home"></i> Home
+            <div className="navigation">
+                <Link to="/dashboard" className={(active == 1) ? "active" : ""}>
+                    <i className="far fa-newspaper"></i>Feed
+                </Link>
+                <Link to="/friends" className={(active == 2) ? "active" : ""}>
+                    <i className="fas fa-user-friends"></i>Friends
+                </Link>
+                <Link to="#" className={(active == 3) ? "active" : ""}>
+                    <i className="far fa-user"></i>Profile
                     </Link>
-                    <button className="rounded-pill">
-                        <i className="far fa-user"></i> Profile
-                    </button>
-                    <button className="rounded-pill">
-                        <i className="far fa-bell"></i> Notifications
-                    </button>
-                    <Link to="/friends" className="rounded-pill">
-                        <i class="fas fa-user-friends"></i> Friends
+                <Link to="#" className={(active == 4) ? "active" : ""}>
+                    <i className="far fa-thumbs-up"></i>Liked
                     </Link>
-                    <button className="rounded-pill">
-                        <i className="far fa-thumbs-up"></i> Liked Posts
-                    </button>
-                    <button className="rounded-pill" onClick={logOut}>
-                        <i className="fas fa-sign-out-alt"></i> Logout
-                    </button>
+                <Link to="#" className={(active == 5) ? "active" : ""}>
+                    <i className="far fa-bookmark"></i>Saved
+                    </Link>
+            </div>
+            <div className="about">
+                <h6>About socialnetwork</h6>
+                <p>
+                    socialnetwork is built with Django back-end serving API
+                    responses to React.js. Know more:
+                </p>
+                <div className="techs">
+                    <a href="https://github.com/gauravjot/social-network">
+                        <i className="fab fa-github"></i>Project Github
+                    </a>
+                    <a href="https://www.djangoproject.com/">
+                        <i className="fab fa-python python"></i>Django
+                    </a>
+                    <a href="https://reactjs.org/">
+                        <i className="fab fa-react reactjs"></i>React.js
+                    </a>
+                    <a href="https://www.postgresql.org/">
+                        <i className="fas fa-database sql"></i>PostgreSQL
+                    </a>
+                </div>
+                <p>Themeing with:</p>
+                <div className="techs">
+                    <a href="https://fontawesome.com/">
+                        <i className="fab fa-font-awesome faw"></i>Font Awesome
+                    </a>
+                    <a href="https://getbootstrap.com/">
+                        <i className="fab fa-bootstrap bts"></i>Bootstrap
+                    </a>
                 </div>
             </div>
+            <div className="navbar-spacer"></div>
         </section>
     );
 }

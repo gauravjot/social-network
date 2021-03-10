@@ -1,5 +1,6 @@
 import React from 'react'
 import { BACKEND_SERVER_DOMAIN } from "../../../settings";
+import { Link } from "react-router-dom";
 
 export default function FriendListItem({friend}) {
 
@@ -9,8 +10,8 @@ export default function FriendListItem({friend}) {
                 <img src={BACKEND_SERVER_DOMAIN + friend.avatar} className="rounded" />
             </div>
             <div>
-                <h6>{friend.first_name} {friend.last_name}</h6>
-                <div className="text-sm">{friend.tagline}<br/>Born on {friend.birthday}</div>
+                <h6><Link href="#">{friend.first_name} {friend.last_name}</Link></h6>
+                <span>{friend.tagline}<br/>Born on {friend.birthday}</span>
             </div>
         </div>
     );

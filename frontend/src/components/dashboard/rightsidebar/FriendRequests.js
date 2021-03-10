@@ -57,57 +57,59 @@ export default function FriendRequests() {
     const declineFriendRequest = (id) => {};
 
     return friendRequests ? (
-        <section className="friend-requests">
-            <h4>Friend Requests</h4>
+        <div className="card">
+            <h6>Friend Requests</h6>
             {friendRequests.map((person, index) => (
-                <div key={index} className="d-flex">
+                <div key={index} className="d-flex user">
+                    <img
+                        className="rounded-circle"
+                        src={BACKEND_SERVER_DOMAIN + person.avatar}
+                        alt="profile picture"
+                    />
+                    <div>
+                        <h6>
+                            <a href="#">
+                                {person.first_name} {person.last_name}
+                            </a>
+                        </h6>
+                        <span>{person.tagline}</span>
+                        <div className="d-flex">
+                            <button
+                                onClick={() =>
+                                    acceptFriendRequest(person.request_id)
+                                }
+                                disabled={
+                                    Object.values(clickedButtons).indexOf(
+                                        person.request_id
+                                    ) !== -1
+                                }
+                                className="btn btn-sm btn-outline-primary"
+                            >
+                                {Object.values(acceptedRequests).indexOf(
+                                    person.request_id
+                                ) !== -1
+                                    ? "Accepted"
+                                    : "Accept"}
+                            </button>
+                            <button
+                                onClick={() =>
+                                    declineFriendRequest(person.request_id)
+                                }
+                                className="btn btn-sm btn-outline-danger"
+                            >
+                                Decline
+                            </button>
+                        </div>
+                    </div>
                     <img
                         src={BACKEND_SERVER_DOMAIN + person.avatar}
                         className="rounded"
                         width="50rem"
                         height="50rem"
                     />
-
-                    <div>
-                        <h6>
-                            {person.first_name} {person.last_name}
-                        </h6>
-                        <div className="text-sm">{person.tagline}</div>
-                        <button
-                            onClick={() =>
-                                acceptFriendRequest(person.request_id)
-                            }
-                            className="btn btn-sm btn-outline-success"
-                            disabled={
-                                Object.values(clickedButtons).indexOf(
-                                    person.request_id
-                                ) !== -1
-                            }
-                        >
-                            {Object.values(acceptedRequests).indexOf(
-                                person.request_id
-                            ) !== -1
-                                ? "Accepted"
-                                : "Accept"}
-                        </button>
-                        {Object.values(acceptedRequests).indexOf(
-                            person.request_id
-                        ) !== -1 ? (
-                            ""
-                        ) : (
-                            <button
-                                onClick={() =>
-                                    declineFriendRequest(person.request_id)
-                                }
-                                className="btn btn-sm btn-outline-danger ms-3"
-                            >
-                                Decline
-                            </button>
-                        )}
-                    </div>
                 </div>
             ))}
-        </section>
+        </div>
     ) : (
         <div></div>
     );

@@ -12,15 +12,13 @@ import {
 function App() {
   return (
     <Router>
-      <div className="container">
-        <Switch>
-          <Route path='/friends' exact component={Friends} />
-          <Route path='/dashboard' exact component={Dashboard} />
-          <Route path='/login' exact component={LogIn} />
-          <Route path='/' exact component={Index} />
-          <Redirect from='*' to='/' />
-        </Switch>
-      </div>
+      <Switch>
+        <Route path='/friends' exact component={Friends} />
+        <Route path='/dashboard' exact component={Dashboard} />
+        <Route path='/login' exact component={LogIn} />
+        <Route path='/' exact component={Index} />
+        <Redirect from='*' to='/' />
+      </Switch>
     </Router>
   );
 }

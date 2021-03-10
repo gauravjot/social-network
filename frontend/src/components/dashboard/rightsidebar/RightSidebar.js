@@ -1,5 +1,4 @@
 import React from 'react';
-import {useSelector} from 'react-redux';
 import SuggestFriends from './SuggestFriends';
 import FriendRequests from './FriendRequests';
 
