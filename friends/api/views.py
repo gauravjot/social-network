@@ -33,7 +33,7 @@ def getFriends(request):
             persons = Person.objects.filter(id__in=friends)
             persons_dict = [PersonSerializer(person).data for person in persons]
             return Response(data=persons_dict, status=status.HTTP_200_OK)
-        return Response(data=errorResponse("No friends found!"),status=status.HTTP_200_OK)
+        return Response(data=errorResponse("No friends found!"),status=status.HTTP_404_NOT_FOUND)
     except Friend.DoesNotExist:
         return Response(data=errorResponse("No friends found!"),status=status.HTTP_404_NOT_FOUND)
 
