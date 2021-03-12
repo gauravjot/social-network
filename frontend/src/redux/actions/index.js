@@ -20,6 +20,13 @@ export const setPosts = (posts) => {
     }
 }
 
+export const addPost = (post) => {
+    return {
+        type: actions.ADD_POST,
+        payload: post
+    }
+}
+
 export const removeAllPosts = () => {
     return {
         type: actions.REMOVE_ALL_POSTS,
