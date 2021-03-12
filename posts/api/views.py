@@ -77,10 +77,11 @@ def newPost(request):
     # If person_id type is Response that means we have errored
     if type(person_id) is Response:
         return person_id
-    postsSerializer = PostsSerializer(data={**request.data,**{'person_id':person_id,'created':datetime.now().timestamp(),'updated':datetime.now().timestamp()}})
+    req_data = {'post_text':request.data['post_text'],'post_image':request.data['post_image']}
+    postsSerializer = PostsSerializer(data={**req_data,**{'person_id':person_id,'created':datetime.now().timestamp(),'updated':datetime.now().timestamp()}})
     if (postsSerializer.is_valid()):
         postsSerializer.save()
-        return Response(data=postsSerializer.validated_data, status=status.HTTP_201_CREATED)
+        return Response(data=postsSerializer.data, status=status.HTTP_201_CREATED)
     return Response(postsSerializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 # For operations on one singular post, Auth: REQUIRED
