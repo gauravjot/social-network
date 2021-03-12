@@ -1,34 +1,30 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useRef, useEffect } from "react";
-import { useSelector } from "react-redux";
 import { timeSince } from "../../../utils/timesince";
 import { BACKEND_SERVER_DOMAIN } from "../../../settings";
 import axios from "axios";
 
-const TimelinePost = ({ post, friends, token }) => {
-    const user = useSelector((state) => state.user);
+const TimelinePost = ({ user, post, friends, token, liked }) => {
     const [author, setAuthor] = useState("");
-    const [isLiked, setIsLiked] = useState(false);
+    const [isLiked, setIsLiked] = useState(liked);
     let btnRef = useRef();
 
     useEffect(() => {
-        if (user.id == post.person_id) {
+        if (Number(user.id) === Number(post.person_id)) {
             setAuthor(user);
         } else {
             if (friends !== null) {
                 for (var i = 0; i < friends.length; i++) {
-                    if (friends[i].id == post.person_id) {
+                    if (Number(friends[i].id) === Number(post.person_id)) {
                         setAuthor(friends[i]);
                         break;
                     }
                 }
             }
         }
-        if (post.likes.persons != undefined) {
-            setIsLiked(post.likes.persons.includes(user.id));
-        }
-    }, []);
+        setIsLiked(liked);
+    }, [post.person_id,liked]);
 
     const likePost = () => {
         if (btnRef.current) {
@@ -73,7 +69,7 @@ const TimelinePost = ({ post, friends, token }) => {
             </div>
             <p>{post.post_text}</p>
             {post.post_image ? (
-                <img src={post.post_image} className="rounded post-picture" />
+                <img src={BACKEND_SERVER_DOMAIN +post.post_image} className="rounded post-picture" />
             ) : (
                 ""
             )}
@@ -93,7 +89,7 @@ const TimelinePost = ({ post, friends, token }) => {
                     <i className="far fa-thumbs-up"></i>
                     {post.likes.persons != null ? (
                         <tag>
-                            {post.likes.persons.length} Like
+                            {post.likes.persons.length > 0 ? post.likes.persons.length+" " : ''}Like
                             {post.likes.persons.length > 1 ? "s" : ""}
                         </tag>
                     ) : (

@@ -7,8 +7,9 @@ import { BACKEND_SERVER_DOMAIN } from '../../settings'
 
 function Posts({token}) {
 
-    let posts = useSelector(state => state.posts.posts);
-    let friends = useSelector(state => state.friends);
+    const user = useSelector((state) => state.user);
+    const posts = useSelector(state => state.posts.posts);
+    const friends = useSelector(state => state.friends);
     const dispatch = useDispatch();
 
     const getPosts = () => {
@@ -21,31 +22,32 @@ function Posts({token}) {
                 dispatch(setPosts(response.data));
             })
             .catch(function (err) {
-                console.log(err.response.data);
-                posts = [];
+                console.log(err);
+                dispatch(setPosts([]));
             });
     }
 
     useEffect(() => {
-        if (posts === undefined) {
-            // posts does not exist in app state
-            getPosts();
-        } else if (typeof(posts) == "object") {
-            // posts exist in app state
-            if (Object.values(posts).length <= 0) {
-                // if posts is empty
-                getPosts();
-            }
-        }
-        // if post exists in state and not empty then we just use
-        // state data rather than making network request
+        getPosts();
+        // if (posts === undefined) {
+        //     // posts does not exist in app state
+        //     getPosts();
+        // } else if (typeof(posts) == "object") {
+        //     // posts exist in app state
+        //     if (Object.values(posts).length <= 0) {
+        //         // if posts is empty
+        //         getPosts();
+        //     }
+        // }
+        // // if post exists in state and not empty then we just use
+        // // state data rather than making network request
     },[])
 
-    return (posts !== undefined) ? 
+    return (posts && posts.length > 0) ? 
             (<section className="timeline-posts">
                 {posts.slice().reverse().map((post, index) => (
-                    <div key={index}>
-                        <TimelinePost post={post} friends={friends} token={token}/>
+                    <div key={post.id}>
+                        <TimelinePost user={user} post={post} friends={friends} token={token} liked={post.likes.persons && post.likes.persons.includes(user.id)}/>
                     </div>
             ))}
             </section>) : (

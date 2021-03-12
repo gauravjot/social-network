@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
 
 import LeftSidebar from "./LeftSidebar";
@@ -8,11 +8,17 @@ import Navbar from "./Navbar";
 import CreatePost from "./CreatePost";
 import Posts from "./Posts";
 import { useHistory } from "react-router-dom";
+import { addPost } from "../../redux/actions"
 
 function Dashboard() {
     const user = useSelector((state) => state.user);
+    const dispatch = useDispatch();
 
     const token = user.token;
+
+    const newPost = (post) => {
+        dispatch(addPost(post));
+    }
 
     return (
         <section className="dashboard">
@@ -27,7 +33,7 @@ function Dashboard() {
                         <LeftSidebar active={1}/>
                     </div>
                     <div className="col-lg-6 col-12 timeline">
-                        <CreatePost token={token} avatar={user.avatar} />
+                        <CreatePost token={token} avatar={user.avatar} newPost={newPost} />
                         <Posts token={token} />
                     </div>
                     <div className="col-lg-3 col-12">

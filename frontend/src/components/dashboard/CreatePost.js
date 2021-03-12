@@ -2,39 +2,61 @@ import React, {useState, useRef} from 'react';
 import axios from 'axios';
 import { BACKEND_SERVER_DOMAIN } from "../../settings";
 
-function CreatePost({avatar, token}) {
+function CreatePost({avatar, token, newPost}) {
     const [postText, setPostText] = useState("");
+    const [postImage, setPostImage] = useState(null);
     const [apiResponse, setAPIResponse] = useState();
 
     let btnRef = useRef();
-    const handlePostText = ({ target }) => {setPostText(target.value)};
-    const handleMakePost = () => {
+    let postPictureBtnRef = useRef();
+    let showBtn = useRef();
+    let textAreaRef = useRef();
+    const handlePostText = ({ target }) => {
+        setPostText(target.value)
+        textAreaRef.current.style.height = 'auto'
+        textAreaRef.current.style.height = (textAreaRef.current.scrollHeight+2)+'px'
+        if (target.value) {
+            btnRef.current.removeAttribute("disabled");
+            showBtn.current.classList.add("show-btn");
+        } else {
+            btnRef.current.setAttribute("disabled", "disabled");
+            if (!postImage) {
+                showBtn.current.classList.remove("show-btn");
+            }
+        }
+    };
+    const handlePostPicture = ({target}) => {
+        if (target.value) {
+            setPostImage(target.files[0]);
+            setAPIResponse(<span>+&nbsp; {target.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1]}</span>);
+            showBtn.current.classList.add("show-btn");
+        }
+    }
+    const clickPostPicture = () => {
+        postPictureBtnRef.current.click();
+    }
+    const clickMakePost = () => {
         if(btnRef.current){
             btnRef.current.setAttribute("disabled", "disabled");
         }
-        let data = {};
-        data['post_text'] = postText;
+        let formData = new FormData();
+        formData.append("post_text", postText);
+        formData.append("post_image", postImage);
         let config = { headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'multipart/form-data',
             Authorization: token,   
         }}
-        axios.post('http://localhost:8000/api/post/new',JSON.stringify(data), config)
+        axios.post('http://localhost:8000/api/post/new',formData, config)
             .then(function (response) {
                 // Post has been made successfully
                 setPostText("");
-                setAPIResponse(<span className="fw-bold text-uppercase text-success text-sm">Post has been made successfully</span>);
-                btnRef.current.removeAttribute("disabled");
-            })
+                setPostImage(null);
+                newPost(response.data);
+                setAPIResponse("");
+                showBtn.current.classList.remove("show-btn");
+                })
             .catch(function (error) {
-                let error_data = error.response.data;
-                let error_type, error_msg;
-                for (var k in error_data) {
-                    error_type = k;
-                    error_msg = error_data[k];
-                    break;
-                }
-                let output_error = error_type.replace("_"," ") + ": " + error_msg;
-                setAPIResponse(<span className="fw-bold text-uppercase text-danger text-sm">{output_error}</span>);
+                setAPIResponse(<span className="fw-bold text-uppercase text-danger text-sm">{error}</span>);
                 if(btnRef.current){
                     btnRef.current.removeAttribute("disabled");
                 }
@@ -45,12 +67,13 @@ function CreatePost({avatar, token}) {
             <h6>Post Something</h6>
             <div className="d-flex">
                 <img className="rounded-circle" src={BACKEND_SERVER_DOMAIN+avatar} alt="profile-picture"/>
-                <textarea placeholder="What's on your mind?" rows="1" onChange={handlePostText} name="post_text" value={postText}></textarea>
-                <button><i className="far fa-image"></i></button>
+                <textarea ref={textAreaRef} placeholder="What's on your mind?" rows="1" onChange={handlePostText} name="post_text" value={postText}></textarea>
+                <button onClick={clickPostPicture}><i className="far fa-image"></i></button>
             </div>
-            <div className="submit-btn">
-                <button className="btn btn-primary btn-sm" type="submit" ref={btnRef} onClick={handleMakePost}>Create Post</button> {apiResponse}
+            <div className="submit-btn" ref={showBtn}>
+                <button className="btn btn-primary btn-sm" type="submit" ref={btnRef} onClick={clickMakePost}>Create Post</button> {apiResponse}
             </div>
+            <input type="file" accept="image/*" name="post_image" onChange={handlePostPicture} ref={postPictureBtnRef} className="d-none" />
         </section>
         );
 }
