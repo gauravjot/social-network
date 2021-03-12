@@ -13,7 +13,7 @@ from friends.models import Friend
 from account.models import Person
 
 import json
-from datetime import datetime
+from datetime import datetime, time
 from helpers.error_messages import UNAUTHORIZED, INVALID_TOKEN
 from helpers.api_error_response import errorResponse
 
@@ -82,7 +82,8 @@ def newPost(request):
         req_data = {'post_text':request.data['post_text'],'post_image':request.data['post_image']}
     else:
         req_data = {'post_text':request.data['post_text']}
-    postsSerializer = PostsSerializer(data={**req_data,**{'person_id':person_id,'created':datetime.now().timestamp(),'updated':datetime.now().timestamp()}})
+    time_stamp = datetime.now().timestamp()
+    postsSerializer = PostsSerializer(data={**req_data,**{'person_id':person_id,'created':time_stamp,'updated':time_stamp}})
     if (postsSerializer.is_valid()):
         postsSerializer.save()
         return Response(data=postsSerializer.data, status=status.HTTP_201_CREATED)
