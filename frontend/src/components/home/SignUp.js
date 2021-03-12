@@ -82,21 +82,8 @@ function SignUp() {
                     )
                     .then(function (response) {
                         dispatch(setUser(response.data));
-                        let config = {
-                            headers: {
-                                "Content-Type": "application/json",
-                                Authorization: response.data.token,
-                            },
-                        };
-                        axios
-                            .get(BACKEND_SERVER_DOMAIN + "/api/friends", config)
-                            .then((res) => {
-                                dispatch(setFriends(res.data));
-                                history.push("/dashboard");
-                            })
-                            .catch(function(error) {
-                                history.push("/dashboard");
-                            });
+                        dispatch(setFriends({}));
+                        history.push("/dashboard");
                     })
                     .catch(function (error) {
                         let output_error;
