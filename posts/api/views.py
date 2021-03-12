@@ -77,7 +77,11 @@ def newPost(request):
     # If person_id type is Response that means we have errored
     if type(person_id) is Response:
         return person_id
-    req_data = {'post_text':request.data['post_text'],'post_image':request.data['post_image']}
+    if request.data['post_image'] != "null":
+        print(request.data['post_image'])
+        req_data = {'post_text':request.data['post_text'],'post_image':request.data['post_image']}
+    else:
+        req_data = {'post_text':request.data['post_text']}
     postsSerializer = PostsSerializer(data={**req_data,**{'person_id':person_id,'created':datetime.now().timestamp(),'updated':datetime.now().timestamp()}})
     if (postsSerializer.is_valid()):
         postsSerializer.save()
