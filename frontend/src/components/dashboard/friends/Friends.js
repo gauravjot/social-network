@@ -23,20 +23,17 @@ export default function Friends() {
                     <div className="col-lg-3 col-12">
                         <LeftSidebar active={2}/>
                     </div>
-                    <div className="col-lg-9 col-12 timeline rightsidebar">
-                        <FriendRequests />
-                        <SuggestFriends />
+                    <div className="col-lg-6 col-12 timeline">
                         <div class="card">
                         <h6>Friends</h6>
                             {(friends) ? (
-                                <div className="friends-list row g-3">
+                                <div className="friends-list">
                                     {friends
                                         .slice()
                                         .reverse()
                                         .map((friend, index) => (
                                             <div
                                                 key={index}
-                                                className="col-lg-3 col-md-6 col-12"
                                             >
                                                 <FriendListItem friend={friend} />
                                             </div>
@@ -48,6 +45,10 @@ export default function Friends() {
                                 </div>
                             )}
                         </div>
+                    </div>
+                    <div className="col-lg-3 col-12 rightsidebar">
+                        <FriendRequests />
+                        <SuggestFriends />
                     </div>
                 </div>
             </div>

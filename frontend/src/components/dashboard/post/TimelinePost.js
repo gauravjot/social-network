@@ -108,7 +108,7 @@ const TimelinePost = ({ post, friends, token }) => {
                 <div className="d-flex user">
                     <img
                         className="rounded-circle"
-                        src="https://droidheat.com/cv/profile-picture.jpg"
+                        src={BACKEND_SERVER_DOMAIN+user.avatar}
                         alt="profile picture"
                     />
                     <input type="text" placeholder="Write your comment..." />

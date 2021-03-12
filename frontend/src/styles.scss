@@ -26,7 +26,7 @@ $theme-colors: (
 
 $clr-accent: #0075ff;
 $clr-white: #131314;
-$clr-text: #eaeaea;
+$clr-text: #dcdcdc;
 $clr-black: #ffffff;
 $clr-light-accent: darken(#fafafb,85%);
 $clr-grey: #8a8a94;
@@ -72,22 +72,11 @@ h4,
 h5,
 h6 {
     font-family: 'Poppins', sans-serif;
-    color:$clr-black;
-}
-
-span,
-p {
-    font-size: 1rem;
 }
 
 a {
     color: $clr-accent;
     text-decoration: none;
-
-    &:hover {
-        text-decoration: underline;
-        color: $clr-accent;
-    }
 }
 
 button:focus, input:focus {
@@ -96,6 +85,14 @@ button:focus, input:focus {
 
 img {
     background-color:$clr-light-accent;
+}
+
+.btn-light-accent {
+    color:$clr-accent !important;
+
+    i {
+    color:$clr-accent !important;
+    }
 }
 
 .row {
@@ -113,7 +110,7 @@ img {
     background-color: $clr-white;
     padding: 1rem;
     border-radius: 1rem;
-    margin:1rem 0;
+    margin:1rem 0 1.5rem 0;
     border:none;
     box-shadow:0 0 5px 1px rgba($clr-grey, 0.05);
 }
@@ -312,6 +309,7 @@ img {
 
                 & > img {
                     max-height:1.6rem;
+                    background-color: transparent;
                 }
             }
 
@@ -349,6 +347,7 @@ img {
                 input {
                     border: 0px;
                     background: transparent;
+                    color: $clr-black;
                     padding: 0 0.6rem;
                     width: 100%;
                     transition: background-color ease-out 250ms;
@@ -634,14 +633,14 @@ img {
 
 .timeline {
     background-color: $clr-light-accent;
-    padding:1rem;
+    padding:0 1rem;
     min-height:100vh;
 
     & > .create-post {
         background-color:$clr-white;
         border-radius:1rem;
         padding:1rem 1rem 0 1rem;
-        margin-bottom: 1.5rem;
+        margin: 1rem 0 1.5rem 0;
 
         & > h6 {
             margin-bottom: 1rem;
@@ -856,6 +855,7 @@ img {
                     border:none;
                     width:100%;
                     font-size: 0.9rem;
+                    color: $clr-text;
                     background:transparent;
                     border-radius: 0.5rem;
                     padding: 0 0.75rem;
@@ -904,7 +904,7 @@ img {
         border-radius: 0.5rem;
         padding:0.5rem;
         gap: 0.75rem;
-        margin:0 -0.5rem;
+        margin:0.25rem -0.5rem;
 
         img {
             min-width: 2.5rem;
@@ -917,19 +917,23 @@ img {
         div {
             vertical-align: middle;
 
-            span,
-            h6 {
+            span {
                 text-overflow: ellipsis;
                 overflow: hidden;
                 white-space: nowrap;
                 display: block;
+                max-width: 20ch;
+                font-size: 0.8rem;
+                color: $clr-grey;
+                margin-top: 0.125rem;
+                line-height: 1rem;
             }
             h6 {
                 font-size: 0.9rem;
                 font-weight: 600;
                 letter-spacing: 0.03rem;
+                line-height: 1.6rem;
                 color: $clr-black;
-                margin-top: 0.25rem;
 
                 a {
                     color:$clr-black;
@@ -937,12 +941,6 @@ img {
                         text-decoration: underline;
                     }
                 }
-            }
-            span {
-                font-size: 0.8rem;
-                color: $clr-grey;
-                margin-top: 0.25rem;
-                line-height: 1rem;
             }
 
             button {
@@ -959,34 +957,33 @@ img {
 
 }
 
-.friendlistitem {
-    width:80%;
-
-    & > .avatar {
+.friends .timeline .card {
+    & > h6 {
+        font-size: 0.9rem;
+        font-weight: 600;
+        letter-spacing: 0.03rem;
+        line-height: 1.6rem;
+        color: $clr-black;
         margin-bottom: 1rem;
-        padding: 50%;
-        position: relative;
+    }
+}
 
-        & > img {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            object-fit: contain;
-        }
-    
-        &::before, &::after {
-            padding:50% 0;
-        }
+.friendlistitem {
+
+    margin:1rem 0;
+    gap:1rem;
+
+    img {
+        width: 5rem;
+        height: 5rem;
+        object-fit: cover;
     }
 
     h6 {
         font-size:0.9rem;
         font-weight:600;
         letter-spacing: 0.03rem;
+        line-height: 1.6rem;
         a {
             color:$clr-black;
             &:hover {
@@ -997,7 +994,7 @@ img {
 
     span {
         font-size: 0.8rem;
-        line-height: 1.1rem;
+        line-height: 1.2rem;
         display:block;
         margin-top:0.25rem;
         white-space: nowrap;

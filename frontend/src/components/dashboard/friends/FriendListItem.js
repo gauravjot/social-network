@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export default function FriendListItem({friend}) {
 
     return (
-        <div className="friendlistitem">
+        <div className="friendlistitem d-flex">
             <div className="avatar">
                 <img src={BACKEND_SERVER_DOMAIN + friend.avatar} className="rounded" />
             </div>

@@ -101,12 +101,6 @@ export default function FriendRequests() {
                             </button>
                         </div>
                     </div>
-                    <img
-                        src={BACKEND_SERVER_DOMAIN + person.avatar}
-                        className="rounded"
-                        width="50rem"
-                        height="50rem"
-                    />
                 </div>
             ))}
         </div>
