@@ -15,8 +15,8 @@ class Person(models.Model):
     birthday = models.CharField(max_length=10)
     tagline = models.CharField(max_length=200, default="")
     slug = models.CharField(max_length=100, unique=True)
-    created = models.FloatField(default=datetime.datetime.utcnow().timestamp())
-    updated = models.FloatField(default=datetime.datetime.utcnow().timestamp())
+    created = models.FloatField(default=datetime.datetime.now().timestamp())
+    updated = models.FloatField(default=datetime.datetime.now().timestamp())
 
     def __str__(self):
         return "id:"+str(self.pk) + ", " + self.first_name + " " + self.last_name+ ", " + self.email
