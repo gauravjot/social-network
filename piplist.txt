@@ -1,12 +1,8 @@
-$ python3 -m pip list
-Package                 Version             
------------------------ --------------------             
-bcrypt                  3.2.0                        
-Django                  3.1.7               
-django-cors-headers     3.7.0               
-djangorestframework     3.12.2                       
-Pillow                  7.0.0               
-pip                     20.0.2            
-psycopg2-binary         2.8.6                
-python-decouple         3.4                 
-pytz                    2021.1
+bcrypt==3.2.0                        
+Django==3.1.7               
+django-cors-headers==3.7.0               
+djangorestframework==3.12.2                       
+Pillow==7.0.0          
+psycopg2-binary==2.8.6                
+python-decouple==3.4                 
+pytz==2021.1
