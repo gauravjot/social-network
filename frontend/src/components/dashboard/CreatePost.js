@@ -68,7 +68,7 @@ function CreatePost({avatar, token, newPost}) {
             <div className="d-flex">
                 <img className="rounded-circle" src={BACKEND_SERVER_DOMAIN+avatar} alt="profile-picture"/>
                 <textarea ref={textAreaRef} placeholder="What's on your mind?" rows="1" onChange={handlePostText} name="post_text" value={postText}></textarea>
-                <button onClick={clickPostPicture}><i className="far fa-image"></i></button>
+                <button onClick={clickPostPicture}><i class="far fa-file-image"></i></button>
             </div>
             <div className="submit-btn" ref={showBtn}>
                 <button className="btn btn-primary btn-sm" type="submit" ref={btnRef} onClick={clickMakePost}>Create Post</button> {apiResponse}

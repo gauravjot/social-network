@@ -19,9 +19,13 @@ function SignUp() {
     const [email, setEmail] = useState("");
     const [birthday, setBirthday] = useState("");
     const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState(true);
-    const [apiResponse, setAPIResponse] = useState();
     const [tagline, setTagline] = useState("");
+
+    const [confirmPassword, setConfirmPassword] = useState(undefined);
+    const [apiResponse, setAPIResponse] = useState();
+
+    let realProfilePictureBtnRef = useRef();
+    let fakeProfilePictureBtnRef = useRef();
 
     const handleFirstName = ({ target }) => {
         setFirstName(target.value);
@@ -30,7 +34,10 @@ function SignUp() {
         setLastName(target.value);
     };
     const handleAvatar = ({ target }) => {
-        setAvatar(target.files[0]);
+        if (target.value) {
+            fakeProfilePictureBtnRef.current.textContent = target.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
+            setAvatar(target.files[0]);
+        }
     };
     const handleTagline = ({ target }) => {
         setTagline(target.value);
@@ -51,8 +58,36 @@ function SignUp() {
             setConfirmPassword(false);
         }
     };
+
+    const clickChoosePicture = () => {
+        realProfilePictureBtnRef.current.click();
+    }
+
+
     let btnRef = useRef();
     const handleSignUp = () => {
+
+        if (!first_name || !last_name || !email || !tagline || !password || !birthday || !avatar) {
+            setAPIResponse(
+                <div class="fw-bold text-uppercase text-danger text-sm">
+                    Oops! Fields may not be blank.
+                </div>
+            );
+            return;
+        }
+
+        if (!confirmPassword) {
+            if (btnRef.current) {
+                btnRef.current.removeAttribute("disabled");
+            }
+            setAPIResponse(
+                <div class="fw-bold text-uppercase text-danger text-sm">
+                    Oops! Passwords do not match.
+                </div>
+            );
+            return;
+        }
+
         if (btnRef.current) {
             btnRef.current.setAttribute("disabled", "disabled");
         }
@@ -67,60 +102,55 @@ function SignUp() {
         formData.append("password", password);
         formData.append("birthday", birthday);
         formData.append("avatar", avatar);
-        if (confirmPassword) {
-            let config = {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            };
-            if (isValidDate(birthday)) {
-                axios
-                    .post(
-                        BACKEND_SERVER_DOMAIN + "/api/person/signup",
-                        formData,
-                        config
-                    )
-                    .then(function (response) {
-                        dispatch(setUser(response.data));
-                        dispatch(setFriends({}));
-                        history.push("/dashboard");
-                    })
-                    .catch(function (error) {
-                        let output_error;
-                        try {
-                            let error_data = error.response.data;
-                            let error_type, error_msg;
-                            for (var k in error_data) {
-                                error_type = k;
-                                error_msg = error_data[k];
-                                break;
-                            }
-                            output_error =
-                                error_type.replace("_", " ") + ": " + error_msg;
-                        } catch (error) {
-                            output_error =
-                                "error: sorry ,we are unable to serve your request.";
+        
+        let config = {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        };
+        if (isValidDate(birthday)) {
+            axios
+                .post(
+                    BACKEND_SERVER_DOMAIN + "/api/person/signup",
+                    formData,
+                    config
+                )
+                .then(function (response) {
+                    dispatch(setUser(response.data));
+                    dispatch(setFriends({}));
+                    history.push("/dashboard");
+                })
+                .catch(function (error) {
+                    let output_error;
+                    try {
+                        let error_data = error.response.data;
+                        let error_type, error_msg;
+                        for (var k in error_data) {
+                            error_type = k;
+                            error_msg = error_data[k];
+                            break;
                         }
-                        if (btnRef.current) {
-                            btnRef.current.removeAttribute("disabled");
-                        }
-                        setAPIResponse(
-                            <div class="fw-bold text-uppercase text-danger text-sm">
-                                {output_error}
-                            </div>
-                        );
-                    });
-            } else {
-                setAPIResponse(
-                    <div class="fw-bold text-uppercase text-danger text-sm">
-                        error: Too young, has to be over age 13 :(
-                    </div>
-                );
-                if (btnRef.current) {
-                    btnRef.current.removeAttribute("disabled");
-                }
-            }
+                        output_error =
+                            error_type.replace("_", " ") + ": " + error_msg;
+                    } catch (error) {
+                        output_error =
+                            "error: sorry ,we are unable to serve your request.";
+                    }
+                    if (btnRef.current) {
+                        btnRef.current.removeAttribute("disabled");
+                    }
+                    setAPIResponse(
+                        <div class="fw-bold text-uppercase text-danger text-sm">
+                            {output_error}
+                        </div>
+                    );
+                });
         } else {
+            setAPIResponse(
+                <div class="fw-bold text-uppercase text-danger text-sm">
+                    error: Too young, has to be over age 13 :(
+                </div>
+            );
             if (btnRef.current) {
                 btnRef.current.removeAttribute("disabled");
             }
@@ -138,18 +168,9 @@ function SignUp() {
                     All fields are mandatory.
                 </div>
                 <div className="row g-3">
-                    <div className="col-12">
-                        <label className="form-label">Profile Picture:</label>
-                        <input
-                            className="d-block"
-                            type="file"
-                            name="avatar"
-                            onChange={handleAvatar}
-                        />
-                    </div>
                     <div className="col-md-6">
                         <InputField
-                            label="First Name:"
+                            label="First Name"
                             onChange={handleFirstName}
                             name="first_name"
                             type="text"
@@ -157,7 +178,7 @@ function SignUp() {
                     </div>
                     <div className="col-md-6">
                         <InputField
-                            label="Last Name:"
+                            label="Last Name"
                             onChange={handleLastName}
                             name="last_name"
                             type="text"
@@ -165,7 +186,7 @@ function SignUp() {
                     </div>
                     <div className="col-12">
                         <InputField
-                            label="Tagline:"
+                            label="Tagline"
                             onChange={handleTagline}
                             name="tagline"
                             type="text"
@@ -174,7 +195,7 @@ function SignUp() {
                     </div>
                     <div className="col-md-6">
                         <InputField
-                            label="Email:"
+                            label="Email"
                             onChange={handleEmail}
                             name="email"
                             type="email"
@@ -183,7 +204,7 @@ function SignUp() {
                     </div>
                     <div className="col-md-6">
                         <InputField
-                            label="Birthday:"
+                            label="Birthday"
                             onChange={handleBirthday}
                             name="birthday"
                             type="date"
@@ -192,7 +213,7 @@ function SignUp() {
                     </div>
                     <div className="col-md-6">
                         <InputField
-                            label="Password:"
+                            label="Password"
                             onChange={handlePassword}
                             name="password"
                             type="password"
@@ -200,9 +221,9 @@ function SignUp() {
                         />
                     </div>
                     <div className="col-md-6">
-                        <div className={confirmPassword ? "" : "error-bg"}>
+                        <div className={confirmPassword == false ? "error-bg" : ""}>
                             <InputField
-                                label="Confirm Password:"
+                                label="Retype Password"
                                 onChange={handleConfirmPassword}
                                 name="confirm_password"
                                 type="password"
@@ -210,18 +231,32 @@ function SignUp() {
                         </div>
                     </div>
                     <div className="col-12">
+                        <label className="form-label">Profile Picture&nbsp; <i className="far fa-file-image "></i></label>
+                        <button className="choose-avatar form-control" ref={fakeProfilePictureBtnRef} onClick={clickChoosePicture}>
+                            choose an image here
+                        </button>
+                        <input
+                            className="d-none"
+                            type="file"
+                            name="avatar"
+                            accept="image/*"
+                            ref={realProfilePictureBtnRef}
+                            onChange={handleAvatar}
+                        />
+                    </div>
+                    <div className="col-12">
                         <button
                             type="submit"
                             ref={btnRef}
                             onClick={handleSignUp}
-                            className="btn btn-primary"
+                            className="btn btn-primary btn-signup"
                         >
                             Let's Go!
                         </button>
                         {apiResponse}
                     </div>
                 </div>
-                <div className="text-muted text-sm tos-text-signup py-3">
+                <div className="tos-text-signup">
                     By clicking the button above, you agree to our{" "}
                     <a href="#">terms of use</a> and{" "}
                     <a href="#">privacy policies</a>

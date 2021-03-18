@@ -71,7 +71,7 @@ function LogIn() {
     };
 
     return (
-        <section className="login">
+        <section className="login bg-social-icons">
             <Helmet>
                 <title>Log In to socialnetwork!</title>
             </Helmet>

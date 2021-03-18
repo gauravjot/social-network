@@ -20,7 +20,7 @@ export function timeSince(epoch) {
     }
     interval = seconds / 3600;
     if (interval > 1) {
-      return Math.floor(interval) + " hoursago ";
+      return Math.floor(interval) + " hours ago ";
     }
     interval = seconds / 60;
     if (interval > 1) {

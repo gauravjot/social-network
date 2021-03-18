@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Poppins:wght@400;500;600;700;900&display=swap");
 :root {
   --breakpoint-xs: 0;
   --breakpoint-sm: 576px;
@@ -26,10 +26,12 @@ body {
   color: #dcdcdc;
   font-size: 1rem;
   font-weight: 500;
-  font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: "Noto Sans", "Open Sans", "Helvetica Neue", sans-serif;
 }
 
-*, *::after, *::before {
+*,
+*::after,
+*::before {
   -webkit-box-sizing: border-box !important;
           box-sizing: border-box !important;
   margin: 0;
@@ -52,7 +54,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 a {
@@ -60,12 +62,9 @@ a {
   text-decoration: none;
 }
 
-button:focus, input:focus {
+button:focus,
+input:focus {
   outline: none;
-}
-
-img {
-  background-color: #1e1e26;
 }
 
 .btn-light-accent {
@@ -85,7 +84,24 @@ img {
 }
 
 .form-label {
-  color: #8a8a94;
+  color: #dcdcdc;
+}
+
+.form-control {
+  background: rgba(30, 30, 38, 0.4);
+  color: #ffffff;
+  border: 0.1rem solid rgba(138, 138, 148, 0.3);
+  border-radius: 0.75rem;
+  padding: 0.6em 1em;
+}
+
+.form-control:focus {
+  background: #131314;
+  color: #ffffff;
+  border-color: #0075ff;
+  outline: 0;
+  -webkit-box-shadow: 0;
+          box-shadow: 0;
 }
 
 .card {
@@ -107,7 +123,7 @@ img {
   font-style: bold;
   font-size: 0.7rem;
   letter-spacing: 0.1rem;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   font-weight: 600;
   color: #ffffff;
   border: none;
@@ -120,7 +136,8 @@ img {
   text-decoration: underline;
 }
 
-.btn-outline-success:hover, .btn-outline-danger:hover {
+.btn-outline-success:hover,
+.btn-outline-danger:hover {
   color: #ffffff;
 }
 
@@ -149,12 +166,36 @@ img {
 
 .error-bg input,
 .error-bg input:focus {
-  background-color: rgba(255, 65, 54, 0.2);
+  border-color: rgba(255, 65, 54, 0.6);
 }
 
 .btn-light:focus {
   -webkit-box-shadow: 0 0 0 0 #ffffff;
           box-shadow: 0 0 0 0 #ffffff;
+}
+
+.btn {
+  border-radius: 0.75rem;
+}
+
+.bg-social-icons {
+  -webkit-box-shadow: inset 0 0 4rem 1rem rgba(30, 30, 38, 0.7);
+          box-shadow: inset 0 0 4rem 1rem rgba(30, 30, 38, 0.7);
+  position: relative;
+  background: #1e1e26 url(../src/assets/images/bg-4.png);
+  background-size: 250px;
+  z-index: 1;
+}
+
+.bg-social-icons::before {
+  content: "";
+  position: absolute;
+  background-color: rgba(30, 30, 38, 0.5);
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  z-index: -1;
 }
 
 .home {
@@ -165,43 +206,52 @@ img {
   background-color: #1e1e26;
 }
 
-.intro-panel {
-  margin: 0rem 1rem;
-  margin-bottom: 2rem;
+.home .intro-panel {
+  margin: 0rem 1rem 2rem;
 }
 
-.intro-panel * {
-  margin: 1rem 0;
-}
-
-.intro-panel .logo {
+.home .intro-panel .logo {
   width: 300px;
   margin: 2rem 0;
   max-width: 75%;
 }
 
-.intro-panel .img {
-  text-align: center;
-}
-
-.intro-panel h2 {
+.home .intro-panel h2 {
+  margin: .5em 0 1em 0;
   line-height: 2.5rem;
-  font-weight: 700;
+  font-weight: 400;
   color: #dcdcdc;
-  letter-spacing: 0.06rem;
+  letter-spacing: 0.03rem;
 }
 
-.intro-panel .img-preview {
-  width: auto;
-  max-width: 100%;
-  height: 50vh;
-  -o-object-fit: cover;
-     object-fit: cover;
+.home .intro-panel p {
+  font-family: 'Poppins';
+  font-weight: 300;
+  letter-spacing: 0.01rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.home .intro-panel p b {
+  font-weight: 500;
+  border-bottom: 0.1rem #0075ff solid;
+  letter-spacing: 0.03rem;
+  padding: 0 0.1rem;
+  color: #ffffff;
 }
 
 .signup {
   margin: 1rem;
   line-height: 1.6rem;
+}
+
+.signup > .card {
+  padding: 1.5rem;
+}
+
+@media (max-width: 1200px) {
+  .signup > .card {
+    padding: 1rem;
+  }
 }
 
 .signup .row {
@@ -211,28 +261,60 @@ img {
 .signup .tos-text-signup {
   background-color: rgba(30, 30, 38, 0.5);
   text-align: center;
-  font-weight: 600;
+  font-weight: 500;
   border-radius: 0 0 1rem 1rem;
-  margin: -1.05rem;
+  margin: -1.55rem;
   margin-top: 1rem;
   line-height: 1.2rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.8rem;
+  padding: 1em;
+}
+
+.signup .tos-text-signup a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 1200px) {
+  .signup .tos-text-signup {
+    margin: -1.05rem;
+    margin-top: 1rem;
+  }
 }
 
 .signup h3 {
-  font-weight: 600;
-  margin: 0.25em 0 .5rem;
+  font-weight: 500;
+  margin: 0.3em 0 0.5rem;
 }
 
 .signup .form-label {
-  margin-bottom: .2rem;
+  margin-bottom: 0.2rem;
+  font-size: 0.85rem;
 }
 
-.signup button {
+.signup .btn-signup {
   width: 100%;
   margin: 1rem 0;
   font-weight: bold;
   font-size: 0.9rem;
   padding: 0.75rem;
+}
+
+.signup .choose-avatar {
+  text-align: left;
+  color: #8a8a94;
+}
+
+.signup .choose-avatar > i {
+  margin-right: 0.5rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+}
+
+.signup .choose-avatar:focus {
+  border-color: #0075ff;
+  background-color: #131314;
+  color: #ffffff;
 }
 
 .login {
@@ -242,7 +324,7 @@ img {
 
 .login h3 {
   font-weight: 600;
-  margin: 0.25em 0 .5rem;
+  margin: 0.25em 0 0.5rem;
 }
 
 .login > div {
@@ -335,10 +417,15 @@ img {
 .navbar > .container > .row .row > div > form {
   border: 1px rgba(138, 138, 148, 0.1) solid;
   border-radius: 0.5rem;
-  max-width: 35rem;
   background-color: #1e1e26;
   font-size: 0.8rem;
-  margin: 0.5rem 1rem;
+  margin: 0.5rem 1.5rem;
+}
+
+@media (max-width: 992px) {
+  .navbar > .container > .row .row > div > form {
+    margin-top: 1rem;
+  }
 }
 
 .navbar > .container > .row .row > div > form input {
@@ -480,7 +567,7 @@ img {
 
 .leftsidebar .user div h6 {
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.03rem;
   color: #ffffff;
 }
@@ -495,7 +582,8 @@ img {
   margin: 1rem 0;
 }
 
-.leftsidebar > .navigation > button, .leftsidebar > .navigation a {
+.leftsidebar > .navigation > button,
+.leftsidebar > .navigation a {
   display: inline-block;
   background-color: transparent;
   border: none;
@@ -503,8 +591,8 @@ img {
   text-align: start;
   border-radius: 0.5rem;
   color: #ffffff;
-  font-family: 'Poppins';
-  font-weight: 600;
+  font-family: "Poppins";
+  font-weight: 500;
   font-size: 0.85rem;
   letter-spacing: 0.03rem;
   padding: 0.2rem 1rem;
@@ -515,7 +603,8 @@ img {
   transition: color ease-in-out 250ms;
 }
 
-.leftsidebar > .navigation > button > i, .leftsidebar > .navigation a > i {
+.leftsidebar > .navigation > button > i,
+.leftsidebar > .navigation a > i {
   margin-right: 1rem;
   color: #8a8a94;
   font-size: 1.2rem;
@@ -525,15 +614,18 @@ img {
   transition: color ease-in-out 250ms;
 }
 
-.leftsidebar > .navigation > button:hover, .leftsidebar > .navigation a:hover {
+.leftsidebar > .navigation > button:hover,
+.leftsidebar > .navigation a:hover {
   color: #0075ff;
 }
 
-.leftsidebar > .navigation > button:hover > i, .leftsidebar > .navigation a:hover > i {
+.leftsidebar > .navigation > button:hover > i,
+.leftsidebar > .navigation a:hover > i {
   color: #0075ff;
 }
 
-.leftsidebar > .navigation > button:focus, .leftsidebar > .navigation a:focus {
+.leftsidebar > .navigation > button:focus,
+.leftsidebar > .navigation a:focus {
   background-color: rgba(138, 138, 148, 0.08);
 }
 
@@ -572,9 +664,9 @@ img {
   display: table;
   color: #ffffff;
   margin: 0.5rem 0.5em;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 500;
   position: relative;
 }
 
@@ -656,7 +748,7 @@ img {
 .timeline > .create-post > h6 {
   margin-bottom: 1rem;
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .timeline > .create-post > .d-flex > img {
@@ -678,6 +770,7 @@ img {
   background-color: #131314;
   color: #ffffff;
   letter-spacing: 0.02rem;
+  font-size: 0.9rem;
   line-height: 1.6rem;
   -webkit-transition: background-color ease-in-out 250ms;
   transition: background-color ease-in-out 250ms;
@@ -696,6 +789,8 @@ img {
   border: none;
   padding: 0;
   font-size: 1.4rem;
+  width: 3rem;
+  height: 3rem;
   color: #8a8a94;
   border-radius: 50%;
   -webkit-transition: background-color ease-in-out 250ms, color ease-in-out 250ms;
@@ -703,8 +798,8 @@ img {
 }
 
 .timeline > .create-post > .d-flex > button > i {
-  width: 3rem;
-  height: 3rem;
+  width: inherit;
+  height: inherit;
   display: -ms-grid;
   display: grid;
   place-content: center;
@@ -722,8 +817,8 @@ img {
   max-height: 0rem;
   opacity: 0;
   overflow-y: hidden;
-  -webkit-transition: max-height ease-out 350ms , opacity ease-out 350ms;
-  transition: max-height ease-out 350ms , opacity ease-out 350ms;
+  -webkit-transition: max-height ease-out 350ms, opacity ease-out 350ms;
+  transition: max-height ease-out 350ms, opacity ease-out 350ms;
 }
 
 .timeline > .create-post > .submit-btn button {
@@ -744,8 +839,8 @@ img {
 }
 
 .timeline .post {
-  -webkit-animation: .5s ease-out 0s 1 slideInFromRight forwards;
-          animation: .5s ease-out 0s 1 slideInFromRight forwards;
+  -webkit-animation: 0.5s ease-out 0s 1 slideInFromRight forwards;
+          animation: 0.5s ease-out 0s 1 slideInFromRight forwards;
 }
 
 .timeline .post > .user {
@@ -777,7 +872,7 @@ img {
 
 .timeline .post > .user div h6 {
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.03rem;
   color: #ffffff;
   margin-top: 0.25rem;
@@ -928,6 +1023,46 @@ img {
   }
 }
 
+.post-comments .d-flex {
+  margin-top: 1rem;
+  line-height: 1.2rem;
+}
+
+.post-comments .d-flex > div {
+  margin-left: 0.5em;
+  min-width: 50%;
+}
+
+.post-comments .d-flex .content {
+  background-color: rgba(138, 138, 148, 0.1);
+  border-radius: 1rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.post-comments .d-flex .content > h6 {
+  color: rgba(220, 220, 220, 0.75);
+  font-weight: 500;
+  font-size: 0.8rem;
+}
+
+.post-comments .d-flex .content > p {
+  margin-top: 0.25rem;
+  font-size: 0.9rem;
+  line-height: 1.325rem;
+}
+
+.post-comments .d-flex .timesince {
+  font-size: 0.75rem;
+  color: rgba(220, 220, 220, 0.75);
+  margin-left: 0.75rem;
+}
+
+.post-comments .avatar {
+  width: 2rem;
+  height: 2rem;
+  margin-top: 0.075rem;
+}
+
 .rightsidebar {
   padding: 0 1rem;
 }
@@ -1001,7 +1136,7 @@ img {
 
 .friends .timeline .card > h6 {
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.03rem;
   line-height: 1.6rem;
   color: #ffffff;
@@ -1022,7 +1157,7 @@ img {
 
 .friendlistitem h6 {
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.03rem;
   line-height: 1.6rem;
 }
@@ -1048,7 +1183,7 @@ img {
 .sorry {
   text-align: center;
   font-size: 1.6rem;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   margin: 4rem 1rem;
   line-height: 3rem;
 }
@@ -1061,7 +1196,8 @@ img {
   .container {
     padding: 0;
   }
-  .leftsidebar, .rightsidebar {
+  .leftsidebar,
+  .rightsidebar {
     display: none;
   }
   .timeline .post .post-actions {

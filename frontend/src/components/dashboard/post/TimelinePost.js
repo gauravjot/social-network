@@ -8,6 +8,8 @@ import axios from "axios";
 const TimelinePost = ({ user, post, friends, token, liked }) => {
     const [author, setAuthor] = useState("");
     const [isLiked, setIsLiked] = useState(liked);
+    const [comments, setComments] = useState();
+    const [showComments, setShowComments] = useState(false);
     let btnRef = useRef();
 
     useEffect(() => {
@@ -49,6 +51,21 @@ const TimelinePost = ({ user, post, friends, token, liked }) => {
             });
     };
 
+    const commentsToggle = () => {
+        if (comments) {
+            setShowComments(!showComments);
+        } else {
+            axios.get(BACKEND_SERVER_DOMAIN + "/api/" + post.id + "/comments/", {headers:{Authorization: token}})
+                .then(function (response) {
+                    setShowComments(true)
+                    setComments(response.data.comments)
+                })
+                .catch((err) => {
+                    console.log(err.response)
+                })
+        }
+    }
+
     return (
         <div className="post card">
             <div className="d-flex user">
@@ -74,7 +91,8 @@ const TimelinePost = ({ user, post, friends, token, liked }) => {
                 ""
             )}
             <div className="d-flex post-actions">
-                <button>
+                <button
+                    onClick={commentsToggle}>
                     <i className="far fa-comment-alt"></i>Comments
                 </button>
                 <button
@@ -100,13 +118,26 @@ const TimelinePost = ({ user, post, friends, token, liked }) => {
                     <i className="far fa-share-square"></i>Share
                 </button>
             </div>
+            {
+                showComments && typeof comments == "object" ?
+                    <div className="post-comments">
+                        {comments.slice().map((comment, index) => (
+                            <div className="d-flex">
+                                <img className="avatar rounded-circle" src={BACKEND_SERVER_DOMAIN+comment.person.avatar} />
+                                <div>
+                                    <div className="content">
+                                        <h6>{comment.person.first_name} {comment.person.last_name}</h6>
+                                        <p>{comment.comment_text}</p>
+                                    </div>
+                                    <span className="timesince">{timeSince(comment.created)}</span>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                : <div></div>
+            }
             <div className="post-comment">
                 <div className="d-flex user">
-                    <img
-                        className="rounded-circle"
-                        src={BACKEND_SERVER_DOMAIN+user.avatar}
-                        alt="profile picture"
-                    />
                     <input type="text" placeholder="Write your comment..." />
                     <button>
                         <i className="far fa-paper-plane"></i>
