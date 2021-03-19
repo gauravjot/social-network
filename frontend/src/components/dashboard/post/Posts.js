@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import TimelinePost from './post/TimelinePost';
+import TimelinePost from './TimelinePost';
 import { useDispatch, useSelector } from 'react-redux';
-import { setPosts } from "../../redux/actions"
-import { BACKEND_SERVER_DOMAIN } from '../../settings'
+import { setPosts } from "../../../redux/actions"
+import { BACKEND_SERVER_DOMAIN } from '../../../settings'
 
 function Posts({token}) {
 

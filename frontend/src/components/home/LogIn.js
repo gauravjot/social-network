@@ -26,6 +26,15 @@ function LogIn() {
     let btnRef = useRef();
 
     const handleLogIn = () => {
+
+        if (!email || !password) {
+            setAPIResponse(
+                <div className="fw-bold text-danger text-sm pb-2">
+                    Ooops! Make sure you have typed in your email and password.
+                </div>);
+            return;
+        }
+
         if (btnRef.current) {
             btnRef.current.setAttribute("disabled", "disabled");
         }
@@ -60,8 +69,8 @@ function LogIn() {
             })
             .catch(function (error) {
                 setAPIResponse(
-                    <div className="fw-bold text-uppercase text-danger text-sm pb-2">
-                        {error.response.data.error}
+                    <div className="fw-bold text-danger text-sm pb-2">
+                        Unable to login, make sure your email and password are correct.
                     </div>
                 );
                 if (btnRef.current) {
@@ -82,14 +91,14 @@ function LogIn() {
                         <h3>Log in</h3>
                         {apiResponse}
                         <InputField
-                            label="Email:"
+                            label="Email"
                             onChange={handleEmail}
                             name="email"
                             type="email"
                             placeholder="you@company.com"
                         />
                         <InputField
-                            label="Password:"
+                            label="Password"
                             onChange={handlePassword}
                             name="password"
                             type="password"

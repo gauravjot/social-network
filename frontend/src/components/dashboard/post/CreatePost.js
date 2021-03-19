@@ -1,6 +1,6 @@
 import React, {useState, useRef} from 'react';
 import axios from 'axios';
-import { BACKEND_SERVER_DOMAIN } from "../../settings";
+import { BACKEND_SERVER_DOMAIN } from "../../../settings";
 
 function CreatePost({avatar, token, newPost}) {
     const [postText, setPostText] = useState("");

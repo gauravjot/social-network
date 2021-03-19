@@ -5,8 +5,8 @@ import { Helmet } from "react-helmet";
 import LeftSidebar from "./LeftSidebar";
 import RightSidebar from "./rightsidebar/RightSidebar";
 import Navbar from "./Navbar";
-import CreatePost from "./CreatePost";
-import Posts from "./Posts";
+import CreatePost from "./post/CreatePost";
+import Posts from "./post/Posts";
 import { useHistory } from "react-router-dom";
 import { addPost } from "../../redux/actions"
 
