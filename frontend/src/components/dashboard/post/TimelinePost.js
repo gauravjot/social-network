@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { timeSince } from "../../../utils/timesince";
 import { BACKEND_SERVER_DOMAIN } from "../../../settings";
+import CommentComponent from "./Comment";
 import axios from "axios";
 
 const TimelinePost = ({ user, post, friends, token, liked }) => {
@@ -10,6 +11,7 @@ const TimelinePost = ({ user, post, friends, token, liked }) => {
     const [isLiked, setIsLiked] = useState(liked);
     const [comments, setComments] = useState();
     const [showComments, setShowComments] = useState(false);
+    const [likesCount, setLikesCount] = useState((post.likes.persons != null) ? post.likes.persons.length : 0);
     let btnRef = useRef();
 
     useEffect(() => {
@@ -26,7 +28,8 @@ const TimelinePost = ({ user, post, friends, token, liked }) => {
             }
         }
         setIsLiked(liked);
-    }, [post.person_id,liked]);
+        setLikesCount((post.likes.persons != null) ? post.likes.persons.length : 0);
+    }, [post.person_id,liked,post.likes.persons]);
 
     const likePost = () => {
         if (btnRef.current) {
@@ -41,13 +44,20 @@ const TimelinePost = ({ user, post, friends, token, liked }) => {
         axios
             .put(BACKEND_SERVER_DOMAIN + "/api/post/" + post.id, {}, config)
             .then(function (response) {
-                setIsLiked(!isLiked);
+                let like = isLiked ? false : true;
+                setIsLiked(like);
+                if (like) {
+                    setLikesCount(likesCount+1);
+                } else {
+                    setLikesCount(likesCount-1);
+                }
+                console.log(like);
                 if (btnRef.current) {
                     btnRef.current.removeAttribute("disabled");
                 }
             })
             .catch(function (err) {
-                console.log(err.response.data);
+                console.log(err);
             });
     };
 
@@ -64,6 +74,49 @@ const TimelinePost = ({ user, post, friends, token, liked }) => {
                     console.log(err.response)
                 })
         }
+    }
+
+    const commentField = useRef();
+    const postComment = (parent) => {
+        let commentText = commentField.current.value;
+        if (commentText) {
+            let formData = new FormData();
+            formData.append("comment_text", commentText);
+            formData.append("comment_parent", parent);
+            let config = { headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization: token,   
+            }}
+            axios.post('http://localhost:8000/api/'+post.id+'/comments/new/',formData, config)
+                .then(function (response) {
+                    // Post has been made successfully
+                    if (comments) 
+                    {
+                        // If we already have comments
+                        comments.push(response.data);
+                        // React only rerenders if pointer to field is changed so 
+                        // we have to make a new array
+                        let newArr = [...comments];
+                        setComments(newArr);
+                    }
+                    else {
+                        setComments(Array.of(response.data));
+                    }
+                    commentField.current.value = "";
+                    setShowComments(true)
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        } else {
+            console.log("empty field");
+        }
+    }
+
+    function splicedArray(array,index) {
+        let nArr = [...array];
+        nArr.splice(0,index+1);
+        return nArr;
     }
 
     return (
@@ -107,7 +160,7 @@ const TimelinePost = ({ user, post, friends, token, liked }) => {
                     <i className="far fa-thumbs-up"></i>
                     {post.likes.persons != null ? (
                         <tag>
-                            {post.likes.persons.length > 0 ? post.likes.persons.length+" " : ''}Like
+                            {likesCount > 0 ? likesCount+' ' : ''}Like
                             {post.likes.persons.length > 1 ? "s" : ""}
                         </tag>
                     ) : (
@@ -120,26 +173,24 @@ const TimelinePost = ({ user, post, friends, token, liked }) => {
             </div>
             {
                 showComments && typeof comments == "object" ?
-                    <div className="post-comments">
+                    <div className="each-comment parent-comment">
                         {comments.slice().map((comment, index) => (
-                            <div className="d-flex">
-                                <img className="avatar rounded-circle" src={BACKEND_SERVER_DOMAIN+comment.person.avatar} />
-                                <div>
-                                    <div className="content">
-                                        <h6>{comment.person.first_name} {comment.person.last_name}</h6>
-                                        <p>{comment.comment_text}</p>
-                                    </div>
-                                    <span className="timesince">{timeSince(comment.created)}</span>
-                                </div>
-                            </div>
+                            (comment.comment_parent == 0) ?
+                                <CommentComponent comment={comment} key={index}
+                                user={user}
+                                token={token}
+                                allComments={splicedArray(comments,index)}
+                                post_id={post.id}
+                                liked={comment.comment_likes.persons && comment.comment_likes.persons.includes(user.id)}/>
+                            : ''                            
                         ))}
                     </div>
                 : <div></div>
             }
             <div className="post-comment">
                 <div className="d-flex user">
-                    <input type="text" placeholder="Write your comment..." />
-                    <button>
+                    <input type="text" ref={commentField} placeholder="Write your comment..." />
+                    <button onClick={() => postComment(0)}>
                         <i className="far fa-paper-plane"></i>
                     </button>
                 </div>

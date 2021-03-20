@@ -8,7 +8,7 @@
 }
 
 html {
-  font-size: 16px;
+  font-size: 16.5px;
 }
 
 @media (max-width: 992px) {
@@ -517,7 +517,7 @@ input:focus {
 
 .leftsidebar {
   width: inherit;
-  max-width: 20.25rem;
+  max-width: 19.75rem;
   height: 100vh;
   position: fixed;
   padding: 0 1rem;
@@ -631,7 +631,6 @@ input:focus {
 
 .leftsidebar > .navigation > .active {
   color: #0075ff !important;
-  border: 0.1rem transparent solid;
   -webkit-box-shadow: 10px 7px 15px -1px #15151a;
           box-shadow: 10px 7px 15px -1px #15151a;
   background-color: #1e1e26;
@@ -649,7 +648,6 @@ input:focus {
   text-transform: uppercase;
   font-size: 0.8rem;
   letter-spacing: 0.1rem;
-  font-weight: bold;
   color: #8a8a94;
   margin: 2rem 0 1rem 0;
 }
@@ -722,13 +720,13 @@ input:focus {
 
 @media (max-width: 1400px) {
   .leftsidebar {
-    max-width: 17.5rem;
+    max-width: 17rem;
   }
 }
 
 @media (max-width: 1200px) {
   .leftsidebar {
-    max-width: 14.65rem;
+    max-width: 14.15rem;
   }
 }
 
@@ -1023,41 +1021,149 @@ input:focus {
   }
 }
 
-.post-comments .d-flex {
-  margin-top: 1rem;
+.show {
+  display: block !important;
+  -webkit-transition: display ease-in-out 200ms;
+  transition: display ease-in-out 200ms;
+}
+
+.parent-comment > .comment {
+  margin-left: 0 !important;
+  border: none !important;
+  padding-left: 0 !important;
+}
+
+.each-comment .comment {
+  padding-top: 1rem;
   line-height: 1.2rem;
+  margin-left: -1.75rem;
+  padding-left: 1rem;
+  border-left: 0.1rem rgba(138, 138, 148, 0.15) solid;
 }
 
-.post-comments .d-flex > div {
+@media (max-width: 1200px) {
+  .each-comment .comment {
+    margin-left: -2.25rem;
+  }
+}
+
+.each-comment .comment > div {
+  width: 100%;
+}
+
+.each-comment .comment .content {
   margin-left: 0.5em;
-  min-width: 50%;
-}
-
-.post-comments .d-flex .content {
+  display: inline-block;
+  min-width: 35%;
   background-color: rgba(138, 138, 148, 0.1);
   border-radius: 1rem;
   padding: 0.5rem 0.75rem;
 }
 
-.post-comments .d-flex .content > h6 {
+.each-comment .comment .content > h6 {
   color: rgba(220, 220, 220, 0.75);
   font-weight: 500;
   font-size: 0.8rem;
 }
 
-.post-comments .d-flex .content > p {
+.each-comment .comment .content > p {
   margin-top: 0.25rem;
   font-size: 0.9rem;
   line-height: 1.325rem;
 }
 
-.post-comments .d-flex .timesince {
-  font-size: 0.75rem;
-  color: rgba(220, 220, 220, 0.75);
-  margin-left: 0.75rem;
+.each-comment .comment .comment-options {
+  margin-top: .25rem;
 }
 
-.post-comments .avatar {
+.each-comment .comment .comment-options > button {
+  font-size: 0.8rem;
+  background: transparent;
+  border: none;
+  color: #dcdcdc;
+  margin-right: .125rem;
+  border-radius: .5rem;
+  padding: .25rem .5rem;
+}
+
+.each-comment .comment .comment-options > button > i {
+  color: #8a8a94;
+  margin-right: .25rem;
+}
+
+.each-comment .comment .comment-options > button:hover, .each-comment .comment .comment-options > button:focus {
+  background-color: rgba(138, 138, 148, 0.07);
+  color: #ffffff;
+}
+
+.each-comment .comment .comment-options > button:hover > i, .each-comment .comment .comment-options > button:focus > i {
+  color: #dcdcdc;
+}
+
+.each-comment .comment .comment-options > button:focus {
+  -webkit-box-shadow: 0 0 0 1px rgba(138, 138, 148, 0.2);
+          box-shadow: 0 0 0 1px rgba(138, 138, 148, 0.2);
+}
+
+.each-comment .comment .comment-options > .comment-actions {
+  margin-left: .5rem;
+}
+
+.each-comment .comment .comment-options > .comment-actions > i {
+  margin: 0;
+  vertical-align: middle;
+}
+
+.each-comment .comment .timesince {
+  font-size: 0.75rem;
+  color: rgba(220, 220, 220, 0.75);
+  margin-left: 0.25rem;
+}
+
+.each-comment .comment .post-comment {
+  margin-top: .25rem;
+  margin-left: .5rem;
+  width: 80%;
+  max-width: 20rem;
+  display: none;
+}
+
+.each-comment .comment .post-comment > div {
+  background-color: #191920;
+  border-radius: 1.3rem;
+}
+
+.each-comment .comment .post-comment > div > input {
+  border: none;
+  width: 100%;
+  font-size: 0.9rem;
+  color: #dcdcdc;
+  background: transparent;
+  border-radius: 0.5rem;
+  padding: .5rem 0.75rem;
+}
+
+.each-comment .comment .post-comment > div > button {
+  background: transparent;
+  border: none;
+  color: #8a8a94;
+  padding: 0 0.7rem;
+  border-radius: 50%;
+  font-size: 0.95rem;
+  -webkit-transition: font-size ease-out 250ms;
+  transition: font-size ease-out 250ms;
+}
+
+.each-comment .comment .post-comment > div > button:focus, .each-comment .comment .post-comment > div > button:hover {
+  color: #ffffff;
+  background: rgba(138, 138, 148, 0.1);
+}
+
+.each-comment .comment .post-comment > div > button:active {
+  font-size: 1.1rem;
+}
+
+.each-comment .avatar {
   width: 2rem;
   height: 2rem;
   margin-top: 0.075rem;

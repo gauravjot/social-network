@@ -34,7 +34,7 @@ $clr-light-accent: darken(#fafafb, 85%);
 $clr-grey: #8a8a94;
 
 html {
-    font-size: 16px;
+    font-size: 16.5px;
 }
 
 @media (max-width: 992px) {
@@ -522,7 +522,7 @@ input:focus {
 
 .leftsidebar {
     width: inherit;
-    max-width: 20.25rem;
+    max-width: 19.75rem;
     height: 100vh;
     position: fixed;
     padding: 0 1rem;
@@ -619,7 +619,6 @@ input:focus {
 
         & > .active {
             color: $clr-accent !important;
-            border: 0.1rem transparent solid;
             box-shadow: 10px 7px 15px -1px darken($clr-light-accent, 4%);
             background-color: $clr-light-accent;
 
@@ -636,7 +635,6 @@ input:focus {
             text-transform: uppercase;
             font-size: 0.8rem;
             letter-spacing: 0.1rem;
-            font-weight: bold;
             color: $clr-grey;
             margin: 2rem 0 1rem 0;
         }
@@ -711,13 +709,13 @@ input:focus {
 
 @media (max-width: 1400px) {
     .leftsidebar {
-        max-width: 17.5rem;
+        max-width: 17rem;
     }
 }
 
 @media (max-width: 1200px) {
     .leftsidebar {
-        max-width: 14.65rem;
+        max-width: 14.15rem;
     }
 }
 
@@ -998,17 +996,37 @@ input:focus {
     }
 }
 
-.post-comments {
-    .d-flex {
-        margin-top: 1rem;
-        line-height: 1.2rem;
+.show {
+    display: block !important;
+            transition: display ease-in-out 200ms;
+}
 
-        & > div {
-            margin-left: 0.5em;
-            min-width: 50%;
+.parent-comment {
+    & > .comment {
+        margin-left: 0 !important;
+        border:none !important;
+        padding-left:0 !important;
+    }
+}
+.each-comment {
+    .comment {
+        padding-top: 1rem;
+        line-height: 1.2rem;
+        margin-left: -1.75rem;
+        padding-left:1rem;
+        border-left:.1rem rgba($clr-grey, 0.15) solid;
+
+        @media(max-width:1200px) {
+            margin-left:-2.25rem;
         }
 
+        & > div {
+            width:100%;
+        }
         .content {
+            margin-left: 0.5em;
+            display: inline-block;
+            min-width: 35%;
             background-color: rgba($clr-grey, 0.1);
             border-radius: 1rem;
             padding: 0.5rem 0.75rem;
@@ -1026,10 +1044,92 @@ input:focus {
             }
         }
 
+        .comment-options{
+            margin-top: .25rem;
+            & > button {
+                font-size:0.8rem;
+                background:transparent;
+                border:none;
+                color:$clr-text;
+                margin-right:.125rem;
+                border-radius: .5rem;
+                padding:.25rem .5rem;
+                & > i {
+                    color:$clr-grey;
+                    margin-right:.25rem;
+                }
+                &:hover,
+                &:focus {
+                    background-color: rgba($clr-grey, 0.07);
+                    color: $clr-black;
+
+                    & > i {
+                        color: $clr-text;
+                    }
+                }
+
+                &:focus {
+                    box-shadow: 0 0 0 1px rgba($clr-grey, 0.2);
+                }
+            }
+
+            & > .comment-actions {
+                margin-left: .5rem;
+                & > i {
+                    margin:0;
+                    vertical-align: middle;
+                }
+            }
+        }
+
         .timesince {
             font-size: 0.75rem;
             color: rgba($clr-text, 0.75);
-            margin-left: 0.75rem;
+            margin-left: 0.25rem;
+        }
+
+        .post-comment {
+            margin-top: .25rem;
+            margin-left: .5rem;
+            width:80%;
+            max-width:20rem;
+            display:none;
+
+            & > div {
+                background-color: darken($clr-light-accent, 2%);
+                border-radius: 1.3rem;
+
+                & > input {
+                    border: none;
+                    width: 100%;
+                    font-size: 0.9rem;
+                    color: $clr-text;
+                    background: transparent;
+                    border-radius: 0.5rem;
+                    padding: .5rem 0.75rem;
+                    
+                }
+
+                & > button {
+                    background: transparent;
+                    border: none;
+                    color: $clr-grey;
+                    padding: 0 0.7rem;
+                    border-radius: 50%;
+                    font-size: 0.95rem;
+                    transition: font-size ease-out 250ms;
+
+                    &:focus,
+                    &:hover {
+                        color: $clr-black;
+                        background: rgba($clr-grey, 0.1);
+                    }
+
+                    &:active {
+                        font-size: 1.1rem;
+                    }
+                }
+            }
         }
     }
     .avatar {
