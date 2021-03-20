@@ -32,7 +32,7 @@ def getPostComments(request, post):
         result = [{
                 **comment,
                 'person':PersonSerializer(Person.objects.get(id=comment['person_id'])).data
-            } for comment in Comment.objects.filter(post_id=post).values()]
+            } for comment in Comment.objects.filter(post_id=post).order_by('pk').values()]
         return Response({"comments":result},status=status.HTTP_200_OK)
 
     return Response(errorResponse(INVALID_REQUEST),status=status.HTTP_400_BAD_REQUEST)
@@ -69,7 +69,7 @@ def postNewComment(request, post_id):
     })
     if commentSerializer.is_valid():
         commentSerializer.save()
-        return Response(data=commentSerializer.data, status=status.HTTP_201_CREATED)
+        return Response(data={**commentSerializer.data,'person':PersonSerializer(Person.objects.get(id=person)).data}, status=status.HTTP_201_CREATED)
     return Response(commentSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['PUT','DELETE','POST'])

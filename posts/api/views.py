@@ -55,7 +55,7 @@ def getPosts(request):
         data = Friend.objects.filter(Q(user_a=person_id) | Q(user_b=person_id))
         friends = [entry.user_a if entry.user_a is not person_id else entry.user_b for entry in data]
         friends.append(person_id)
-        data = Posts.objects.filter(person_id__in=friends)
+        data = Posts.objects.filter(person_id__in=friends).order_by('pk')
         postsSerializer = PostsSerializer(data, many=True)
         if postsSerializer.data:
             return Response(data=postsSerializer.data,status=status.HTTP_200_OK)
