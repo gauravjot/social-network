@@ -104,6 +104,26 @@ input:focus {
           box-shadow: 0;
 }
 
+.dropdown-menu {
+  background-color: #1b1b1e;
+  color: #dcdcdc;
+  padding: 0;
+  border-radius: .5rem;
+  min-width: 8rem;
+}
+
+.dropdown-menu .dropdown-item {
+  color: #ffffff;
+  font-size: 0.8rem;
+  padding: .5rem 1rem;
+  font-weight: 600;
+}
+
+.dropdown-menu .dropdown-item:hover, .dropdown-menu .dropdown-item:focus {
+  background-color: #333338;
+  border-radius: .5rem;
+}
+
 .card {
   background-color: #131314;
   padding: 1rem;
@@ -185,8 +205,8 @@ input:focus {
   background-image: -webkit-gradient(linear, left top, right top, from(#009ffd), color-stop(50%, #2a2a72), to(#009ffd));
   background-image: linear-gradient(90deg, #009ffd 0%, #2a2a72 50%, #009ffd 100%);
   border-radius: 10rem;
-  -webkit-animation: bg-animation infinite 2s alternate;
-          animation: bg-animation infinite 2s alternate;
+  -webkit-animation: bg-animation infinite 1.5s alternate;
+          animation: bg-animation infinite 1.5s alternate;
   background-size: 200%;
   margin-top: 0.5rem;
 }
@@ -533,11 +553,11 @@ input:focus {
   transition: width ease-in-out 250ms, background-color ease-in-out 250ms;
 }
 
-.navbar > .container > .row .row > div ul > li button:hover {
+.navbar > .container > .row .row > div ul > li button:hover, .navbar > .container > .row .row > div ul > li button:focus {
   color: #ffffff;
 }
 
-.navbar > .container > .row .row > div ul > li button:hover::after {
+.navbar > .container > .row .row > div ul > li button:hover::after, .navbar > .container > .row .row > div ul > li button:focus::after {
   background-color: #ffffff;
   width: 100%;
 }
@@ -1112,9 +1132,14 @@ input:focus {
 
 .each-comment .comment .comment-options {
   margin-top: 0.25rem;
+  margin-left: .5rem;
 }
 
-.each-comment .comment .comment-options > button {
+.each-comment .comment .comment-options .dropright {
+  display: inline-block;
+}
+
+.each-comment .comment .comment-options > button, .each-comment .comment .comment-options .comment-actions {
   font-size: 0.8rem;
   background: transparent;
   border: none;
@@ -1124,30 +1149,30 @@ input:focus {
   padding: 0.25rem 0.5rem;
 }
 
-.each-comment .comment .comment-options > button > i {
+.each-comment .comment .comment-options > button > i, .each-comment .comment .comment-options .comment-actions > i {
   color: #8a8a94;
   margin-right: 0.25rem;
 }
 
-.each-comment .comment .comment-options > button:hover, .each-comment .comment .comment-options > button:focus {
+.each-comment .comment .comment-options > button:hover, .each-comment .comment .comment-options > button:focus, .each-comment .comment .comment-options .comment-actions:hover, .each-comment .comment .comment-options .comment-actions:focus {
   background-color: rgba(138, 138, 148, 0.07);
   color: #ffffff;
 }
 
-.each-comment .comment .comment-options > button:hover > i, .each-comment .comment .comment-options > button:focus > i {
+.each-comment .comment .comment-options > button:hover > i, .each-comment .comment .comment-options > button:focus > i, .each-comment .comment .comment-options .comment-actions:hover > i, .each-comment .comment .comment-options .comment-actions:focus > i {
   color: #dcdcdc;
 }
 
-.each-comment .comment .comment-options > button:focus {
+.each-comment .comment .comment-options > button:focus, .each-comment .comment .comment-options .comment-actions:focus {
   -webkit-box-shadow: 0 0 0 1px rgba(138, 138, 148, 0.2);
           box-shadow: 0 0 0 1px rgba(138, 138, 148, 0.2);
 }
 
-.each-comment .comment .comment-options > .comment-actions {
+.each-comment .comment .comment-options .comment-actions {
   margin-left: 0.5rem;
 }
 
-.each-comment .comment .comment-options > .comment-actions > i {
+.each-comment .comment .comment-options .comment-actions > i {
   margin: 0;
   vertical-align: middle;
 }
@@ -1204,6 +1229,10 @@ input:focus {
 .each-comment .avatar {
   width: 2rem;
   height: 2rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+  min-width: 2rem;
+  min-height: 2rem;
   margin-top: 0.075rem;
 }
 

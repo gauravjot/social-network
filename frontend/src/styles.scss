@@ -130,6 +130,26 @@ input:focus {
     }
 }
 
+.dropdown-menu {
+    background-color: darken($clr-grey,45%);
+    color:$clr-text;
+    padding:0;
+    border-radius: .5rem;
+    min-width:8rem;
+
+    .dropdown-item {
+        color:$clr-black;
+        font-size: 0.8rem;
+        padding:.5rem 1rem;
+        font-weight: 600;
+
+        &:hover, &:focus {
+            background-color: darken($clr-grey,35%);
+            border-radius: .5rem;
+        }
+    }
+}
+
 .card {
     background-color: $clr-white;
     padding: 1rem;
@@ -213,7 +233,7 @@ input:focus {
         rgba(0, 159, 253, 1) 100%
     );
     border-radius: 10rem;
-    animation: bg-animation infinite 2s alternate;
+    animation: bg-animation infinite 1.5s alternate;
     background-size: 200%;
     margin-top: 0.5rem;
 }
@@ -528,7 +548,7 @@ input:focus {
                             background-color ease-in-out 250ms;
                     }
 
-                    &:hover {
+                    &:hover,&:focus {
                         color: $clr-black;
 
                         &::after {
@@ -1077,7 +1097,12 @@ input:focus {
 
         .comment-options {
             margin-top: 0.25rem;
-            & > button {
+            margin-left:.5rem;
+
+            .dropright {
+                display: inline-block;
+            }
+            & > button, .comment-actions {
                 font-size: 0.8rem;
                 background: transparent;
                 border: none;
@@ -1104,7 +1129,7 @@ input:focus {
                 }
             }
 
-            & > .comment-actions {
+            .comment-actions {
                 margin-left: 0.5rem;
                 & > i {
                     margin: 0;
@@ -1165,6 +1190,9 @@ input:focus {
     .avatar {
         width: 2rem;
         height: 2rem;
+        object-fit: cover;
+        min-width: 2rem;
+        min-height: 2rem;
         margin-top: 0.075rem;
     }
 }

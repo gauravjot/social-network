@@ -163,20 +163,15 @@ const TimelinePost = ({ user, post, friends, token, liked }) => {
                     }
                 >
                     <i className="far fa-thumbs-up"></i>
-                    {post.likes.persons != null ? (
-                        <tag>
-                            {likesCount > 0 ? likesCount+' ' : ''}Like
-                            {post.likes.persons.length > 1 ? "s" : ""}
-                        </tag>
-                    ) : (
-                        "Like"
-                    )}
+                    {likesCount > 0 ? likesCount+' ' : ''}Like
+                    {likesCount > 1 ? "s" : ""}
                 </button>
                 <button>
                     <i className="far fa-share-square"></i>Share
                 </button>
             </div>
             <div className={(isLoadingComments) ? "slim-loading-bar":""}></div>
+            
             {
                 showComments && typeof comments == "object" ?
                     <div className="each-comment parent-comment">
