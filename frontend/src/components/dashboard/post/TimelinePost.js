@@ -71,12 +71,13 @@ const TimelinePost = ({ user, post, friends, token, liked }) => {
                 .then(function (response) {
                     setShowComments(true)
                     setComments(response.data.comments)
-                    if (response.data.comments) {
+                    if (response.data.comments && response.data.comments.length == 0) {
                         setIsLoadingComments(false);
                     }
                 })
                 .catch((err) => {
                     console.log(err.response)
+                    setIsLoadingComments(false);
                 })
         }
     }
@@ -151,7 +152,7 @@ const TimelinePost = ({ user, post, friends, token, liked }) => {
             <div className="d-flex post-actions">
                 <button
                     onClick={commentsToggle}>
-                    <i className="far fa-comment-alt"></i>Comments
+                    <i className="far fa-comment-alt"></i>{(comments) ? (comments.length == 0) ? "No " : comments.length +" " : ""}Comments
                 </button>
                 <button
                     ref={btnRef}

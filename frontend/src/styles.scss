@@ -19,19 +19,19 @@ $theme-colors: (
     @return map-get($theme-colors, $key);
 }
 
-// $clr-accent: #0075ff;
-// $clr-white: #ffffff;
-// $clr-text: #51515c;
-// $clr-black: #000000;
-// $clr-light-accent: #f7f7f9;
-// $clr-grey: #8a8a94;
-
 $clr-accent: #0075ff;
-$clr-white: #131314;
-$clr-text: #dcdcdc;
-$clr-black: #ffffff;
-$clr-light-accent: darken(#fafafb, 85%);
+$clr-white: #ffffff;
+$clr-text: #51515c;
+$clr-black: #000000;
+$clr-light-accent: #f7f7f9;
 $clr-grey: #8a8a94;
+
+// $clr-accent: #0075ff;
+// $clr-white: #131314;
+// $clr-text: #dcdcdc;
+// $clr-black: #ffffff;
+// $clr-light-accent: darken(#fafafb, 85%);
+// $clr-grey: #8a8a94;
 
 html {
     font-size: 16.5px;
@@ -131,21 +131,20 @@ input:focus {
 }
 
 .dropdown-menu {
-    background-color: darken($clr-grey,45%);
+    background-color: rgba($clr-grey,.15);
     color:$clr-text;
-    padding:0;
+    border:1px solid rgba($clr-grey,.15);
     border-radius: .5rem;
     min-width:8rem;
 
     .dropdown-item {
-        color:$clr-black;
+        color:rgba($clr-black,.9);
         font-size: 0.8rem;
-        padding:.5rem 1rem;
+        padding:.3rem 1rem;
         font-weight: 600;
 
         &:hover, &:focus {
-            background-color: darken($clr-grey,35%);
-            border-radius: .5rem;
+            background-color: rgba($clr-grey,.25);
         }
     }
 }
@@ -562,7 +561,7 @@ input:focus {
     }
 }
 .navbar-spacer {
-    padding-top: 4.035rem;
+    padding-top: 3.9rem;
 }
 
 .leftsidebar {
@@ -852,6 +851,7 @@ input:focus {
 
             button {
                 margin-bottom: 1rem;
+                border-radius: .3rem;
             }
 
             span {

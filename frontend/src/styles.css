@@ -20,10 +20,10 @@ html {
 body {
   margin: auto;
   line-height: 2rem;
-  background-color: #131314;
-  background-image: -webkit-gradient(linear, left top, right top, color-stop(50%, #131314), color-stop(60%, #1e1e26));
-  background-image: linear-gradient(to right, #131314 50%, #1e1e26 60%);
-  color: #dcdcdc;
+  background-color: #ffffff;
+  background-image: -webkit-gradient(linear, left top, right top, color-stop(50%, #ffffff), color-stop(60%, #f7f7f9));
+  background-image: linear-gradient(to right, #ffffff 50%, #f7f7f9 60%);
+  color: #51515c;
   font-size: 1rem;
   font-weight: 500;
   font-family: "Noto Sans", "Open Sans", "Helvetica Neue", sans-serif;
@@ -84,20 +84,20 @@ input:focus {
 }
 
 .form-label {
-  color: #dcdcdc;
+  color: #51515c;
 }
 
 .form-control {
-  background: rgba(30, 30, 38, 0.4);
-  color: #ffffff;
+  background: rgba(247, 247, 249, 0.4);
+  color: #000000;
   border: 0.1rem solid rgba(138, 138, 148, 0.3);
   border-radius: 0.75rem;
   padding: 0.6em 1em;
 }
 
 .form-control:focus {
-  background: #131314;
-  color: #ffffff;
+  background: #ffffff;
+  color: #000000;
   border-color: #0075ff;
   outline: 0;
   -webkit-box-shadow: 0;
@@ -105,27 +105,26 @@ input:focus {
 }
 
 .dropdown-menu {
-  background-color: #1b1b1e;
-  color: #dcdcdc;
-  padding: 0;
+  background-color: rgba(138, 138, 148, 0.15);
+  color: #51515c;
+  border: 1px solid rgba(138, 138, 148, 0.15);
   border-radius: .5rem;
   min-width: 8rem;
 }
 
 .dropdown-menu .dropdown-item {
-  color: #ffffff;
+  color: rgba(0, 0, 0, 0.9);
   font-size: 0.8rem;
-  padding: .5rem 1rem;
+  padding: .3rem 1rem;
   font-weight: 600;
 }
 
 .dropdown-menu .dropdown-item:hover, .dropdown-menu .dropdown-item:focus {
-  background-color: #333338;
-  border-radius: .5rem;
+  background-color: rgba(138, 138, 148, 0.25);
 }
 
 .card {
-  background-color: #131314;
+  background-color: #ffffff;
   padding: 1rem;
   border-radius: 1rem;
   margin: 1rem 0 1.5rem 0;
@@ -145,14 +144,14 @@ input:focus {
   letter-spacing: 0.1rem;
   font-family: "Poppins";
   font-weight: 600;
-  color: #ffffff;
+  color: #000000;
   border: none;
   padding: 0.25rem 0;
-  background-color: rgba(30, 30, 38, 0.5);
+  background-color: rgba(247, 247, 249, 0.5);
 }
 
 .card-btn:hover {
-  background-color: rgba(30, 30, 38, 0.75);
+  background-color: rgba(247, 247, 249, 0.75);
   text-decoration: underline;
 }
 
@@ -230,10 +229,10 @@ input:focus {
 }
 
 .bg-social-icons {
-  -webkit-box-shadow: inset 0 0 4rem 1rem rgba(30, 30, 38, 0.7);
-          box-shadow: inset 0 0 4rem 1rem rgba(30, 30, 38, 0.7);
+  -webkit-box-shadow: inset 0 0 4rem 1rem rgba(247, 247, 249, 0.7);
+          box-shadow: inset 0 0 4rem 1rem rgba(247, 247, 249, 0.7);
   position: relative;
-  background: #1e1e26 url(../src/assets/images/bg-4.png);
+  background: #f7f7f9 url(../src/assets/images/bg-4.png);
   background-size: 250px;
   z-index: 1;
 }
@@ -241,7 +240,7 @@ input:focus {
 .bg-social-icons::before {
   content: "";
   position: absolute;
-  background-color: rgba(30, 30, 38, 0.5);
+  background-color: rgba(247, 247, 249, 0.5);
   top: 0px;
   right: 0px;
   bottom: 0px;
@@ -254,7 +253,7 @@ input:focus {
   display: grid;
   place-content: center;
   min-height: 100vh;
-  background-color: #1e1e26;
+  background-color: #f7f7f9;
 }
 
 .home .intro-panel {
@@ -271,7 +270,7 @@ input:focus {
   margin: 0.5em 0 1em 0;
   line-height: 2.5rem;
   font-weight: 400;
-  color: #dcdcdc;
+  color: #51515c;
   letter-spacing: 0.03rem;
 }
 
@@ -279,7 +278,7 @@ input:focus {
   font-family: "Poppins";
   font-weight: 300;
   letter-spacing: 0.01rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(0, 0, 0, 0.7);
 }
 
 .home .intro-panel p b {
@@ -287,7 +286,7 @@ input:focus {
   border-bottom: 0.1rem #0075ff solid;
   letter-spacing: 0.03rem;
   padding: 0 0.1rem;
-  color: #ffffff;
+  color: #000000;
 }
 
 .signup {
@@ -310,14 +309,14 @@ input:focus {
 }
 
 .signup .tos-text-signup {
-  background-color: rgba(30, 30, 38, 0.5);
+  background-color: rgba(247, 247, 249, 0.5);
   text-align: center;
   font-weight: 500;
   border-radius: 0 0 1rem 1rem;
   margin: -1.55rem;
   margin-top: 1rem;
   line-height: 1.2rem;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(0, 0, 0, 0.5);
   font-size: 0.8rem;
   padding: 1em;
 }
@@ -358,19 +357,19 @@ input:focus {
 
 .signup .choose-avatar > i {
   margin-right: 0.5rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(0, 0, 0, 0.7);
   font-size: 1rem;
 }
 
 .signup .choose-avatar:focus {
   border-color: #0075ff;
-  background-color: #131314;
-  color: #ffffff;
+  background-color: #ffffff;
+  color: #000000;
 }
 
 .login {
   padding: 0 1rem;
-  background-color: #1e1e26;
+  background-color: #f7f7f9;
 }
 
 .login h3 {
@@ -411,7 +410,7 @@ input:focus {
 }
 
 .navbar {
-  background: #131314;
+  background: #ffffff;
   border-bottom: 1px rgba(138, 138, 148, 0.15) solid;
   -webkit-box-shadow: 0 0 1px 0 rgba(138, 138, 148, 0.1);
           box-shadow: 0 0 1px 0 rgba(138, 138, 148, 0.1);
@@ -443,7 +442,7 @@ input:focus {
   border: 0px;
   padding: 0.8rem;
   margin-top: 0.3rem;
-  color: #dcdcdc;
+  color: #51515c;
 }
 
 .navbar > .container > .row > .nav-brand .navbar-toggler .navbar-toggler-icon {
@@ -468,7 +467,7 @@ input:focus {
 .navbar > .container > .row .row > div > form {
   border: 1px rgba(138, 138, 148, 0.1) solid;
   border-radius: 0.5rem;
-  background-color: #1e1e26;
+  background-color: #f7f7f9;
   font-size: 0.8rem;
   margin: 0.5rem 1.5rem;
 }
@@ -482,7 +481,7 @@ input:focus {
 .navbar > .container > .row .row > div > form input {
   border: 0px;
   background: transparent;
-  color: #ffffff;
+  color: #000000;
   padding: 0 0.6rem;
   width: 100%;
   -webkit-transition: background-color ease-out 250ms;
@@ -509,11 +508,11 @@ input:focus {
 
 .navbar > .container > .row .row > div > form button:focus, .navbar > .container > .row .row > div > form button:hover {
   outline: 0;
-  color: #ffffff;
+  color: #000000;
 }
 
 .navbar > .container > .row .row > div > form button:focus {
-  background-color: rgba(255, 255, 255, 0.08);
+  background-color: rgba(0, 0, 0, 0.08);
 }
 
 .navbar > .container > .row .row > div .collapse {
@@ -529,7 +528,7 @@ input:focus {
 }
 
 .navbar > .container > .row .row > div ul > li button {
-  color: #dcdcdc;
+  color: #51515c;
   position: relative;
   background-color: transparent;
   border: none;
@@ -545,7 +544,7 @@ input:focus {
   display: block;
   height: 1px;
   width: 0px;
-  background-color: #131314;
+  background-color: #ffffff;
   position: absolute;
   left: 0;
   right: 0;
@@ -554,16 +553,16 @@ input:focus {
 }
 
 .navbar > .container > .row .row > div ul > li button:hover, .navbar > .container > .row .row > div ul > li button:focus {
-  color: #ffffff;
+  color: #000000;
 }
 
 .navbar > .container > .row .row > div ul > li button:hover::after, .navbar > .container > .row .row > div ul > li button:focus::after {
-  background-color: #ffffff;
+  background-color: #000000;
   width: 100%;
 }
 
 .navbar-spacer {
-  padding-top: 4.035rem;
+  padding-top: 3.9rem;
 }
 
 .leftsidebar {
@@ -587,7 +586,7 @@ input:focus {
 
 .leftsidebar .user {
   margin: 1rem 0;
-  background-color: #1e1e26;
+  background-color: #f7f7f9;
   border: 1px rgba(138, 138, 148, 0.1) solid;
   border-radius: 0.8rem;
   padding: 0.7rem 0.5rem;
@@ -620,7 +619,7 @@ input:focus {
   font-size: 0.9rem;
   font-weight: 500;
   letter-spacing: 0.03rem;
-  color: #ffffff;
+  color: #000000;
 }
 
 .leftsidebar .user div span {
@@ -641,7 +640,7 @@ input:focus {
   width: 100%;
   text-align: start;
   border-radius: 0.5rem;
-  color: #ffffff;
+  color: #000000;
   font-family: "Poppins";
   font-weight: 500;
   font-size: 0.85rem;
@@ -682,9 +681,9 @@ input:focus {
 
 .leftsidebar > .navigation > .active {
   color: #0075ff !important;
-  -webkit-box-shadow: 10px 7px 15px -1px #15151a;
-          box-shadow: 10px 7px 15px -1px #15151a;
-  background-color: #1e1e26;
+  -webkit-box-shadow: 10px 7px 15px -1px #ebebf0;
+          box-shadow: 10px 7px 15px -1px #ebebf0;
+  background-color: #f7f7f9;
 }
 
 .leftsidebar > .navigation > .active > i {
@@ -711,7 +710,7 @@ input:focus {
 
 .leftsidebar > .about .techs a {
   display: table;
-  color: #ffffff;
+  color: #000000;
   margin: 0.5rem 0.5em;
   font-family: "Poppins";
   font-size: 0.85rem;
@@ -724,7 +723,7 @@ input:focus {
   display: block;
   height: 1px;
   width: 0px;
-  background-color: #131314;
+  background-color: #ffffff;
   position: absolute;
   left: 0;
   right: 0;
@@ -733,11 +732,11 @@ input:focus {
 }
 
 .leftsidebar > .about .techs a:hover {
-  color: #ffffff;
+  color: #000000;
 }
 
 .leftsidebar > .about .techs a:hover::after {
-  background-color: #ffffff;
+  background-color: #000000;
   width: 100%;
 }
 
@@ -782,13 +781,13 @@ input:focus {
 }
 
 .timeline {
-  background-color: #1e1e26;
+  background-color: #f7f7f9;
   padding: 0 1rem;
   min-height: 100vh;
 }
 
 .timeline > .create-post {
-  background-color: #131314;
+  background-color: #ffffff;
   border-radius: 1rem;
   padding: 1rem 1rem 0 1rem;
   margin: 1rem 0 1.5rem 0;
@@ -816,8 +815,8 @@ input:focus {
   border: none;
   margin: 0 0.5rem;
   padding: 0.5rem 1rem;
-  background-color: #131314;
-  color: #ffffff;
+  background-color: #ffffff;
+  color: #000000;
   letter-spacing: 0.02rem;
   font-size: 0.9rem;
   line-height: 1.6rem;
@@ -855,7 +854,7 @@ input:focus {
 }
 
 .timeline > .create-post > .d-flex > button:focus, .timeline > .create-post > .d-flex > button:hover {
-  color: #ffffff;
+  color: #000000;
   background-color: rgba(138, 138, 148, 0.2);
   outline: none;
 }
@@ -872,6 +871,7 @@ input:focus {
 
 .timeline > .create-post > .submit-btn button {
   margin-bottom: 1rem;
+  border-radius: .3rem;
 }
 
 .timeline > .create-post > .submit-btn span {
@@ -923,7 +923,7 @@ input:focus {
   font-size: 0.9rem;
   font-weight: 500;
   letter-spacing: 0.03rem;
-  color: #ffffff;
+  color: #000000;
   margin-top: 0.25rem;
 }
 
@@ -952,7 +952,7 @@ input:focus {
 }
 
 .timeline .post > .user a:hover {
-  color: #ffffff;
+  color: #000000;
   background-color: rgba(138, 138, 148, 0.2);
 }
 
@@ -980,7 +980,7 @@ input:focus {
 .timeline .post > .post-actions button {
   background-color: transparent;
   border: none;
-  color: #dcdcdc;
+  color: #51515c;
   text-align: start;
   font-size: 0.85rem;
   border-radius: 0.5rem;
@@ -996,11 +996,11 @@ input:focus {
 
 .timeline .post > .post-actions button:hover, .timeline .post > .post-actions button:focus {
   background-color: rgba(138, 138, 148, 0.07);
-  color: #ffffff;
+  color: #000000;
 }
 
 .timeline .post > .post-actions button:hover > i, .timeline .post > .post-actions button:focus > i {
-  color: #dcdcdc;
+  color: #51515c;
 }
 
 .timeline .post > .post-actions button:focus {
@@ -1010,7 +1010,7 @@ input:focus {
 
 .timeline .post > .post-comment {
   margin-top: 1rem;
-  background-color: #191920;
+  background-color: #f1f1f5;
   border-radius: 1.3rem;
   padding: 0.2rem;
 }
@@ -1028,7 +1028,7 @@ input:focus {
   border: none;
   width: 100%;
   font-size: 0.9rem;
-  color: #dcdcdc;
+  color: #51515c;
   background: transparent;
   border-radius: 0.5rem;
   padding: 0 0.75rem;
@@ -1046,7 +1046,7 @@ input:focus {
 }
 
 .timeline .post > .post-comment > div > button:focus, .timeline .post > .post-comment > div > button:hover {
-  color: #ffffff;
+  color: #000000;
   background: rgba(138, 138, 148, 0.1);
 }
 
@@ -1119,7 +1119,7 @@ input:focus {
 }
 
 .each-comment .comment .content > h6 {
-  color: rgba(220, 220, 220, 0.75);
+  color: rgba(81, 81, 92, 0.75);
   font-weight: 500;
   font-size: 0.8rem;
 }
@@ -1143,7 +1143,7 @@ input:focus {
   font-size: 0.8rem;
   background: transparent;
   border: none;
-  color: #dcdcdc;
+  color: #51515c;
   margin-right: 0.125rem;
   border-radius: 0.5rem;
   padding: 0.25rem 0.5rem;
@@ -1156,11 +1156,11 @@ input:focus {
 
 .each-comment .comment .comment-options > button:hover, .each-comment .comment .comment-options > button:focus, .each-comment .comment .comment-options .comment-actions:hover, .each-comment .comment .comment-options .comment-actions:focus {
   background-color: rgba(138, 138, 148, 0.07);
-  color: #ffffff;
+  color: #000000;
 }
 
 .each-comment .comment .comment-options > button:hover > i, .each-comment .comment .comment-options > button:focus > i, .each-comment .comment .comment-options .comment-actions:hover > i, .each-comment .comment .comment-options .comment-actions:focus > i {
-  color: #dcdcdc;
+  color: #51515c;
 }
 
 .each-comment .comment .comment-options > button:focus, .each-comment .comment .comment-options .comment-actions:focus {
@@ -1179,7 +1179,7 @@ input:focus {
 
 .each-comment .comment .timesince {
   font-size: 0.75rem;
-  color: rgba(220, 220, 220, 0.75);
+  color: rgba(81, 81, 92, 0.75);
   margin-left: 0.25rem;
 }
 
@@ -1192,7 +1192,7 @@ input:focus {
 }
 
 .each-comment .comment .post-comment > div {
-  background-color: #191920;
+  background-color: #f1f1f5;
   border-radius: 1.3rem;
 }
 
@@ -1200,7 +1200,7 @@ input:focus {
   border: none;
   width: 100%;
   font-size: 0.9rem;
-  color: #dcdcdc;
+  color: #51515c;
   background: transparent;
   border-radius: 0.5rem;
   padding: 0.5rem 0.75rem;
@@ -1218,7 +1218,7 @@ input:focus {
 }
 
 .each-comment .comment .post-comment > div > button:focus, .each-comment .comment .post-comment > div > button:hover {
-  color: #ffffff;
+  color: #000000;
   background: rgba(138, 138, 148, 0.1);
 }
 
@@ -1285,11 +1285,11 @@ input:focus {
   font-weight: 600;
   letter-spacing: 0.03rem;
   line-height: 1.6rem;
-  color: #ffffff;
+  color: #000000;
 }
 
 .rightsidebar .user div h6 a {
-  color: #ffffff;
+  color: #000000;
 }
 
 .rightsidebar .user div h6 a:hover {
@@ -1304,7 +1304,7 @@ input:focus {
 }
 
 .rightsidebar .back-hover:hover {
-  background-color: #1e1e26;
+  background-color: #f7f7f9;
 }
 
 .friends .timeline .card > h6 {
@@ -1312,7 +1312,7 @@ input:focus {
   font-weight: 500;
   letter-spacing: 0.03rem;
   line-height: 1.6rem;
-  color: #ffffff;
+  color: #000000;
   margin-bottom: 1rem;
 }
 
@@ -1336,7 +1336,7 @@ input:focus {
 }
 
 .friendlistitem h6 a {
-  color: #ffffff;
+  color: #000000;
 }
 
 .friendlistitem h6 a:hover {
@@ -1363,7 +1363,7 @@ input:focus {
 
 @media (max-width: 992px) {
   body {
-    background-color: #1e1e26;
+    background-color: #f7f7f9;
     background-image: none;
   }
   .container {
