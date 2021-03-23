@@ -202,6 +202,31 @@ input:focus {
     border-radius: 0.75rem;
 }
 
+.slim-loading-bar {
+    height: 0.15rem;
+    width: 100%;
+    background-color: #2a2a72;
+    background-image: linear-gradient(
+        90deg,
+        rgba(0, 159, 253, 1) 0%,
+        rgba(42, 42, 114, 1) 50%,
+        rgba(0, 159, 253, 1) 100%
+    );
+    border-radius: 10rem;
+    animation: bg-animation infinite 2s alternate;
+    background-size: 200%;
+    margin-top: 0.5rem;
+}
+
+@keyframes bg-animation {
+    0% {
+        background-position: left;
+    }
+    100% {
+        background-position: right;
+    }
+}
+
 .bg-social-icons {
     box-shadow: inset 0 0 4rem 1rem rgba($clr-light-accent, 0.7);
     position: relative;
@@ -238,7 +263,7 @@ input:focus {
         }
 
         h2 {
-            margin: .5em 0 1em 0;
+            margin: 0.5em 0 1em 0;
             line-height: 2.5rem;
             font-weight: 400;
             color: $clr-text;
@@ -246,14 +271,14 @@ input:focus {
         }
 
         p {
-            font-family: 'Poppins';
+            font-family: "Poppins";
             font-weight: 300;
             letter-spacing: 0.01rem;
-            color: rgba($clr-black,.7);
+            color: rgba($clr-black, 0.7);
 
             b {
-                font-weight: 500;  
-                border-bottom: .1rem $clr-accent solid;
+                font-weight: 500;
+                border-bottom: 0.1rem $clr-accent solid;
                 letter-spacing: 0.03rem;
                 padding: 0 0.1rem;
                 color: $clr-black;
@@ -429,8 +454,8 @@ input:focus {
                 font-size: 0.8rem;
                 margin: 0.5rem 1.5rem;
 
-                @media(max-width:992px) {
-                    margin-top:1rem;
+                @media (max-width: 992px) {
+                    margin-top: 1rem;
                 }
 
                 input {
@@ -998,30 +1023,36 @@ input:focus {
 
 .show {
     display: block !important;
-            transition: display ease-in-out 200ms;
+    transition: display ease-in-out 200ms;
 }
 
 .parent-comment {
-    & > .comment {
+    & > div > .comment {
         margin-left: 0 !important;
-        border:none !important;
-        padding-left:0 !important;
+        border: none !important;
+        padding-left: 0 !important;
+        padding-top: 1rem;
+
+        @media (max-width: 1200px) {
+            margin-left: 0 !important;
+        }
+
     }
 }
 .each-comment {
     .comment {
-        padding-top: 1rem;
+        padding-top: .5rem;
         line-height: 1.2rem;
-        margin-left: -1.75rem;
-        padding-left:1rem;
-        border-left:.1rem rgba($clr-grey, 0.15) solid;
+        margin-left: -2rem;
+        padding-left: .75rem;
+        border-left: 0.1rem rgba($clr-grey, 0.15) solid;
 
-        @media(max-width:1200px) {
-            margin-left:-2.25rem;
+        @media (max-width: 1200px) {
+            margin-left: -2.0rem;
         }
 
         & > div {
-            width:100%;
+            width: 100%;
         }
         .content {
             margin-left: 0.5em;
@@ -1044,19 +1075,19 @@ input:focus {
             }
         }
 
-        .comment-options{
-            margin-top: .25rem;
+        .comment-options {
+            margin-top: 0.25rem;
             & > button {
-                font-size:0.8rem;
-                background:transparent;
-                border:none;
-                color:$clr-text;
-                margin-right:.125rem;
-                border-radius: .5rem;
-                padding:.25rem .5rem;
+                font-size: 0.8rem;
+                background: transparent;
+                border: none;
+                color: $clr-text;
+                margin-right: 0.125rem;
+                border-radius: 0.5rem;
+                padding: 0.25rem 0.5rem;
                 & > i {
-                    color:$clr-grey;
-                    margin-right:.25rem;
+                    color: $clr-grey;
+                    margin-right: 0.25rem;
                 }
                 &:hover,
                 &:focus {
@@ -1074,9 +1105,9 @@ input:focus {
             }
 
             & > .comment-actions {
-                margin-left: .5rem;
+                margin-left: 0.5rem;
                 & > i {
-                    margin:0;
+                    margin: 0;
                     vertical-align: middle;
                 }
             }
@@ -1089,11 +1120,11 @@ input:focus {
         }
 
         .post-comment {
-            margin-top: .25rem;
-            margin-left: .5rem;
-            width:80%;
-            max-width:20rem;
-            display:none;
+            margin-top: 0.25rem;
+            margin-left: 0.5rem;
+            width: 80%;
+            max-width: 20rem;
+            display: none;
 
             & > div {
                 background-color: darken($clr-light-accent, 2%);
@@ -1106,8 +1137,7 @@ input:focus {
                     color: $clr-text;
                     background: transparent;
                     border-radius: 0.5rem;
-                    padding: .5rem 0.75rem;
-                    
+                    padding: 0.5rem 0.75rem;
                 }
 
                 & > button {

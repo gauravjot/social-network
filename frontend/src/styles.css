@@ -178,6 +178,37 @@ input:focus {
   border-radius: 0.75rem;
 }
 
+.slim-loading-bar {
+  height: 0.15rem;
+  width: 100%;
+  background-color: #2a2a72;
+  background-image: -webkit-gradient(linear, left top, right top, from(#009ffd), color-stop(50%, #2a2a72), to(#009ffd));
+  background-image: linear-gradient(90deg, #009ffd 0%, #2a2a72 50%, #009ffd 100%);
+  border-radius: 10rem;
+  -webkit-animation: bg-animation infinite 2s alternate;
+          animation: bg-animation infinite 2s alternate;
+  background-size: 200%;
+  margin-top: 0.5rem;
+}
+
+@-webkit-keyframes bg-animation {
+  0% {
+    background-position: left;
+  }
+  100% {
+    background-position: right;
+  }
+}
+
+@keyframes bg-animation {
+  0% {
+    background-position: left;
+  }
+  100% {
+    background-position: right;
+  }
+}
+
 .bg-social-icons {
   -webkit-box-shadow: inset 0 0 4rem 1rem rgba(30, 30, 38, 0.7);
           box-shadow: inset 0 0 4rem 1rem rgba(30, 30, 38, 0.7);
@@ -217,7 +248,7 @@ input:focus {
 }
 
 .home .intro-panel h2 {
-  margin: .5em 0 1em 0;
+  margin: 0.5em 0 1em 0;
   line-height: 2.5rem;
   font-weight: 400;
   color: #dcdcdc;
@@ -225,7 +256,7 @@ input:focus {
 }
 
 .home .intro-panel p {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   font-weight: 300;
   letter-spacing: 0.01rem;
   color: rgba(255, 255, 255, 0.7);
@@ -1027,23 +1058,30 @@ input:focus {
   transition: display ease-in-out 200ms;
 }
 
-.parent-comment > .comment {
+.parent-comment > div > .comment {
   margin-left: 0 !important;
   border: none !important;
   padding-left: 0 !important;
+  padding-top: 1rem;
+}
+
+@media (max-width: 1200px) {
+  .parent-comment > div > .comment {
+    margin-left: 0 !important;
+  }
 }
 
 .each-comment .comment {
-  padding-top: 1rem;
+  padding-top: .5rem;
   line-height: 1.2rem;
-  margin-left: -1.75rem;
-  padding-left: 1rem;
+  margin-left: -2rem;
+  padding-left: .75rem;
   border-left: 0.1rem rgba(138, 138, 148, 0.15) solid;
 }
 
 @media (max-width: 1200px) {
   .each-comment .comment {
-    margin-left: -2.25rem;
+    margin-left: -2.0rem;
   }
 }
 
@@ -1073,7 +1111,7 @@ input:focus {
 }
 
 .each-comment .comment .comment-options {
-  margin-top: .25rem;
+  margin-top: 0.25rem;
 }
 
 .each-comment .comment .comment-options > button {
@@ -1081,14 +1119,14 @@ input:focus {
   background: transparent;
   border: none;
   color: #dcdcdc;
-  margin-right: .125rem;
-  border-radius: .5rem;
-  padding: .25rem .5rem;
+  margin-right: 0.125rem;
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.5rem;
 }
 
 .each-comment .comment .comment-options > button > i {
   color: #8a8a94;
-  margin-right: .25rem;
+  margin-right: 0.25rem;
 }
 
 .each-comment .comment .comment-options > button:hover, .each-comment .comment .comment-options > button:focus {
@@ -1106,7 +1144,7 @@ input:focus {
 }
 
 .each-comment .comment .comment-options > .comment-actions {
-  margin-left: .5rem;
+  margin-left: 0.5rem;
 }
 
 .each-comment .comment .comment-options > .comment-actions > i {
@@ -1121,8 +1159,8 @@ input:focus {
 }
 
 .each-comment .comment .post-comment {
-  margin-top: .25rem;
-  margin-left: .5rem;
+  margin-top: 0.25rem;
+  margin-left: 0.5rem;
   width: 80%;
   max-width: 20rem;
   display: none;
@@ -1140,7 +1178,7 @@ input:focus {
   color: #dcdcdc;
   background: transparent;
   border-radius: 0.5rem;
-  padding: .5rem 0.75rem;
+  padding: 0.5rem 0.75rem;
 }
 
 .each-comment .comment .post-comment > div > button {

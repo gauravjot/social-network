@@ -12,6 +12,7 @@ const TimelinePost = ({ user, post, friends, token, liked }) => {
     const [comments, setComments] = useState();
     const [showComments, setShowComments] = useState(false);
     const [likesCount, setLikesCount] = useState((post.likes.persons != null) ? post.likes.persons.length : 0);
+    const [isLoadingComments,setIsLoadingComments] = useState(false); 
     let btnRef = useRef();
 
     useEffect(() => {
@@ -65,10 +66,14 @@ const TimelinePost = ({ user, post, friends, token, liked }) => {
         if (comments) {
             setShowComments(!showComments);
         } else {
+            if (!isLoadingComments) {setIsLoadingComments(true)}
             axios.get(BACKEND_SERVER_DOMAIN + "/api/" + post.id + "/comments/", {headers:{Authorization: token}})
                 .then(function (response) {
                     setShowComments(true)
                     setComments(response.data.comments)
+                    if (response.data.comments) {
+                        setIsLoadingComments(false);
+                    }
                 })
                 .catch((err) => {
                     console.log(err.response)
@@ -171,18 +176,20 @@ const TimelinePost = ({ user, post, friends, token, liked }) => {
                     <i className="far fa-share-square"></i>Share
                 </button>
             </div>
+            <div className={(isLoadingComments) ? "slim-loading-bar":""}></div>
             {
                 showComments && typeof comments == "object" ?
                     <div className="each-comment parent-comment">
                         {comments.slice().map((comment, index) => (
-                            (comment.comment_parent == 0) ?
-                                <CommentComponent comment={comment} key={index}
-                                user={user}
-                                token={token}
-                                allComments={splicedArray(comments,index)}
-                                post_id={post.id}
-                                liked={comment.comment_likes.persons && comment.comment_likes.persons.includes(user.id)}/>
-                            : ''                            
+                            <div>{(comment.comment_parent == 0) ?
+                                    <CommentComponent comment={comment} key={index}
+                                        user={user}
+                                        token={token}
+                                        allComments={splicedArray(comments,index)}
+                                        post_id={post.id}
+                                        liked={comment.comment_likes.persons && comment.comment_likes.persons.includes(user.id)}/>
+                            : ''}
+                            {(Number(index+1) == Number(comments.length) && isLoadingComments) ? setIsLoadingComments(false) : ''}</div>                       
                         ))}
                     </div>
                 : <div></div>
