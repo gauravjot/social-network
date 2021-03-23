@@ -12,6 +12,6 @@ urlpatterns = [
     # Comments
     path('api/<int:post>/comments/', getPostComments),
     path('api/<int:post_id>/comments/new/', postNewComment),
-    path('api/<int:post>/comments/<int:pk>', actionsComment) # like(PUT), update(POST), delete (DELETE) a comment 
+    path('api/<int:post_id>/comments/<int:pk>', actionsComment) # like(PUT), update(POST), delete (DELETE) a comment 
 
 ]

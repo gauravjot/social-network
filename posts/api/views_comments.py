@@ -14,6 +14,7 @@ from posts.models import Comment, Posts
 
 from .serializers import CommentSerializer
 from account.api.serializers import PersonSerializer
+import json
 
 # Get all post comments
 # By default it requires user to be logged in and be friends with post author
@@ -72,8 +73,35 @@ def postNewComment(request, post_id):
         return Response(data={**commentSerializer.data,'person':PersonSerializer(Person.objects.get(id=person)).data}, status=status.HTTP_201_CREATED)
     return Response(commentSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# Actions on a comment
+# Requires Auth
+# ---------------------------------------------------
 @api_view(['PUT','DELETE','POST'])
-def actionsComment(request):
+def actionsComment(request,post_id,pk):
+    person_id = getPersonID(request)
+    if type(person_id) is Response:
+        return person_id
+
+    if request.method == 'PUT':
+        comment = Comment.objects.get(pk=pk)
+        if comment.comment_likes:
+            if person_id in comment.comment_likes['persons']:
+                comment.comment_likes['persons'].remove(person_id)
+            else:
+                comment.comment_likes['persons'].append(person_id)
+        else:
+            comment.comment_likes = dict(persons=[(person_id)])
+        comment.save()
+        return Response(json.loads('{"action":"success"}'),status=status.HTTP_200_OK)
+    elif request.method == 'DELETE':
+        try:
+            comment = Comment.objects.get(pk=pk)
+            if comment.person_id == person_id:
+                comment.delete()
+                return Response(json.loads('{"action":"success"}'),status=status.HTTP_200_OK)
+        except Comment.DoesNotExist:
+            return Response(errorResponse(INVALID_REQUEST),status=status.HTTP_400_BAD_REQUEST)
+
     return Response(errorResponse(INVALID_REQUEST),status=status.HTTP_400_BAD_REQUEST)
 
 # Helper Functions
