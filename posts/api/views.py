@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
 from account.models import Token
+from account.api.serializers import PersonSerializer
 from posts.api.serializers import PostsSerializer
 from posts.models import Posts
 from friends.models import Friend
@@ -55,10 +56,15 @@ def getPosts(request):
         data = Friend.objects.filter(Q(user_a=person_id) | Q(user_b=person_id))
         friends = [entry.user_a if entry.user_a is not person_id else entry.user_b for entry in data]
         friends.append(person_id)
-        data = Posts.objects.filter(person_id__in=friends).order_by('pk')
+        data = Posts.objects.filter(person_id__in=friends).order_by('pk').values()
+        posts_final = []
+        for post in data:
+            print(post)
+            post_by = PersonSerializer(Person.objects.get(pk=post['person_id'])).data
+            posts_final.append({**PostsSerializer(post).data,"person":post_by})
         postsSerializer = PostsSerializer(data, many=True)
-        if postsSerializer.data:
-            return Response(data=postsSerializer.data,status=status.HTTP_200_OK)
+        if posts_final:
+            return Response(data=posts_final,status=status.HTTP_200_OK)
         else:
             return Response(errorResponse("No posts found!"),status=status.HTTP_404_NOT_FOUND)
     except Friend.DoesNotExist:
