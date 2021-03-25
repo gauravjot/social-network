@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 import pytz
 from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Q
 
 from rest_framework import status
 from rest_framework.response import Response
@@ -8,25 +9,43 @@ from rest_framework.decorators import api_view
 
 from .serializers import PersonSerializer
 from account.models import Person, Token
+from posts.models import Comment, Posts
+from posts.api.serializers import CommentSerializer, PostsSerializer
+from friends.models import Friend
 
 import json
 import bcrypt
 from secrets import token_hex
 from random import randrange
+from helpers.error_messages import UNAUTHORIZED, INVALID_TOKEN, INVALID_REQUEST
 
 # Get profile info
 # -----------------------------------------------
 @api_view(['GET'])
-def personInfo(request, pk):
+def personInfo(request, slug):
+    requesting_person = getPersonID(request)
+    if type(requesting_person) is Response:
+        return requesting_person
+
     try:
-        if (type(pk) is int):
-            data = Person.objects.get(pk=pk)
-        elif (type(pk) is str):
-            data = Person.objects.get(slug=pk)
-        else:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+        data = Person.objects.get(slug=slug)
+        wanted_person = data.id
         personSerializer = PersonSerializer(data)
-        return Response(personSerializer.data, status=status.HTTP_200_OK)
+        #comments
+        comments = CommentSerializer(Comment.objects.filter(person_id=wanted_person).order_by('pk')[:3].values(), many=True).data
+        posts = PostsSerializer(Posts.objects.filter(person_id=wanted_person).values(),many=True).data
+        
+        try:
+            data = Friend.objects.filter(Q(user_a=wanted_person) | Q(user_b=wanted_person))
+            friends = [entry.user_a if entry.user_a is not wanted_person else entry.user_b for entry in data]
+            if friends:
+                persons = Person.objects.filter(id__in=friends)
+                persons_dict = [PersonSerializer(person).data for person in persons]
+                friends = persons_dict
+        except Friend.DoesNotExist:
+            friends = []
+            
+        return Response({"user":personSerializer.data, "friends":friends, "posts":posts, "comments":comments}, status=status.HTTP_200_OK)
     except Person.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -96,6 +115,16 @@ def logout(request):
 
 # Helper Functions
 # -----------------------------------------------
+def getPersonID(request):
+    try:
+        token = request.headers['Authorization'].split()[-1]
+    except KeyError:
+        return Response(errorResponse(UNAUTHORIZED),status=status.HTTP_401_UNAUTHORIZED)
+    try:
+        return Token.objects.get(token=token).account
+    except Token.DoesNotExist:
+        return Response(errorResponse(INVALID_TOKEN),status=status.HTTP_400_BAD_REQUEST)
+
 def checkIfOldToken(date):
     gap = datetime.now(tz=pytz.utc) - date
     print(gap)
