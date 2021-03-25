@@ -20,6 +20,10 @@ function Dashboard() {
         dispatch(addPost(post));
     }
 
+    React.useEffect(() => {
+        window.scrollTo(0, 0);
+    },[])
+
     return (
         <section className="dashboard">
             <Helmet>

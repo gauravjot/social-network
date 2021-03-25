@@ -2,6 +2,7 @@ import Index from './components/home/Index';
 import LogIn from './components/home/LogIn';
 import Dashboard from './components/dashboard/Index';
 import Friends from './components/dashboard/friends/Friends';
+import Profile from './components/dashboard/profile/Profile'
 import {
   Route,
   Redirect,
@@ -10,6 +11,7 @@ import {
 } from 'react-router-dom';
 
 function App() {
+
   return (
     <Router>
       <Switch>
@@ -17,6 +19,7 @@ function App() {
         <Route path='/dashboard' exact component={Dashboard} />
         <Route path='/login' exact component={LogIn} />
         <Route path='/' exact component={Index} />
+        <Route path='/u/:slug' render={(props) => <Profile {...props} key={(Math.random() * 10)}/>} />
         <Redirect from='*' to='/' />
       </Switch>
     </Router>

@@ -59,11 +59,10 @@ def getPosts(request):
         data = Posts.objects.filter(person_id__in=friends).order_by('pk').values()
         posts_final = []
         for post in data:
-            print(post)
             post_by = PersonSerializer(Person.objects.get(pk=post['person_id'])).data
-            posts_final.append({**PostsSerializer(post).data,"person":post_by})
-        postsSerializer = PostsSerializer(data, many=True)
+            posts_final.append({**PostsSerializer(Posts.objects.get(pk=post['id'])).data,"person":post_by})
         if posts_final:
+            print(posts_final)
             return Response(data=posts_final,status=status.HTTP_200_OK)
         else:
             return Response(errorResponse("No posts found!"),status=status.HTTP_404_NOT_FOUND)

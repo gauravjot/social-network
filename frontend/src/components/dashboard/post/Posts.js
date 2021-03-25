@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setPosts } from "../../../redux/actions"
 import { BACKEND_SERVER_DOMAIN } from '../../../settings'
 
-function Posts({token}) {
+function Posts({token, userposts}) {
 
     const user = useSelector((state) => state.user);
     const posts = useSelector(state => state.posts.posts);
@@ -13,18 +13,23 @@ function Posts({token}) {
     const dispatch = useDispatch();
 
     const getPosts = () => {
-        let config = { headers: {
-            'Content-Type': 'application/json',
-            Authorization: token,   
-        }};
-        axios.get(BACKEND_SERVER_DOMAIN + '/api/posts', config)
-            .then(function (response) {
-                dispatch(setPosts(response.data));
-            })
-            .catch(function (err) {
-                console.log(err);
-                dispatch(setPosts([]));
-            });
+        if (!userposts) {
+            let config = { headers: {
+                'Content-Type': 'application/json',
+                Authorization: token,   
+            }};
+            axios.get(BACKEND_SERVER_DOMAIN + '/api/posts', config)
+                .then(function (response) {
+                    dispatch(setPosts(response.data));
+                })
+                .catch(function (err) {
+                    console.log(err);
+                    dispatch(setPosts([]));
+                });
+        } else {
+            dispatch(setPosts(userposts));
+        }
+        
     }
 
     useEffect(() => {
@@ -46,13 +51,13 @@ function Posts({token}) {
     return (posts && posts.length > 0) ? 
             (<section className="timeline-posts">
                 {posts.slice().reverse().map((post, index) => (
-                    <div key={post.id}>
+                    <div key={index}>
                         <TimelinePost user={user} post={post} friends={friends} token={token} liked={post.likes.persons && post.likes.persons.includes(user.id)}/>
                     </div>
             ))}
             </section>) : (
             <div className="sorry">
-                Sorry, but we could not have any posts for you yet. Add friends or post something to get started!
+                No posts yet.
             </div>
         );
 }

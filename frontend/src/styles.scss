@@ -12,7 +12,7 @@ $theme-colors: (
     --breakpoint-lg: 992px;
     --breakpoint-xl: 1200px;
 }
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Poppins:wght@400;500;600;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@400;500;600;700;900&display=swap");
 
 // Overwrites
 @function theme-color($key: "primary") {
@@ -55,7 +55,8 @@ body {
     color: $clr-text;
     font-size: 1rem;
     font-weight: 500;
-    font-family: "Noto Sans", "Open Sans", "Helvetica Neue", sans-serif;
+    font-family: "Roboto", "Noto Sans", "Open Sans", "Helvetica Neue",
+        sans-serif;
 }
 
 *,
@@ -88,6 +89,12 @@ h6 {
 a {
     color: $clr-accent;
     text-decoration: none;
+
+    &:focus {
+        text-decoration: underline;
+        outline: none;
+        color:$clr-black !important;
+    }
 }
 
 button:focus,
@@ -131,20 +138,21 @@ input:focus {
 }
 
 .dropdown-menu {
-    background-color: rgba($clr-grey,.15);
-    color:$clr-text;
-    border:1px solid rgba($clr-grey,.15);
-    border-radius: .5rem;
-    min-width:8rem;
+    background-color: $clr-light-accent;
+    color: $clr-text;
+    border: 1px solid rgba($clr-grey, 0.15);
+    border-radius: 0.5rem;
+    min-width: 8rem;
 
     .dropdown-item {
-        color:rgba($clr-black,.9);
+        color: rgba($clr-black, 0.9);
         font-size: 0.8rem;
-        padding:.3rem 1rem;
+        padding: 0.3rem 1rem;
         font-weight: 600;
 
-        &:hover, &:focus {
-            background-color: rgba($clr-grey,.25);
+        &:hover,
+        &:focus {
+            background-color: rgba($clr-grey, 0.25);
         }
     }
 }
@@ -169,10 +177,15 @@ input:focus {
     letter-spacing: 0.1rem;
     font-family: "Poppins";
     font-weight: 600;
+    text-align: center;
     color: $clr-black;
     border: none;
     padding: 0.25rem 0;
     background-color: rgba($clr-light-accent, 0.5);
+
+    a {
+        color: #000;
+    }
 
     &:hover {
         background-color: rgba($clr-light-accent, 0.75);
@@ -522,8 +535,9 @@ input:focus {
                 font-size: 0.9rem;
                 padding: 0 1.5rem;
                 margin: 0.5rem 0;
+                text-align: end;
 
-                button {
+                button, a {
                     color: $clr-text;
                     position: relative;
                     background-color: transparent;
@@ -547,8 +561,10 @@ input:focus {
                             background-color ease-in-out 250ms;
                     }
 
-                    &:hover,&:focus {
+                    &:hover,
+                    &:focus {
                         color: $clr-black;
+                        text-decoration: none;
 
                         &::after {
                             background-color: $clr-black;
@@ -557,11 +573,25 @@ input:focus {
                     }
                 }
             }
+
+            @media (max-width:992px) {
+                ul {
+                    width: 100%;
+
+                    li {
+                        text-align: start;
+                    }
+                }
+            }
         }
     }
 }
+
+.align-end {
+    text-align: end !important;
+}
 .navbar-spacer {
-    padding-top: 3.9rem;
+    height: 3.9rem;
 }
 
 .leftsidebar {
@@ -605,6 +635,14 @@ input:focus {
                 overflow: hidden;
                 white-space: nowrap;
                 display: block;
+
+                a {
+                    color:inherit;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
             }
             h6 {
                 font-size: 0.9rem;
@@ -851,7 +889,7 @@ input:focus {
 
             button {
                 margin-bottom: 1rem;
-                border-radius: .3rem;
+                border-radius: 0.3rem;
             }
 
             span {
@@ -897,9 +935,14 @@ input:focus {
                 h6 {
                     font-size: 0.9rem;
                     font-weight: 500;
-                    letter-spacing: 0.03rem;
                     color: $clr-black;
                     margin-top: 0.25rem;
+                    a {
+                        color:$clr-black;
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                    }
                 }
                 span {
                     font-size: 0.8rem;
@@ -909,7 +952,7 @@ input:focus {
                 }
             }
 
-            a {
+            .more-options {
                 color: $clr-grey;
                 min-width: 2.5rem;
                 height: 2.5rem;
@@ -1056,19 +1099,18 @@ input:focus {
         @media (max-width: 1200px) {
             margin-left: 0 !important;
         }
-
     }
 }
 .each-comment {
     .comment {
-        padding-top: .5rem;
+        padding-top: 0.5rem;
         line-height: 1.2rem;
         margin-left: -2rem;
-        padding-left: .75rem;
+        padding-left: 0.75rem;
         border-left: 0.1rem rgba($clr-grey, 0.15) solid;
 
         @media (max-width: 1200px) {
-            margin-left: -2.0rem;
+            margin-left: -2rem;
         }
 
         & > div {
@@ -1097,12 +1139,13 @@ input:focus {
 
         .comment-options {
             margin-top: 0.25rem;
-            margin-left:.5rem;
+            margin-left: 0.5rem;
 
             .dropright {
                 display: inline-block;
             }
-            & > button, .comment-actions {
+            & > button,
+            .comment-actions {
                 font-size: 0.8rem;
                 background: transparent;
                 border: none;
@@ -1206,13 +1249,14 @@ input:focus {
         font-size: 0.9rem;
         letter-spacing: 0.03rem;
         font-weight: 600;
+
     }
 
     .user {
         border-radius: 0.5rem;
         padding: 0.5rem;
         gap: 0.75rem;
-        margin: 0.25rem -0.5rem;
+        margin: 0.125rem -0.5rem;
 
         img {
             min-width: 2.5rem;
@@ -1237,14 +1281,13 @@ input:focus {
                 line-height: 1rem;
             }
             h6 {
-                font-size: 0.9rem;
+                font-size: 0.85rem;
                 font-weight: 600;
                 letter-spacing: 0.03rem;
-                line-height: 1.6rem;
-                color: $clr-black;
+                line-height: 1.2rem;
 
                 a {
-                    color: $clr-black;
+                    color: rgba($clr-black,0.8);
                     &:hover {
                         text-decoration: underline;
                     }
@@ -1255,6 +1298,8 @@ input:focus {
                 margin-top: 0.5rem;
                 margin-right: 0.75rem;
                 transform: scale(0.95);
+                border-radius:.5rem;
+                padding:0.125em .5em;
             }
         }
     }
@@ -1309,12 +1354,115 @@ input:focus {
     }
 }
 
+.profile-page {
+    .timeline {
+        .profile-user {
+            .cover-image {
+                width:100%;
+                height:20vh;
+                max-height:300px;
+                background:$clr-light-accent;
+                border-radius: .5rem;
+            }
+            .d-flex {
+                margin: -2.5rem 1rem 0 2rem;
+            }
+            .avatar {
+                width: 7.5rem;
+                height: 7.5rem;
+                min-width: 7.5rem;
+                min-height: 7.5rem;
+                object-fit: cover;
+                border:.2rem $clr-white solid;
+                background-color: $clr-light-accent;
+            }
+
+            .user-details {
+                margin: 3.5rem 0 0 1rem;
+                h6 {
+                    font-size: 1.1rem;
+                    font-style: bold;
+                    margin-bottom: .2rem;
+                    color:$clr-black;
+                }
+                p {
+                    color: $clr-grey;
+                    line-height:1.2rem;
+                    font-size: 0.9rem;
+                }
+            }
+
+            ul {
+                list-style-type: none;
+                margin:1rem 0 0 1rem;
+                padding: 0;
+
+                li {
+                    font-size: 0.9rem;
+                    color:rgba($clr-text,0.8);
+                    line-height: 1.6rem;
+
+                    i {
+                        color:$clr-text;
+                        margin-right: .5rem;
+                        font-size: 1rem;
+                    }
+                }
+            }
+
+            @media (max-width: 992px) {
+                .d-flex {
+                    margin-left:0;
+                }
+                .user-details {
+                    margin: 3rem 0 0 .5rem;
+                }
+            }
+        }
+
+        .recent-activity {
+            line-height: 1.3rem;
+            padding:0.5rem 0 0.25rem 0;
+            border-bottom:1px solid $clr-light-accent;
+            .what {
+                font-size: 0.75rem;
+                color: $clr-grey;
+            }
+            .content {
+                font-size: 0.85rem;
+                &::before {
+                    content:"“";
+                }
+                &::after {
+                    content:"”";
+                }
+            }
+            .when {
+                font-size:0.75rem;
+                color:rgba($clr-text,0.85);
+            }
+        }
+    }
+}
+
+h6 > span {
+    font-size:0.8rem;
+    color:rgba($clr-text,0.8);
+}
 .sorry {
     text-align: center;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     font-family: "Poppins";
     margin: 4rem 1rem;
     line-height: 3rem;
+    color:$clr-grey;
+}
+
+.sorry-sm {
+    text-align: center;
+    line-height: 1rem;
+    font-size:.8rem;
+    color:$clr-grey;
 }
 
 @media (max-width: 992px) {

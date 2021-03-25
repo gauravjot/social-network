@@ -17,7 +17,7 @@ function LeftSidebar({active=1}) {
                 />
                 <div>
                     <h6>
-                        {user.first_name} {user.last_name}
+                        <Link to={"/u/"+user.slug}>{user.first_name} {user.last_name}</Link>
                     </h6>
                     <span>{user.tagline}</span>
                 </div>
@@ -29,7 +29,7 @@ function LeftSidebar({active=1}) {
                 <Link to="/friends" className={(active == 2) ? "active" : ""}>
                     <i className="fas fa-user-friends"></i>Friends
                 </Link>
-                <Link to="#" className={(active == 3) ? "active" : ""}>
+                <Link to={"/u/"+user.slug} className={(active == 3) ? "active" : ""}>
                     <i className="far fa-user"></i>Profile
                     </Link>
                 <Link to="#" className={(active == 4) ? "active" : ""}>

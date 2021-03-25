@@ -32,7 +32,7 @@ def personInfo(request, slug):
         wanted_person = data.id
         personSerializer = PersonSerializer(data)
         #comments
-        comments = CommentSerializer(Comment.objects.filter(person_id=wanted_person).order_by('pk')[:3].values(), many=True).data
+        comments = CommentSerializer(Comment.objects.filter(person_id=wanted_person).order_by('-pk')[:3].values(), many=True).data
         posts = PostsSerializer(Posts.objects.filter(person_id=wanted_person).values(),many=True).data
         
         try:

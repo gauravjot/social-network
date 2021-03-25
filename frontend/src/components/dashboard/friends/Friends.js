@@ -11,6 +11,10 @@ import Navbar from "../Navbar";
 export default function Friends() {
     const friends = useSelector((state) => state.friends);
 
+    React.useEffect(() => {
+        window.scrollTo(0, 0);
+    },[])
+
     return (
         <section className="friends">
             <Helmet>

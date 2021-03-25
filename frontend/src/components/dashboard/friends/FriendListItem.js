@@ -10,7 +10,7 @@ export default function FriendListItem({friend}) {
                 <img src={BACKEND_SERVER_DOMAIN + friend.avatar} className="rounded" />
             </div>
             <div>
-                <h6><Link href="#">{friend.first_name} {friend.last_name}</Link></h6>
+                <h6><Link to={"/u/"+friend.slug}>{friend.first_name} {friend.last_name}</Link></h6>
                 <span>{friend.tagline}<br/>Born on {friend.birthday}</span>
             </div>
         </div>

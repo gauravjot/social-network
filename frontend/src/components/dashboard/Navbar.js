@@ -33,6 +33,8 @@ export default function Navbar() {
                             type="button"
                             data-bs-toggle="collapse"
                             data-bs-target="#navbarToggler"
+                            data-toggle="collapse"
+                            data-target="#navbarToggler"
                             aria-controls="navbarToggler"
                             aria-expanded="false"
                             aria-label="Toggle navigation"
@@ -60,7 +62,22 @@ export default function Navbar() {
                                 </div>
                                 <div className="col-lg-4 col-12">
                                     <ul className="navbar-nav">
-                                        <li>
+                                        <li className="d-md-block d-lg-none">
+                                            <Link to={"/dashboard"}>
+                                                <i className="far fa-newspaper"></i>&nbsp;&nbsp;&nbsp; Feed
+                                            </Link>
+                                        </li>
+                                        <li className="d-md-block d-lg-none">
+                                            <Link to={"/friends"}>
+                                                <i className="fas fa-user-friends"></i>&nbsp;&nbsp;&nbsp; Friends
+                                            </Link>
+                                        </li>
+                                        <li className="d-md-block d-lg-none">
+                                            <Link to={"/u/"+user.slug}>
+                                                <i className="far fa-user"></i>&nbsp;&nbsp;&nbsp; Profile
+                                            </Link>
+                                        </li>
+                                        <li class="align-end">
                                             <button onClick={logOut}>
                                                 Logout
                                                 <i className="fas fa-sign-out-alt"></i>

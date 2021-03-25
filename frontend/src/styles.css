@@ -1,4 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Poppins:wght@400;500;600;700;900&display=swap");
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@400;500;600;700;900&display=swap");
 :root {
   --breakpoint-xs: 0;
   --breakpoint-sm: 576px;
@@ -26,7 +27,7 @@ body {
   color: #51515c;
   font-size: 1rem;
   font-weight: 500;
-  font-family: "Noto Sans", "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: "Roboto", "Noto Sans", "Open Sans", "Helvetica Neue", sans-serif;
 }
 
 *,
@@ -60,6 +61,12 @@ h6 {
 a {
   color: #0075ff;
   text-decoration: none;
+}
+
+a:focus {
+  text-decoration: underline;
+  outline: none;
+  color: #000000 !important;
 }
 
 button:focus,
@@ -105,17 +112,17 @@ input:focus {
 }
 
 .dropdown-menu {
-  background-color: rgba(138, 138, 148, 0.15);
+  background-color: #f7f7f9;
   color: #51515c;
   border: 1px solid rgba(138, 138, 148, 0.15);
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   min-width: 8rem;
 }
 
 .dropdown-menu .dropdown-item {
   color: rgba(0, 0, 0, 0.9);
   font-size: 0.8rem;
-  padding: .3rem 1rem;
+  padding: 0.3rem 1rem;
   font-weight: 600;
 }
 
@@ -144,10 +151,15 @@ input:focus {
   letter-spacing: 0.1rem;
   font-family: "Poppins";
   font-weight: 600;
+  text-align: center;
   color: #000000;
   border: none;
   padding: 0.25rem 0;
   background-color: rgba(247, 247, 249, 0.5);
+}
+
+.card-btn a {
+  color: #000;
 }
 
 .card-btn:hover {
@@ -525,21 +537,22 @@ input:focus {
   font-size: 0.9rem;
   padding: 0 1.5rem;
   margin: 0.5rem 0;
+  text-align: end;
 }
 
-.navbar > .container > .row .row > div ul > li button {
+.navbar > .container > .row .row > div ul > li button, .navbar > .container > .row .row > div ul > li a {
   color: #51515c;
   position: relative;
   background-color: transparent;
   border: none;
 }
 
-.navbar > .container > .row .row > div ul > li button i {
+.navbar > .container > .row .row > div ul > li button i, .navbar > .container > .row .row > div ul > li a i {
   margin-left: 0.5rem;
   font-size: 1rem;
 }
 
-.navbar > .container > .row .row > div ul > li button::after {
+.navbar > .container > .row .row > div ul > li button::after, .navbar > .container > .row .row > div ul > li a::after {
   content: "";
   display: block;
   height: 1px;
@@ -552,17 +565,31 @@ input:focus {
   transition: width ease-in-out 250ms, background-color ease-in-out 250ms;
 }
 
-.navbar > .container > .row .row > div ul > li button:hover, .navbar > .container > .row .row > div ul > li button:focus {
+.navbar > .container > .row .row > div ul > li button:hover, .navbar > .container > .row .row > div ul > li button:focus, .navbar > .container > .row .row > div ul > li a:hover, .navbar > .container > .row .row > div ul > li a:focus {
   color: #000000;
+  text-decoration: none;
 }
 
-.navbar > .container > .row .row > div ul > li button:hover::after, .navbar > .container > .row .row > div ul > li button:focus::after {
+.navbar > .container > .row .row > div ul > li button:hover::after, .navbar > .container > .row .row > div ul > li button:focus::after, .navbar > .container > .row .row > div ul > li a:hover::after, .navbar > .container > .row .row > div ul > li a:focus::after {
   background-color: #000000;
   width: 100%;
 }
 
+@media (max-width: 992px) {
+  .navbar > .container > .row .row > div ul {
+    width: 100%;
+  }
+  .navbar > .container > .row .row > div ul li {
+    text-align: start;
+  }
+}
+
+.align-end {
+  text-align: end !important;
+}
+
 .navbar-spacer {
-  padding-top: 3.9rem;
+  height: 3.9rem;
 }
 
 .leftsidebar {
@@ -613,6 +640,16 @@ input:focus {
   overflow: hidden;
   white-space: nowrap;
   display: block;
+}
+
+.leftsidebar .user div span a,
+.leftsidebar .user div h6 a {
+  color: inherit;
+}
+
+.leftsidebar .user div span a:hover,
+.leftsidebar .user div h6 a:hover {
+  text-decoration: underline;
 }
 
 .leftsidebar .user div h6 {
@@ -871,7 +908,7 @@ input:focus {
 
 .timeline > .create-post > .submit-btn button {
   margin-bottom: 1rem;
-  border-radius: .3rem;
+  border-radius: 0.3rem;
 }
 
 .timeline > .create-post > .submit-btn span {
@@ -922,9 +959,16 @@ input:focus {
 .timeline .post > .user div h6 {
   font-size: 0.9rem;
   font-weight: 500;
-  letter-spacing: 0.03rem;
   color: #000000;
   margin-top: 0.25rem;
+}
+
+.timeline .post > .user div h6 a {
+  color: #000000;
+}
+
+.timeline .post > .user div h6 a:hover {
+  text-decoration: underline;
 }
 
 .timeline .post > .user div span {
@@ -934,7 +978,7 @@ input:focus {
   line-height: 1rem;
 }
 
-.timeline .post > .user a {
+.timeline .post > .user .more-options {
   color: #8a8a94;
   min-width: 2.5rem;
   height: 2.5rem;
@@ -946,12 +990,12 @@ input:focus {
   transition: background-color ease-out 250ms;
 }
 
-.timeline .post > .user a > i {
+.timeline .post > .user .more-options > i {
   height: 1rem;
   width: 1rem;
 }
 
-.timeline .post > .user a:hover {
+.timeline .post > .user .more-options:hover {
   color: #000000;
   background-color: rgba(138, 138, 148, 0.2);
 }
@@ -1092,16 +1136,16 @@ input:focus {
 }
 
 .each-comment .comment {
-  padding-top: .5rem;
+  padding-top: 0.5rem;
   line-height: 1.2rem;
   margin-left: -2rem;
-  padding-left: .75rem;
+  padding-left: 0.75rem;
   border-left: 0.1rem rgba(138, 138, 148, 0.15) solid;
 }
 
 @media (max-width: 1200px) {
   .each-comment .comment {
-    margin-left: -2.0rem;
+    margin-left: -2rem;
   }
 }
 
@@ -1132,14 +1176,15 @@ input:focus {
 
 .each-comment .comment .comment-options {
   margin-top: 0.25rem;
-  margin-left: .5rem;
+  margin-left: 0.5rem;
 }
 
 .each-comment .comment .comment-options .dropright {
   display: inline-block;
 }
 
-.each-comment .comment .comment-options > button, .each-comment .comment .comment-options .comment-actions {
+.each-comment .comment .comment-options > button,
+.each-comment .comment .comment-options .comment-actions {
   font-size: 0.8rem;
   background: transparent;
   border: none;
@@ -1149,21 +1194,27 @@ input:focus {
   padding: 0.25rem 0.5rem;
 }
 
-.each-comment .comment .comment-options > button > i, .each-comment .comment .comment-options .comment-actions > i {
+.each-comment .comment .comment-options > button > i,
+.each-comment .comment .comment-options .comment-actions > i {
   color: #8a8a94;
   margin-right: 0.25rem;
 }
 
-.each-comment .comment .comment-options > button:hover, .each-comment .comment .comment-options > button:focus, .each-comment .comment .comment-options .comment-actions:hover, .each-comment .comment .comment-options .comment-actions:focus {
+.each-comment .comment .comment-options > button:hover, .each-comment .comment .comment-options > button:focus,
+.each-comment .comment .comment-options .comment-actions:hover,
+.each-comment .comment .comment-options .comment-actions:focus {
   background-color: rgba(138, 138, 148, 0.07);
   color: #000000;
 }
 
-.each-comment .comment .comment-options > button:hover > i, .each-comment .comment .comment-options > button:focus > i, .each-comment .comment .comment-options .comment-actions:hover > i, .each-comment .comment .comment-options .comment-actions:focus > i {
+.each-comment .comment .comment-options > button:hover > i, .each-comment .comment .comment-options > button:focus > i,
+.each-comment .comment .comment-options .comment-actions:hover > i,
+.each-comment .comment .comment-options .comment-actions:focus > i {
   color: #51515c;
 }
 
-.each-comment .comment .comment-options > button:focus, .each-comment .comment .comment-options .comment-actions:focus {
+.each-comment .comment .comment-options > button:focus,
+.each-comment .comment .comment-options .comment-actions:focus {
   -webkit-box-shadow: 0 0 0 1px rgba(138, 138, 148, 0.2);
           box-shadow: 0 0 0 1px rgba(138, 138, 148, 0.2);
 }
@@ -1252,7 +1303,7 @@ input:focus {
   border-radius: 0.5rem;
   padding: 0.5rem;
   gap: 0.75rem;
-  margin: 0.25rem -0.5rem;
+  margin: 0.125rem -0.5rem;
 }
 
 .rightsidebar .user img {
@@ -1281,15 +1332,14 @@ input:focus {
 }
 
 .rightsidebar .user div h6 {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 600;
   letter-spacing: 0.03rem;
-  line-height: 1.6rem;
-  color: #000000;
+  line-height: 1.2rem;
 }
 
 .rightsidebar .user div h6 a {
-  color: #000000;
+  color: rgba(0, 0, 0, 0.8);
 }
 
 .rightsidebar .user div h6 a:hover {
@@ -1301,6 +1351,8 @@ input:focus {
   margin-right: 0.75rem;
   -webkit-transform: scale(0.95);
           transform: scale(0.95);
+  border-radius: .5rem;
+  padding: 0.125em .5em;
 }
 
 .rightsidebar .back-hover:hover {
@@ -1353,12 +1405,120 @@ input:focus {
   text-overflow: ellipsis;
 }
 
+.profile-page .timeline .profile-user .cover-image {
+  width: 100%;
+  height: 20vh;
+  max-height: 300px;
+  background: #f7f7f9;
+  border-radius: .5rem;
+}
+
+.profile-page .timeline .profile-user .d-flex {
+  margin: -2.5rem 1rem 0 2rem;
+}
+
+.profile-page .timeline .profile-user .avatar {
+  width: 7.5rem;
+  height: 7.5rem;
+  min-width: 7.5rem;
+  min-height: 7.5rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border: 0.2rem #ffffff solid;
+  background-color: #f7f7f9;
+}
+
+.profile-page .timeline .profile-user .user-details {
+  margin: 3.5rem 0 0 1rem;
+}
+
+.profile-page .timeline .profile-user .user-details h6 {
+  font-size: 1.1rem;
+  font-style: bold;
+  margin-bottom: .2rem;
+  color: #000000;
+}
+
+.profile-page .timeline .profile-user .user-details p {
+  color: #8a8a94;
+  line-height: 1.2rem;
+  font-size: 0.9rem;
+}
+
+.profile-page .timeline .profile-user ul {
+  list-style-type: none;
+  margin: 1rem 0 0 1rem;
+  padding: 0;
+}
+
+.profile-page .timeline .profile-user ul li {
+  font-size: 0.9rem;
+  color: rgba(81, 81, 92, 0.8);
+  line-height: 1.6rem;
+}
+
+.profile-page .timeline .profile-user ul li i {
+  color: #51515c;
+  margin-right: .5rem;
+  font-size: 1rem;
+}
+
+@media (max-width: 992px) {
+  .profile-page .timeline .profile-user .d-flex {
+    margin-left: 0;
+  }
+  .profile-page .timeline .profile-user .user-details {
+    margin: 3rem 0 0 .5rem;
+  }
+}
+
+.profile-page .timeline .recent-activity {
+  line-height: 1.3rem;
+  padding: 0.5rem 0 0.25rem 0;
+  border-bottom: 1px solid #f7f7f9;
+}
+
+.profile-page .timeline .recent-activity .what {
+  font-size: 0.75rem;
+  color: #8a8a94;
+}
+
+.profile-page .timeline .recent-activity .content {
+  font-size: 0.85rem;
+}
+
+.profile-page .timeline .recent-activity .content::before {
+  content: "“";
+}
+
+.profile-page .timeline .recent-activity .content::after {
+  content: "”";
+}
+
+.profile-page .timeline .recent-activity .when {
+  font-size: 0.75rem;
+  color: rgba(81, 81, 92, 0.85);
+}
+
+h6 > span {
+  font-size: 0.8rem;
+  color: rgba(81, 81, 92, 0.8);
+}
+
 .sorry {
   text-align: center;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   font-family: "Poppins";
   margin: 4rem 1rem;
   line-height: 3rem;
+  color: #8a8a94;
+}
+
+.sorry-sm {
+  text-align: center;
+  line-height: 1rem;
+  font-size: .8rem;
+  color: #8a8a94;
 }
 
 @media (max-width: 992px) {

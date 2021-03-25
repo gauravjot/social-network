@@ -1,10 +1,9 @@
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useRef, useEffect } from "react";
 import { timeSince } from "../../../utils/timesince";
 import { BACKEND_SERVER_DOMAIN } from "../../../settings";
 import CommentComponent from "./Comment";
 import axios from "axios";
+import { Link } from 'react-router-dom';
 
 const TimelinePost = ({ user, post, friends, token, liked }) => {
     const [author, setAuthor] = useState("");
@@ -135,11 +134,11 @@ const TimelinePost = ({ user, post, friends, token, liked }) => {
                 />
                 <div>
                     <h6>
-                        {author.first_name} {author.last_name}
+                        <Link to={"/u/"+author.slug}>{author.first_name} {author.last_name}</Link>
                     </h6>
                     <span>{timeSince(post.created)}</span>
                 </div>
-                <a href="#">
+                <a href="#" className="more-options">
                     <i className="fas fa-ellipsis-h"></i>
                 </a>
             </div>

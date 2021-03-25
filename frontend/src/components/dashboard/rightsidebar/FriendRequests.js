@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { BACKEND_SERVER_DOMAIN } from "../../../settings";
 import axios from "axios";
+import { Link } from 'react-router-dom';
 
 export default function FriendRequests() {
     const user = useSelector((state) => state.user);
@@ -68,9 +69,9 @@ export default function FriendRequests() {
                     />
                     <div>
                         <h6>
-                            <a href="#">
+                            <Link to={"/u/"+person.slug}>
                                 {person.first_name} {person.last_name}
-                            </a>
+                            </Link>
                         </h6>
                         <span>{person.tagline}</span>
                         <div className="d-flex">
