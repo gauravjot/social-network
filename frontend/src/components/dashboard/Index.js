@@ -37,7 +37,7 @@ function Dashboard() {
                         <LeftSidebar active={1}/>
                     </div>
                     <div className="col-lg-6 col-12 timeline">
-                        <CreatePost token={token} avatar={user.avatar} newPost={newPost} />
+                        <CreatePost user={user} newPost={newPost} />
                         <Posts token={token} />
                     </div>
                     <div className="col-lg-3 col-12">

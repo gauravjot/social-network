@@ -2,7 +2,7 @@ import React, {useState, useRef} from 'react';
 import axios from 'axios';
 import { BACKEND_SERVER_DOMAIN } from "../../../settings";
 
-function CreatePost({avatar, token, newPost}) {
+function CreatePost({user, newPost}) {
     const [postText, setPostText] = useState("");
     const [postImage, setPostImage] = useState(null);
     const [apiResponse, setAPIResponse] = useState();
@@ -44,14 +44,15 @@ function CreatePost({avatar, token, newPost}) {
         formData.append("post_image", postImage);
         let config = { headers: {
             'Content-Type': 'multipart/form-data',
-            Authorization: token,   
+            Authorization: user.token,   
         }}
         axios.post('http://localhost:8000/api/post/new',formData, config)
             .then(function (response) {
                 // Post has been made successfully
                 setPostText("");
+                textAreaRef.current.style.height = 'auto'
                 setPostImage(null);
-                newPost(response.data);
+                newPost({...response.data,"person":user});
                 setAPIResponse("");
                 showBtn.current.classList.remove("show-btn");
                 })
@@ -66,7 +67,7 @@ function CreatePost({avatar, token, newPost}) {
         <section className="create-post">
             <h6>Post Something</h6>
             <div className="d-flex">
-                <img className="rounded-circle" src={BACKEND_SERVER_DOMAIN+avatar} alt="profile-picture"/>
+                <img className="rounded-circle" src={BACKEND_SERVER_DOMAIN+user.avatar} alt="profile-picture"/>
                 <textarea ref={textAreaRef} placeholder="What's on your mind?" rows="1" onChange={handlePostText} name="post_text" value={postText}></textarea>
                 <button onClick={clickPostPicture}><i class="far fa-file-image"></i></button>
             </div>

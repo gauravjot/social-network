@@ -112,10 +112,12 @@ input:focus {
 }
 
 .dropdown-menu {
-  background-color: #f7f7f9;
+  background-color: #ffffff;
   color: #51515c;
   border: 1px solid rgba(138, 138, 148, 0.15);
   border-radius: 0.5rem;
+  -webkit-box-shadow: 0 0 0.5rem 0.25rem #f7f7f9;
+          box-shadow: 0 0 0.5rem 0.25rem #f7f7f9;
   min-width: 8rem;
 }
 
@@ -127,7 +129,7 @@ input:focus {
 }
 
 .dropdown-menu .dropdown-item:hover, .dropdown-menu .dropdown-item:focus {
-  background-color: rgba(138, 138, 148, 0.25);
+  background-color: rgba(138, 138, 148, 0.15);
 }
 
 .card {
@@ -540,19 +542,22 @@ input:focus {
   text-align: end;
 }
 
-.navbar > .container > .row .row > div ul > li button, .navbar > .container > .row .row > div ul > li a {
+.navbar > .container > .row .row > div ul > li button,
+.navbar > .container > .row .row > div ul > li a {
   color: #51515c;
   position: relative;
   background-color: transparent;
   border: none;
 }
 
-.navbar > .container > .row .row > div ul > li button i, .navbar > .container > .row .row > div ul > li a i {
+.navbar > .container > .row .row > div ul > li button i,
+.navbar > .container > .row .row > div ul > li a i {
   margin-left: 0.5rem;
   font-size: 1rem;
 }
 
-.navbar > .container > .row .row > div ul > li button::after, .navbar > .container > .row .row > div ul > li a::after {
+.navbar > .container > .row .row > div ul > li button::after,
+.navbar > .container > .row .row > div ul > li a::after {
   content: "";
   display: block;
   height: 1px;
@@ -565,12 +570,16 @@ input:focus {
   transition: width ease-in-out 250ms, background-color ease-in-out 250ms;
 }
 
-.navbar > .container > .row .row > div ul > li button:hover, .navbar > .container > .row .row > div ul > li button:focus, .navbar > .container > .row .row > div ul > li a:hover, .navbar > .container > .row .row > div ul > li a:focus {
+.navbar > .container > .row .row > div ul > li button:hover, .navbar > .container > .row .row > div ul > li button:focus,
+.navbar > .container > .row .row > div ul > li a:hover,
+.navbar > .container > .row .row > div ul > li a:focus {
   color: #000000;
   text-decoration: none;
 }
 
-.navbar > .container > .row .row > div ul > li button:hover::after, .navbar > .container > .row .row > div ul > li button:focus::after, .navbar > .container > .row .row > div ul > li a:hover::after, .navbar > .container > .row .row > div ul > li a:focus::after {
+.navbar > .container > .row .row > div ul > li button:hover::after, .navbar > .container > .row .row > div ul > li button:focus::after,
+.navbar > .container > .row .row > div ul > li a:hover::after,
+.navbar > .container > .row .row > div ul > li a:focus::after {
   background-color: #000000;
   width: 100%;
 }
@@ -1000,10 +1009,63 @@ input:focus {
   background-color: rgba(138, 138, 148, 0.2);
 }
 
-.timeline .post > p {
-  margin: 1rem 0;
+.timeline .post .post-content {
+  margin: 1rem 0 .5rem;
   line-height: 1.5rem;
   font-size: 0.9rem;
+  white-space: break-spaces;
+}
+
+.timeline .post .url > div {
+  border: 1px solid rgba(138, 138, 148, 0.25);
+  background-color: rgba(138, 138, 148, 0.1);
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  margin-top: .75rem;
+}
+
+.timeline .post .url > div .utitle {
+  font-weight: bold;
+  color: rgba(81, 81, 92, 0.85);
+  font-size: 0.85rem;
+  line-height: 1.2rem;
+  margin-bottom: .25rem;
+}
+
+.timeline .post .url > div .utitle i {
+  font-size: 0.7rem;
+  margin-right: 0.1rem;
+  vertical-align: middle;
+}
+
+.timeline .post .url > div .udescription {
+  font-size: 0.8rem;
+  color: #8a8a94;
+  line-height: 1.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.timeline .post .url > div .uurl {
+  font-size: 0.8rem;
+  color: #8a8a94;
+  line-height: 1.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.timeline .post .url:hover, .timeline .post .url:focus {
+  text-decoration: none !important;
+}
+
+.timeline .post .url:hover > div, .timeline .post .url:focus > div {
+  background-color: rgba(138, 138, 148, 0.2);
+}
+
+.timeline .post .url:hover .utitle, .timeline .post .url:focus .utitle {
+  text-decoration: underline;
 }
 
 .timeline .post > .post-picture {
@@ -1012,6 +1074,7 @@ input:focus {
   max-height: 35rem;
   -o-object-fit: contain;
      object-fit: contain;
+  margin-top: .5rem;
 }
 
 .timeline .post > .post-actions {
@@ -1331,6 +1394,12 @@ input:focus {
   line-height: 1rem;
 }
 
+@media (max-width: 1200px) {
+  .rightsidebar .user div span {
+    max-width: 15ch;
+  }
+}
+
 .rightsidebar .user div h6 {
   font-size: 0.85rem;
   font-weight: 600;
@@ -1351,8 +1420,14 @@ input:focus {
   margin-right: 0.75rem;
   -webkit-transform: scale(0.95);
           transform: scale(0.95);
-  border-radius: .5rem;
-  padding: 0.125em .5em;
+  border-radius: 0.5rem;
+  padding: 0.125em 0.5em;
+}
+
+@media (max-width: 1200px) {
+  .rightsidebar .user div button {
+    padding: 0.125em 0.25em;
+  }
 }
 
 .rightsidebar .back-hover:hover {
@@ -1410,7 +1485,7 @@ input:focus {
   height: 20vh;
   max-height: 300px;
   background: #f7f7f9;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
 }
 
 .profile-page .timeline .profile-user .d-flex {
@@ -1435,7 +1510,7 @@ input:focus {
 .profile-page .timeline .profile-user .user-details h6 {
   font-size: 1.1rem;
   font-style: bold;
-  margin-bottom: .2rem;
+  margin-bottom: 0.2rem;
   color: #000000;
 }
 
@@ -1459,7 +1534,7 @@ input:focus {
 
 .profile-page .timeline .profile-user ul li i {
   color: #51515c;
-  margin-right: .5rem;
+  margin-right: 0.5rem;
   font-size: 1rem;
 }
 
@@ -1468,7 +1543,7 @@ input:focus {
     margin-left: 0;
   }
   .profile-page .timeline .profile-user .user-details {
-    margin: 3rem 0 0 .5rem;
+    margin: 3rem 0 0 0.5rem;
   }
 }
 
@@ -1517,7 +1592,7 @@ h6 > span {
 .sorry-sm {
   text-align: center;
   line-height: 1rem;
-  font-size: .8rem;
+  font-size: 0.8rem;
   color: #8a8a94;
 }
 

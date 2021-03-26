@@ -4,32 +4,38 @@ import { BACKEND_SERVER_DOMAIN } from "../../../settings";
 import CommentComponent from "./Comment";
 import axios from "axios";
 import { Link } from 'react-router-dom';
+import {getMetadata} from 'page-metadata-parser';
 
-const TimelinePost = ({ user, post, friends, token, liked }) => {
-    const [author, setAuthor] = useState("");
-    const [isLiked, setIsLiked] = useState(liked);
+const TimelinePost = ({ user, post}) => {
+    const [isLiked, setIsLiked] = useState();
+    const [likesCount, setLikesCount] = useState();
     const [comments, setComments] = useState();
     const [showComments, setShowComments] = useState(false);
-    const [likesCount, setLikesCount] = useState((post.likes.persons != null) ? post.likes.persons.length : 0);
-    const [isLoadingComments,setIsLoadingComments] = useState(false); 
+    const [isLoadingComments,setIsLoadingComments] = useState(false);
+    const [embedUrls,setEmbedUrls] = useState();
     let btnRef = useRef();
 
     useEffect(() => {
-        if (Number(user.id) === Number(post.person_id)) {
-            setAuthor(user);
-        } else {
-            if (friends !== null) {
-                for (var i = 0; i < friends.length; i++) {
-                    if (Number(friends[i].id) === Number(post.person_id)) {
-                        setAuthor(friends[i]);
-                        break;
-                    }
-                }
-            }
-        }
-        setIsLiked(liked);
+        setIsLiked(post.likes.persons && post.likes.persons.includes(user.id));
         setLikesCount((post.likes.persons != null) ? post.likes.persons.length : 0);
-    }, [post.person_id,liked,post.likes.persons]);
+        let urlRegEx = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+        const urls = [...post.post_text.matchAll(urlRegEx)]
+        let links = []
+        if (urls) {
+            urls.map(async (url, index) => {
+                const domino = require('domino');
+                const response = await fetch(url[0]);
+                const html = await response.text();
+                const doc = domino.createWindow(html).document;
+                const metadata = getMetadata(doc, url);
+                links.push({"title":metadata.title,
+                    "description":metadata.description,
+                    "url":url[0]})
+                if (urls.length == index+1) setEmbedUrls(links);
+            })
+        }
+        console.log(post.post_text)
+    }, []);
 
     const likePost = () => {
         if (btnRef.current) {
@@ -38,7 +44,7 @@ const TimelinePost = ({ user, post, friends, token, liked }) => {
         let config = {
             headers: {
                 "Content-Type": "application/json",
-                Authorization: token,
+                Authorization: user.token,
             },
         };
         axios
@@ -51,7 +57,6 @@ const TimelinePost = ({ user, post, friends, token, liked }) => {
                 } else {
                     setLikesCount(likesCount-1);
                 }
-                console.log(like);
                 if (btnRef.current) {
                     btnRef.current.removeAttribute("disabled");
                 }
@@ -66,12 +71,13 @@ const TimelinePost = ({ user, post, friends, token, liked }) => {
             setShowComments(!showComments);
         } else {
             if (!isLoadingComments) {setIsLoadingComments(true)}
-            axios.get(BACKEND_SERVER_DOMAIN + "/api/" + post.id + "/comments/", {headers:{Authorization: token}})
+            axios.get(BACKEND_SERVER_DOMAIN + "/api/" + post.id + "/comments/", {headers:{Authorization: user.token}})
                 .then(function (response) {
-                    setShowComments(true)
                     setComments(response.data.comments)
-                    if (response.data.comments && response.data.comments.length == 0) {
+                    if (response.data.comments.length == 0) {
                         setIsLoadingComments(false);
+                    } else {
+                        setShowComments(true)
                     }
                 })
                 .catch((err) => {
@@ -90,7 +96,7 @@ const TimelinePost = ({ user, post, friends, token, liked }) => {
             formData.append("comment_parent", parent);
             let config = { headers: {
                 'Content-Type': 'multipart/form-data',
-                Authorization: token,   
+                Authorization: user.token,   
             }}
             axios.post('http://localhost:8000/api/'+post.id+'/comments/new/',formData, config)
                 .then(function (response) {
@@ -129,12 +135,12 @@ const TimelinePost = ({ user, post, friends, token, liked }) => {
             <div className="d-flex user">
                 <img
                     className="rounded-circle"
-                    src={BACKEND_SERVER_DOMAIN + author.avatar}
+                    src={BACKEND_SERVER_DOMAIN + post.person.avatar}
                     alt="profile picture"
                 />
                 <div>
                     <h6>
-                        <Link to={"/u/"+author.slug}>{author.first_name} {author.last_name}</Link>
+                        <Link to={"/u/"+post.person.slug}>{post.person.first_name} {post.person.last_name}</Link>
                     </h6>
                     <span>{timeSince(post.created)}</span>
                 </div>
@@ -142,7 +148,18 @@ const TimelinePost = ({ user, post, friends, token, liked }) => {
                     <i className="fas fa-ellipsis-h"></i>
                 </a>
             </div>
-            <p>{post.post_text}</p>
+            <div>
+                <p className="post-content">{post.post_text}</p>
+                {(embedUrls) ? (embedUrls.map((url, index) => (
+                    <a className="url" href={url.url} key={index} target="_blank">
+                        <div>
+                            <div className="utitle"><i class="fas fa-external-link-alt"></i> {url.title}</div>
+                            {(url.description) ? <div className="udescription">{url.description}</div> : ""}
+                            <div className="uurl">{url.url}</div>
+                        </div>
+                    </a>
+                ))) : ""}
+            </div>
             {post.post_image ? (
                 <img src={BACKEND_SERVER_DOMAIN +post.post_image} className="rounded post-picture" />
             ) : (
@@ -179,7 +196,7 @@ const TimelinePost = ({ user, post, friends, token, liked }) => {
                             <div>{(comment.comment_parent == 0) ?
                                     <CommentComponent comment={comment} key={index}
                                         user={user}
-                                        token={token}
+                                        token={user.token}
                                         allComments={splicedArray(comments,index)}
                                         post_id={post.id}
                                         liked={comment.comment_likes.persons && comment.comment_likes.persons.includes(user.id)}/>

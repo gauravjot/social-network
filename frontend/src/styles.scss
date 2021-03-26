@@ -93,7 +93,7 @@ a {
     &:focus {
         text-decoration: underline;
         outline: none;
-        color:$clr-black !important;
+        color: $clr-black !important;
     }
 }
 
@@ -138,10 +138,11 @@ input:focus {
 }
 
 .dropdown-menu {
-    background-color: $clr-light-accent;
+    background-color: $clr-white;
     color: $clr-text;
     border: 1px solid rgba($clr-grey, 0.15);
     border-radius: 0.5rem;
+    box-shadow: 0 0 .5rem .25rem $clr-light-accent;
     min-width: 8rem;
 
     .dropdown-item {
@@ -152,7 +153,7 @@ input:focus {
 
         &:hover,
         &:focus {
-            background-color: rgba($clr-grey, 0.25);
+            background-color: rgba($clr-grey, 0.15);
         }
     }
 }
@@ -537,7 +538,8 @@ input:focus {
                 margin: 0.5rem 0;
                 text-align: end;
 
-                button, a {
+                button,
+                a {
                     color: $clr-text;
                     position: relative;
                     background-color: transparent;
@@ -574,7 +576,7 @@ input:focus {
                 }
             }
 
-            @media (max-width:992px) {
+            @media (max-width: 992px) {
                 ul {
                     width: 100%;
 
@@ -637,7 +639,7 @@ input:focus {
                 display: block;
 
                 a {
-                    color:inherit;
+                    color: inherit;
 
                     &:hover {
                         text-decoration: underline;
@@ -938,7 +940,7 @@ input:focus {
                     color: $clr-black;
                     margin-top: 0.25rem;
                     a {
-                        color:$clr-black;
+                        color: $clr-black;
                         &:hover {
                             text-decoration: underline;
                         }
@@ -973,10 +975,59 @@ input:focus {
             }
         }
 
-        & > p {
-            margin: 1rem 0;
+        .post-content {
+            margin: 1rem 0 .5rem;
             line-height: 1.5rem;
             font-size: 0.9rem;
+            white-space: break-spaces;
+        }
+
+        .url {
+            & > div {
+                border: 1px solid rgba($clr-grey,.25);
+                background-color: rgba($clr-grey,.1);
+                padding: 0.5rem;
+                border-radius: 0.5rem;
+                margin-top: .75rem;
+
+                .utitle {
+                    font-weight: bold;
+                    color: rgba($clr-text, 0.85s);
+                    font-size: 0.85rem;
+                    line-height: 1.2rem;
+                    margin-bottom: .25rem;
+                    i {
+                        font-size: 0.7rem;
+                        margin-right: 0.1rem;
+                        vertical-align: middle;
+                    }
+                }
+                .udescription {
+                    font-size: 0.8rem;
+                    color: $clr-grey;
+                    line-height: 1.2rem;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+                .uurl {
+                    font-size: 0.8rem;
+                    color: $clr-grey;
+                    line-height: 1.2rem;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+
+            &:hover,
+            &:focus {
+                &>div{background-color: rgba($clr-grey,.2);}
+                text-decoration: none !important;
+                .utitle {
+                    text-decoration: underline;
+                }
+            }
         }
 
         & > .post-picture {
@@ -984,6 +1035,7 @@ input:focus {
             min-height: 10rem;
             max-height: 35rem;
             object-fit: contain;
+            margin-top: .5rem;
         }
 
         & > .post-actions {
@@ -1249,7 +1301,6 @@ input:focus {
         font-size: 0.9rem;
         letter-spacing: 0.03rem;
         font-weight: 600;
-
     }
 
     .user {
@@ -1279,6 +1330,10 @@ input:focus {
                 color: $clr-grey;
                 margin-top: 0.125rem;
                 line-height: 1rem;
+
+                @media (max-width:1200px) {
+                    max-width: 15ch;
+                }
             }
             h6 {
                 font-size: 0.85rem;
@@ -1287,7 +1342,7 @@ input:focus {
                 line-height: 1.2rem;
 
                 a {
-                    color: rgba($clr-black,0.8);
+                    color: rgba($clr-black, 0.8);
                     &:hover {
                         text-decoration: underline;
                     }
@@ -1298,8 +1353,12 @@ input:focus {
                 margin-top: 0.5rem;
                 margin-right: 0.75rem;
                 transform: scale(0.95);
-                border-radius:.5rem;
-                padding:0.125em .5em;
+                border-radius: 0.5rem;
+                padding: 0.125em 0.5em;
+
+                @media (max-width:1200px) {
+                    padding: 0.125em 0.25em;
+                }
             }
         }
     }
@@ -1358,11 +1417,11 @@ input:focus {
     .timeline {
         .profile-user {
             .cover-image {
-                width:100%;
-                height:20vh;
-                max-height:300px;
-                background:$clr-light-accent;
-                border-radius: .5rem;
+                width: 100%;
+                height: 20vh;
+                max-height: 300px;
+                background: $clr-light-accent;
+                border-radius: 0.5rem;
             }
             .d-flex {
                 margin: -2.5rem 1rem 0 2rem;
@@ -1373,7 +1432,7 @@ input:focus {
                 min-width: 7.5rem;
                 min-height: 7.5rem;
                 object-fit: cover;
-                border:.2rem $clr-white solid;
+                border: 0.2rem $clr-white solid;
                 background-color: $clr-light-accent;
             }
 
@@ -1382,29 +1441,29 @@ input:focus {
                 h6 {
                     font-size: 1.1rem;
                     font-style: bold;
-                    margin-bottom: .2rem;
-                    color:$clr-black;
+                    margin-bottom: 0.2rem;
+                    color: $clr-black;
                 }
                 p {
                     color: $clr-grey;
-                    line-height:1.2rem;
+                    line-height: 1.2rem;
                     font-size: 0.9rem;
                 }
             }
 
             ul {
                 list-style-type: none;
-                margin:1rem 0 0 1rem;
+                margin: 1rem 0 0 1rem;
                 padding: 0;
 
                 li {
                     font-size: 0.9rem;
-                    color:rgba($clr-text,0.8);
+                    color: rgba($clr-text, 0.8);
                     line-height: 1.6rem;
 
                     i {
-                        color:$clr-text;
-                        margin-right: .5rem;
+                        color: $clr-text;
+                        margin-right: 0.5rem;
                         font-size: 1rem;
                     }
                 }
@@ -1412,18 +1471,18 @@ input:focus {
 
             @media (max-width: 992px) {
                 .d-flex {
-                    margin-left:0;
+                    margin-left: 0;
                 }
                 .user-details {
-                    margin: 3rem 0 0 .5rem;
+                    margin: 3rem 0 0 0.5rem;
                 }
             }
         }
 
         .recent-activity {
             line-height: 1.3rem;
-            padding:0.5rem 0 0.25rem 0;
-            border-bottom:1px solid $clr-light-accent;
+            padding: 0.5rem 0 0.25rem 0;
+            border-bottom: 1px solid $clr-light-accent;
             .what {
                 font-size: 0.75rem;
                 color: $clr-grey;
@@ -1431,23 +1490,23 @@ input:focus {
             .content {
                 font-size: 0.85rem;
                 &::before {
-                    content:"“";
+                    content: "“";
                 }
                 &::after {
-                    content:"”";
+                    content: "”";
                 }
             }
             .when {
-                font-size:0.75rem;
-                color:rgba($clr-text,0.85);
+                font-size: 0.75rem;
+                color: rgba($clr-text, 0.85);
             }
         }
     }
 }
 
 h6 > span {
-    font-size:0.8rem;
-    color:rgba($clr-text,0.8);
+    font-size: 0.8rem;
+    color: rgba($clr-text, 0.8);
 }
 .sorry {
     text-align: center;
@@ -1455,14 +1514,14 @@ h6 > span {
     font-family: "Poppins";
     margin: 4rem 1rem;
     line-height: 3rem;
-    color:$clr-grey;
+    color: $clr-grey;
 }
 
 .sorry-sm {
     text-align: center;
     line-height: 1rem;
-    font-size:.8rem;
-    color:$clr-grey;
+    font-size: 0.8rem;
+    color: $clr-grey;
 }
 
 @media (max-width: 992px) {

@@ -16,7 +16,9 @@ const postReducer = (state={posts:undefined}, action) => {
         case actions.SET_POSTS:
             return state = {posts: payload};
         case actions.ADD_POST:
-            return state = {...state, posts: [...state.posts, payload]};
+            let sp = [...state.posts];
+            sp.unshift(payload)
+            return state = {posts: sp};
         case actions.GET_POST:
             return state;
         case actions.GET_POSTS:
