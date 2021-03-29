@@ -77,7 +77,7 @@ export default function Navbar() {
                                                 <i className="far fa-user"></i>&nbsp;&nbsp;&nbsp; Profile
                                             </Link>
                                         </li>
-                                        <li class="align-end">
+                                        <li className="align-end">
                                             <button onClick={logOut}>
                                                 Logout
                                                 <i className="fas fa-sign-out-alt"></i>

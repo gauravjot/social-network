@@ -62,7 +62,6 @@ def getPosts(request):
             post_by = PersonSerializer(Person.objects.get(pk=post['person_id'])).data
             posts_final.append({**PostsSerializer(Posts.objects.get(pk=post['id'])).data,"person":post_by})
         if posts_final:
-            print(posts_final)
             return Response(data=posts_final,status=status.HTTP_200_OK)
         else:
             return Response(errorResponse("No posts found!"),status=status.HTTP_404_NOT_FOUND)

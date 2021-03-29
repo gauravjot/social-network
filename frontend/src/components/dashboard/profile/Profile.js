@@ -90,8 +90,8 @@ export default function Profile() {
                                             <div className="card">
                                                 {(profileData.friends.length) ? 
                                                     <div>
-                                                        {profileData.friends.slice(0,5).map((friend, index) => (
-                                                        <div className="d-flex user">
+                                                        {profileData.friends.slice(0,5).map((friend) => (
+                                                        <div className="d-flex user" key={friend.id}>
                                                             <img src={BACKEND_SERVER_DOMAIN + friend.avatar} className="rounded-circle"/>
                                                             <div>
                                                                 <h6><Link to={"/u/"+friend.slug}>{friend.first_name} {friend.last_name}</Link></h6>
@@ -106,8 +106,8 @@ export default function Profile() {
                                             <h6 className="ml-3">Recent Activity</h6>
                                             <div className="card">
                                                 {(profileData.comments.length) ? 
-                                                    profileData.comments.map((comment, index) => (
-                                                        <div className="recent-activity">
+                                                    profileData.comments.map((comment) => (
+                                                        <div className="recent-activity" key={comment.id}>
                                                             <div className="what">posted a comment</div>
                                                             <div>
                                                                 <span className="content">{comment.comment_text}</span>

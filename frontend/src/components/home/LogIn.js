@@ -4,7 +4,7 @@ import InputField from "../../utils/InputField";
 import { Helmet } from "react-helmet";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { setUser, setFriends } from "../../redux/actions";
+import { setUser } from "../../redux/actions";
 import { useHistory } from "react-router-dom";
 import { BACKEND_SERVER_DOMAIN } from "../../settings";
 import { Link } from "react-router-dom";
@@ -51,21 +51,8 @@ function LogIn() {
             )
             .then(function (response) {
                 dispatch(setUser(response.data));
-                let config = {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: response.data.token,
-                    },
-                };
-                axios
-                    .get(BACKEND_SERVER_DOMAIN + "/api/friends", config)
-                    .then((res) => {
-                        dispatch(setFriends(res.data));
-                        history.push("/dashboard");
-                    })
-                    .catch(function(error) {
-                        history.push("/dashboard");
-                    });
+                history.push("/dashboard");
+                
             })
             .catch(function (error) {
                 setAPIResponse(

@@ -19,19 +19,19 @@ $theme-colors: (
     @return map-get($theme-colors, $key);
 }
 
-$clr-accent: #0075ff;
-$clr-white: #ffffff;
-$clr-text: #51515c;
-$clr-black: #000000;
-$clr-light-accent: #f7f7f9;
-$clr-grey: #8a8a94;
-
 // $clr-accent: #0075ff;
-// $clr-white: #131314;
-// $clr-text: #dcdcdc;
-// $clr-black: #ffffff;
-// $clr-light-accent: darken(#fafafb, 85%);
+// $clr-white: #ffffff;
+// $clr-text: #51515c;
+// $clr-black: #000000;
+// $clr-light-accent: #f7f7f9;
 // $clr-grey: #8a8a94;
+
+$clr-accent: #0075ff;
+$clr-white: #131314;
+$clr-text: #dcdcdc;
+$clr-black: #ffffff;
+$clr-light-accent: darken(#fafafb, 85%);
+$clr-grey: #8a8a94;
 
 html {
     font-size: 16.5px;
@@ -150,6 +150,7 @@ input:focus {
         font-size: 0.8rem;
         padding: 0.3rem 1rem;
         font-weight: 600;
+        line-height: 1.4rem;
 
         &:hover,
         &:focus {
@@ -546,8 +547,9 @@ input:focus {
                     border: none;
 
                     i {
-                        margin-left: 0.5rem;
+                        margin-left: 0.25rem;
                         font-size: 1rem;
+                        width:1rem;
                     }
 
                     &::after {
@@ -956,21 +958,28 @@ input:focus {
 
             .more-options {
                 color: $clr-grey;
-                min-width: 2.5rem;
-                height: 2.5rem;
-                display: grid;
-                place-content: center;
-                border-radius: 50%;
-                transition: background-color ease-out 250ms;
+                width:fit-content;
+
+                .post-actions {
+                    background-color: transparent;
+                    border: none;
+                    color: inherit;
+                    width: 2.5rem;
+                    height: 2.5rem;
+                    border-radius: 50%;
+                    display: grid;
+                    place-content: center;
+                    transition: background-color ease-out 250ms;
+
+                    &:hover,&:focus {
+                        color: $clr-black;
+                        background-color: rgba($clr-grey, 0.2);
+                    }
+                }
 
                 & > i {
                     height: 1rem;
                     width: 1rem;
-                }
-
-                &:hover {
-                    color: $clr-black;
-                    background-color: rgba($clr-grey, 0.2);
                 }
             }
         }
@@ -984,8 +993,7 @@ input:focus {
 
         .url {
             & > div {
-                border: 1px solid rgba($clr-grey,.25);
-                background-color: rgba($clr-grey,.1);
+                border: 1px solid rgba($clr-grey,.2);
                 padding: 0.5rem;
                 border-radius: 0.5rem;
                 margin-top: .75rem;
@@ -1022,7 +1030,7 @@ input:focus {
 
             &:hover,
             &:focus {
-                &>div{background-color: rgba($clr-grey,.2);}
+                &>div{background-color: rgba($clr-grey,.05);}
                 text-decoration: none !important;
                 .utitle {
                     text-decoration: underline;
@@ -1176,10 +1184,18 @@ input:focus {
             border-radius: 1rem;
             padding: 0.5rem 0.75rem;
 
-            & > h6 {
-                color: rgba($clr-text, 0.75);
+            & > a {
+
+                & >h6 {
                 font-weight: 500;
                 font-size: 0.8rem;
+                }
+                color: rgba($clr-text, 0.75);
+
+                &:hover,&:focus {
+                    color: $clr-black;
+                    text-decoration: underline;
+                }
             }
 
             & > p {

@@ -34,7 +34,6 @@ const TimelinePost = ({ user, post}) => {
                 if (urls.length == index+1) setEmbedUrls(links);
             })
         }
-        console.log(post.post_text)
     }, []);
 
     const likePost = () => {
@@ -124,6 +123,10 @@ const TimelinePost = ({ user, post}) => {
         }
     }
 
+    const deletePost = () => {
+        return
+    }
+
     function splicedArray(array,index) {
         let nArr = [...array];
         nArr.splice(0,index+1);
@@ -131,7 +134,7 @@ const TimelinePost = ({ user, post}) => {
     }
 
     return (
-        <div className="post card">
+        <article className="post card">
             <div className="d-flex user">
                 <img
                     className="rounded-circle"
@@ -144,9 +147,29 @@ const TimelinePost = ({ user, post}) => {
                     </h6>
                     <span>{timeSince(post.created)}</span>
                 </div>
-                <a href="#" className="more-options">
-                    <i className="fas fa-ellipsis-h"></i>
-                </a>
+                <div className="more-options">
+                    <div className="dropleft">
+                        <button
+                            className="post-actions"
+                            type="button"
+                            id={"options"+post.id}
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                        >
+                            <i className="fas fa-ellipsis-h"></i>
+                        </button>
+                        <div
+                            className="dropdown-menu"
+                            aria-labelledby={"options"+post.id}
+                        >
+                            {(user.id == post.person_id) ? <button className="dropdown-item"
+                            onClick={deletePost}>
+                                Delete
+                            </button> : ""}
+                        </div>
+                    </div>
+                </div>
             </div>
             <div>
                 <p className="post-content">{post.post_text}</p>
@@ -194,12 +217,10 @@ const TimelinePost = ({ user, post}) => {
                     <div className="each-comment parent-comment">
                         {comments.slice().map((comment, index) => (
                             <div>{(comment.comment_parent == 0) ?
-                                    <CommentComponent comment={comment} key={index}
+                                    <CommentComponent key={comment.id} 
+                                        comment={comment}
                                         user={user}
-                                        token={user.token}
-                                        allComments={splicedArray(comments,index)}
-                                        post_id={post.id}
-                                        liked={comment.comment_likes.persons && comment.comment_likes.persons.includes(user.id)}/>
+                                        allComments={splicedArray(comments,index)}/>
                             : ''}
                             {(Number(index+1) == Number(comments.length) && isLoadingComments) ? setIsLoadingComments(false) : ''}</div>                       
                         ))}
@@ -214,7 +235,7 @@ const TimelinePost = ({ user, post}) => {
                     </button>
                 </div>
             </div>
-        </div>
+        </article>
     );
 };
 

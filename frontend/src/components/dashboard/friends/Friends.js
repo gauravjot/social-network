@@ -3,16 +3,33 @@ import { Helmet } from "react-helmet";
 import { useSelector } from "react-redux";
 import SuggestFriends from "../rightsidebar/SuggestFriends";
 import FriendRequests from "../rightsidebar/FriendRequests";
+import axios from "axios";
 
 import LeftSidebar from "../LeftSidebar";
 import FriendListItem from "./FriendListItem";
+import { BACKEND_SERVER_DOMAIN } from "../../../settings";
 import Navbar from "../Navbar";
 
 export default function Friends() {
-    const friends = useSelector((state) => state.friends);
+    const [friends, setFriends] = React.useState();
+    const user = useSelector((state) => state.user);
 
     React.useEffect(() => {
         window.scrollTo(0, 0);
+        let config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: user.token,
+            },
+        };
+        axios
+            .get(BACKEND_SERVER_DOMAIN + "/api/friends", config)
+            .then((res) => {
+                setFriends(res.data)
+            })
+            .catch(function(error) {
+                console.log(error)
+            });
     },[])
 
     return (

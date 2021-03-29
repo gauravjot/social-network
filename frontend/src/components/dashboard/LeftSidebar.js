@@ -31,13 +31,10 @@ function LeftSidebar({active=1}) {
                 </Link>
                 <Link to={"/u/"+user.slug} className={(active == 3) ? "active" : ""}>
                     <i className="far fa-user"></i>Profile
-                    </Link>
+                </Link>
                 <Link to="#" className={(active == 4) ? "active" : ""}>
-                    <i className="far fa-thumbs-up"></i>Liked
-                    </Link>
-                <Link to="#" className={(active == 5) ? "active" : ""}>
                     <i className="far fa-bookmark"></i>Saved
-                    </Link>
+                </Link>
             </div>
             <div className="about">
                 <h6>About socialnetwork</h6>

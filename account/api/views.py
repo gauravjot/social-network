@@ -33,7 +33,11 @@ def personInfo(request, slug):
         personSerializer = PersonSerializer(data)
         #comments
         comments = CommentSerializer(Comment.objects.filter(person_id=wanted_person).order_by('-pk')[:3].values(), many=True).data
-        posts = PostsSerializer(Posts.objects.filter(person_id=wanted_person).values(),many=True).data
+        posts = Posts.objects.filter(person_id=wanted_person).order_by('pk').values()
+        posts_final = []
+        for post in posts:
+            post_by = PersonSerializer(Person.objects.get(pk=post['person_id'])).data
+            posts_final.append({**PostsSerializer(Posts.objects.get(pk=post['id'])).data,"person":post_by})
         
         try:
             data = Friend.objects.filter(Q(user_a=wanted_person) | Q(user_b=wanted_person))
@@ -45,7 +49,7 @@ def personInfo(request, slug):
         except Friend.DoesNotExist:
             friends = []
             
-        return Response({"user":personSerializer.data, "friends":friends, "posts":posts, "comments":comments}, status=status.HTTP_200_OK)
+        return Response({"user":personSerializer.data, "friends":friends, "posts":posts_final, "comments":comments}, status=status.HTTP_200_OK)
     except Person.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 

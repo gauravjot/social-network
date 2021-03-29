@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setPosts } from "../../../redux/actions"
 import { BACKEND_SERVER_DOMAIN } from '../../../settings'
 
-function Posts({token}) {
+function Posts({token, userposts}) {
 
     const user = useSelector((state) => state.user);
     const posts = useSelector((state) => state.posts.posts);
@@ -27,7 +27,11 @@ function Posts({token}) {
     }
 
     useEffect(() => {
-        getPosts();
+        if (userposts) {
+            dispatch(setPosts(userposts))
+        } else {
+            getPosts();
+        }
     },[])
 
     return (posts && posts.length > 0) ? 

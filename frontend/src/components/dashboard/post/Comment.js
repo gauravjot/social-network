@@ -2,29 +2,24 @@ import React, { useState, useRef, useEffect } from "react";
 import { BACKEND_SERVER_DOMAIN } from "../../../settings";
 import { timeSince } from "../../../utils/timesince";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function CommentComponent({
     user,
     allComments,
-    liked,
-    token,
-    post_id,
-    comment,
+    comment
 }) {
-    const [isLiked, setIsLiked] = useState(liked);
-    const [likesCount, setLikesCount] = useState(
-        comment.comment_likes.persons != null
-            ? comment.comment_likes.persons.length
-            : 0
-    );
-    const btnRef = useRef();
+    const [isLiked, setIsLiked] = useState();
+    const [likesCount, setLikesCount] = useState();
     const [comments, setComments] = useState();
-    const commentField = useRef();
-    const commentBoxDiv = useRef();
     const [isDeleted, setIsDeleted] = useState(false);
 
+    const btnRef = useRef();
+    const commentField = useRef();
+    const commentBoxDiv = useRef();
+
     useEffect(() => {
-        setIsLiked(liked);
+        setIsLiked(comment.comment_likes.persons && comment.comment_likes.persons.includes(user.id))
         setLikesCount(
             comment.comment_likes.persons != null
                 ? comment.comment_likes.persons.length
@@ -33,7 +28,7 @@ export default function CommentComponent({
         let subCmts = new Array();
         let possibleParents = new Array();
         possibleParents.push(comment.id);
-        allComments.map((cmt, index) => {
+        allComments.map((cmt) => {
             // check if subcomments' parent comment is not same as upper level comment's parent comment
             // check if subcomment's id is higher than upper level comments id
             // check if subcomment's parent comment is higher or equal to upper level comments id
@@ -57,14 +52,14 @@ export default function CommentComponent({
         let config = {
             headers: {
                 "Content-Type": "application/json",
-                Authorization: token,
+                Authorization: user.token,
             },
         };
         axios
             .put(
                 BACKEND_SERVER_DOMAIN +
                     "/api/" +
-                    post_id +
+                    comment.post_id +
                     "/comments/" +
                     comment.id,
                 {},
@@ -92,14 +87,14 @@ export default function CommentComponent({
         let config = {
             headers: {
                 "Content-Type": "application/json",
-                Authorization: token,
+                Authorization: user.token,
             },
         };
         axios
             .delete(
                 BACKEND_SERVER_DOMAIN +
                     "/api/" +
-                    post_id +
+                    comment.post_id +
                     "/comments/" +
                     comment.id,
                 config
@@ -134,12 +129,12 @@ export default function CommentComponent({
             let config = {
                 headers: {
                     "Content-Type": "multipart/form-data",
-                    Authorization: token,
+                    Authorization: user.token,
                 },
             };
             axios
                 .post(
-                    "http://localhost:8000/api/" + post_id + "/comments/new/",
+                    "http://localhost:8000/api/" + comment.post_id + "/comments/new/",
                     formData,
                     config
                 )
@@ -174,9 +169,9 @@ export default function CommentComponent({
             />
             <div>
                 <div className="content">
-                    <h6>
+                    <Link to={"/u/"+comment.person.slug}><h6> 
                         {(!isDeleted) ? (comment.person.first_name + " " +comment.person.last_name) : "deleted"}
-                    </h6>
+                    </h6></Link>
                     <p>{(!isDeleted) ? comment.comment_text : "deleted"}</p>
                 </div>
                 {(!isDeleted) ? (<div><div className="comment-options">
@@ -241,25 +236,16 @@ export default function CommentComponent({
                 {typeof comments == "object" ? (
                     <div className="each-comment">
                         {comments
-                            .slice()
                             .map((cmt, index) =>
                                 cmt.comment_parent == comment.id ? (
                                     <CommentComponent
                                         comment={cmt}
-                                        key={index}
+                                        key={cmt.id}
                                         user={user}
-                                        token={token}
                                         allComments={splicedArray(
                                             comments,
                                             index
                                         )}
-                                        post_id={post_id}
-                                        liked={
-                                            cmt.comment_likes.persons &&
-                                            cmt.comment_likes.persons.includes(
-                                                user.id
-                                            )
-                                        }
                                     />
                                 ) : (
                                     ""
