@@ -1,3 +1,4 @@
+import json
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -19,7 +20,7 @@ def getNotifications(request):
     if type(person_id) is Response:
         return person_id
 
-    notifications = Notification.objects.filter(person_for=person_id).values()
+    notifications = Notification.objects.filter(person_for=person_id).filter(seen=0).values()
     res = []
     for notif in notifications:
         person_by = PersonSerializer(Person.objects.get(pk=notif['person_from'])).data
@@ -36,12 +37,12 @@ def markAsSeen(request,pk):
         notification = Notification.objects.get(pk=pk)
         notification.seen = 1
         notification.save()
-        return Response('{"action":"success"}',status=status.HTTP_200_OK)
+        return Response(json.loads('{"action":"success"}'),status=status.HTTP_200_OK)
     except Notification.DoesNotExist:
         return Response(errorResponse(INVALID_REQUEST),status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['PUT'])
-def markAllAsSeen(request,pk):
+def markAllAsSeen(request):
     person_id = getPersonID(request)
     if type(person_id) is Response:
         return person_id
@@ -51,7 +52,7 @@ def markAllAsSeen(request,pk):
         notification = Notification.objects.get(pk=notification['id'])
         notification.seen = 1
         notification.save()
-    return Response('{"action":"success"}',status=status.HTTP_200_OK)
+    return Response(json.loads('{"action":"success"}'),status=status.HTTP_200_OK)
 
 # Helper Functions
 # -----------------------------------------------

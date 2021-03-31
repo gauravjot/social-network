@@ -7,7 +7,7 @@ urlpatterns = [
     path('api/friends/requests/', getFriendRequests), # GET request
     path('api/friends/request/send/', sendFriendRequest), # POST request
     path('api/friends/request/accept/', acceptFriendRequest), # PUT request
-    path('api/friends/request/delete/', deleteFriendRequest), # DELETE request
+    path('api/friends/request/delete/<int:pk>', deleteFriendRequest), # DELETE request
     path('api/friends/suggestions/', getFriendSuggestions), # GET request
     #path('api/friend/unfriend',''), #DELETE request
 ]

@@ -3,6 +3,7 @@ import LogIn from './components/home/LogIn';
 import Dashboard from './components/dashboard/Index';
 import Friends from './components/dashboard/friends/Friends';
 import Profile from './components/dashboard/profile/Profile'
+import PostPage from './components/dashboard/post/PostPage'
 import {
   Route,
   Redirect,
@@ -20,6 +21,7 @@ function App() {
         <Route path='/login' exact component={LogIn} />
         <Route path='/' exact component={Index} />
         <Route path='/u/:slug' render={(props) => <Profile {...props} key={(Math.random() * 10)}/>} />
+        <Route path='/post/:post_id' render={(props) => <PostPage {...props} key={(Math.random() * 10)}/>} />
         <Redirect from='*' to='/' />
       </Switch>
     </Router>

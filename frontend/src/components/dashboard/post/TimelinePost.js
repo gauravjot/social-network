@@ -6,7 +6,7 @@ import axios from "axios";
 import { Link } from 'react-router-dom';
 import {getMetadata} from 'page-metadata-parser';
 
-const TimelinePost = ({ user, post}) => {
+const TimelinePost = ({ user, post, expanded}) => {
     const [isLiked, setIsLiked] = useState();
     const [likesCount, setLikesCount] = useState();
     const [comments, setComments] = useState();
@@ -33,6 +33,9 @@ const TimelinePost = ({ user, post}) => {
                     "url":url[0]})
                 if (urls.length == index+1) setEmbedUrls(links);
             })
+        }
+        if (expanded) {
+            commentsToggle()
         }
     }, []);
 
@@ -163,6 +166,9 @@ const TimelinePost = ({ user, post}) => {
                             className="dropdown-menu"
                             aria-labelledby={"options"+post.id}
                         >
+                            <Link className="dropdown-item" to={"/post/"+post.id}>
+                                View Post
+                            </Link>
                             {(user.id == post.person_id) ? <button className="dropdown-item"
                             onClick={deletePost}>
                                 Delete

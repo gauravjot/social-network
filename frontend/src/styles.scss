@@ -34,7 +34,7 @@ $clr-light-accent: darken(#fafafb, 85%);
 $clr-grey: #8a8a94;
 
 html {
-    font-size: 16.5px;
+    font-size: 17px;
 }
 
 @media (max-width: 992px) {
@@ -93,7 +93,6 @@ a {
     &:focus {
         text-decoration: underline;
         outline: none;
-        color: $clr-black !important;
     }
 }
 
@@ -142,7 +141,7 @@ input:focus {
     color: $clr-text;
     border: 1px solid rgba($clr-grey, 0.15);
     border-radius: 0.5rem;
-    box-shadow: 0 0 .5rem .25rem $clr-light-accent;
+    box-shadow: 0 0 0.5rem 0.25rem $clr-light-accent;
     min-width: 8rem;
 
     .dropdown-item {
@@ -456,6 +455,16 @@ input:focus {
                     max-height: 1.6rem;
                     background-color: transparent;
                 }
+
+                @media(max-width:992px) {
+                    width:80%;
+                }
+                @media(max-width:540px) {
+                    width:75%;
+                }
+                @media(max-width:400px) {
+                    width:70%;
+                }
             }
 
             .navbar-toggler {
@@ -539,7 +548,7 @@ input:focus {
                 margin: 0.5rem 0;
                 text-align: end;
 
-                button,
+                & > button,
                 a {
                     color: $clr-text;
                     position: relative;
@@ -549,7 +558,7 @@ input:focus {
                     i {
                         margin-left: 0.25rem;
                         font-size: 1rem;
-                        width:1rem;
+                        width: 1rem;
                     }
 
                     &::after {
@@ -589,6 +598,146 @@ input:focus {
             }
         }
     }
+    .mobile-notification-icon {
+        max-width: 2rem;
+        display: inline-block;
+        margin: 0 .5rem;
+    }
+    .notifications {
+        max-height: 2rem;
+        position: relative;
+
+        .hide {
+            display: none;
+        }
+        .list {
+            display: block;
+            position: absolute;
+            background: $clr-white;
+            box-shadow: 10px 7px 15px -1px darken($clr-light-accent, 4%);
+            border:1px rgba($clr-grey,.3) solid;
+            border-radius: .5rem;
+            top:2.5rem;
+            right:1rem;
+            text-align: left;
+            z-index:2;
+            max-height:50vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+
+            @media (max-width:992px) {
+                right:-1.5rem;
+                top:3rem;
+                max-height:70vh;
+            }
+        }
+
+        .dropdown-menu {
+            top: 2.5rem;
+            right: 0.5rem;
+            z-index: 3;
+            padding:0;
+
+            @media(max-width:992px) {
+                right:-1.5rem;
+            }
+        }
+
+        button {
+            position: relative;
+            width: 2rem;
+            height: 2rem;
+            background: transparent;
+            border: none;
+            color: $clr-text;
+            i {
+                font-size: 1.2rem !important;
+                margin-left: 0 !important;
+                margin-top: 0.5rem;
+            }
+            span {
+                position: absolute;
+                top: -0.25rem;
+                right: -0.5rem;
+                line-height: 0.7rem;
+                font-size: 0.8rem;
+                background: $clr-accent;
+                color: #fff;
+                padding: 0.15rem 0.175rem 0.05rem;
+                border-radius: 0.25rem;
+            }
+
+            &:hover,
+            &:focus {
+                background: rgba($clr-grey, 0.3) !important;
+                border-radius: 50%;
+                &::after {
+                    display: none !important;
+                }
+            }
+        }
+
+        .notif {
+            color:$clr-text;
+            display: block;
+            border-bottom:1px solid $clr-white !important;
+            border-top:1px solid rgba($clr-grey,.15) !important;
+            padding:.75rem 1rem;
+            background-color: rgba($clr-grey,.05) !important;
+
+            &:last-child {
+                border-bottom: none !important;
+                border-bottom-left-radius: .5rem;
+                border-bottom-right-radius: .5rem;
+            }
+            &:first-child {
+                border-top: none !important;
+                border-top-left-radius: .5rem;
+                border-top-right-radius: .5rem;
+            }
+
+            & > div {
+                width: 22rem;
+                line-height: 1.4rem;
+                font-size:.9rem;
+
+                &> i {
+                    margin-right: .5rem;
+                }
+
+                .uname {
+                    color:$clr-black;
+                    font-weight: bold;
+                }
+                .when {
+                    color:$clr-grey;
+                    font-size:.75rem;
+                }
+
+                @media (max-width:992px) {
+                    width: 25rem;
+                }
+                @media(max-width:540px) {
+                    width:20rem;
+                }
+                @media(max-width:400px) {
+                    width: 15rem;
+                }
+            }
+
+            &:hover,
+            &:focus {
+                background: rgba($clr-grey, 0.15) !important;
+                &::after {
+                    display: none !important;
+                }
+            }
+        }
+
+        .seen {
+            background: rgba($clr-grey,.2) !important;
+        }
+    }
 }
 
 .align-end {
@@ -600,7 +749,7 @@ input:focus {
 
 .leftsidebar {
     width: inherit;
-    max-width: 19.75rem;
+    max-width: 19.25rem;
     height: 100vh;
     position: fixed;
     padding: 0 1rem;
@@ -795,13 +944,13 @@ input:focus {
 
 @media (max-width: 1400px) {
     .leftsidebar {
-        max-width: 17rem;
+        max-width: 16.5rem;
     }
 }
 
 @media (max-width: 1200px) {
     .leftsidebar {
-        max-width: 14.15rem;
+        max-width: 14rem;
     }
 }
 
@@ -958,7 +1107,7 @@ input:focus {
 
             .more-options {
                 color: $clr-grey;
-                width:fit-content;
+                width: fit-content;
 
                 .post-actions {
                     background-color: transparent;
@@ -971,7 +1120,8 @@ input:focus {
                     place-content: center;
                     transition: background-color ease-out 250ms;
 
-                    &:hover,&:focus {
+                    &:hover,
+                    &:focus {
                         color: $clr-black;
                         background-color: rgba($clr-grey, 0.2);
                     }
@@ -985,7 +1135,7 @@ input:focus {
         }
 
         .post-content {
-            margin: 1rem 0 .5rem;
+            margin: 1rem 0 0.5rem;
             line-height: 1.5rem;
             font-size: 0.9rem;
             white-space: break-spaces;
@@ -993,17 +1143,17 @@ input:focus {
 
         .url {
             & > div {
-                border: 1px solid rgba($clr-grey,.2);
+                border: 1px solid rgba($clr-grey, 0.2);
                 padding: 0.5rem;
                 border-radius: 0.5rem;
-                margin-top: .75rem;
+                margin-top: 0.75rem;
 
                 .utitle {
                     font-weight: bold;
                     color: rgba($clr-text, 0.85s);
                     font-size: 0.85rem;
                     line-height: 1.2rem;
-                    margin-bottom: .25rem;
+                    margin-bottom: 0.25rem;
                     i {
                         font-size: 0.7rem;
                         margin-right: 0.1rem;
@@ -1030,7 +1180,9 @@ input:focus {
 
             &:hover,
             &:focus {
-                &>div{background-color: rgba($clr-grey,.05);}
+                & > div {
+                    background-color: rgba($clr-grey, 0.05);
+                }
                 text-decoration: none !important;
                 .utitle {
                     text-decoration: underline;
@@ -1043,7 +1195,7 @@ input:focus {
             min-height: 10rem;
             max-height: 35rem;
             object-fit: contain;
-            margin-top: .5rem;
+            margin-top: 0.5rem;
         }
 
         & > .post-actions {
@@ -1142,6 +1294,69 @@ input:focus {
             opacity: 1;
         }
     }
+
+    .friend-req {
+        .user {
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            gap: 0.75rem;
+            margin: 0.125rem -0.5rem;
+    
+            img {
+                min-width: 3.5rem;
+                min-height: 3.5rem;
+                max-width: 3.5rem;
+                max-height: 3.5rem;
+                object-fit: cover;
+            }
+    
+            div {
+                vertical-align: middle;
+    
+                span {
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    display: block;
+                    max-width: 20ch;
+                    font-size: 0.85rem;
+                    color: $clr-grey;
+                    margin-top: 0.125rem;
+                    line-height: 1.2rem;
+    
+                    @media (max-width: 1200px) {
+                        max-width: 15ch;
+                    }
+                }
+                h6 {
+                    font-size: 0.9rem;
+                    font-weight: 600;
+                    letter-spacing: 0.03rem;
+                    line-height: 1.2rem;
+    
+                    a {
+                        color: $clr-black;
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                    }
+                }
+    
+                button {
+                    margin-top: 0.5rem;
+                    margin-right: 0.75rem;
+                    transform: scale(0.95);
+                    border-radius: 0.5rem;
+                    padding: 0.25em 0.75em;
+    
+                    @media (max-width: 1200px) {
+                        padding: 0.125em 0.25em;
+                    }
+                }
+            }
+        }
+    
+    }
 }
 
 .show {
@@ -1185,14 +1400,14 @@ input:focus {
             padding: 0.5rem 0.75rem;
 
             & > a {
-
-                & >h6 {
-                font-weight: 500;
-                font-size: 0.8rem;
+                & > h6 {
+                    font-weight: 500;
+                    font-size: 0.8rem;
                 }
                 color: rgba($clr-text, 0.75);
 
-                &:hover,&:focus {
+                &:hover,
+                &:focus {
                     color: $clr-black;
                     text-decoration: underline;
                 }
@@ -1347,7 +1562,7 @@ input:focus {
                 margin-top: 0.125rem;
                 line-height: 1rem;
 
-                @media (max-width:1200px) {
+                @media (max-width: 1200px) {
                     max-width: 15ch;
                 }
             }
@@ -1370,9 +1585,9 @@ input:focus {
                 margin-right: 0.75rem;
                 transform: scale(0.95);
                 border-radius: 0.5rem;
-                padding: 0.125em 0.5em;
+                padding: 0.175em 0.625em;
 
-                @media (max-width:1200px) {
+                @media (max-width: 1200px) {
                     padding: 0.125em 0.25em;
                 }
             }
@@ -1391,13 +1606,14 @@ input:focus {
         letter-spacing: 0.03rem;
         line-height: 1.6rem;
         color: $clr-black;
-        margin-bottom: 1rem;
+        margin-bottom: 1.5rem;
     }
 }
 
 .friendlistitem {
-    margin: 1rem 0;
+    margin: 0 0 1.5rem;
     gap: 1rem;
+
 
     img {
         width: 5rem;
@@ -1408,6 +1624,7 @@ input:focus {
     h6 {
         font-size: 0.9rem;
         font-weight: 500;
+        margin-top: 0.25rem;
         letter-spacing: 0.03rem;
         line-height: 1.6rem;
         a {
@@ -1420,10 +1637,10 @@ input:focus {
 
     span {
         font-size: 0.8rem;
-        line-height: 1.2rem;
+        line-height: 1.4rem;
         display: block;
-        margin-top: 0.25rem;
         white-space: nowrap;
+        color:$clr-grey;
         overflow: hidden;
         text-overflow: ellipsis;
     }

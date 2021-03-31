@@ -9,8 +9,6 @@ export default function FriendRequests() {
     const user = useSelector((state) => state.user);
     const token = user.token;
     const [friendRequests, setFriendRequests] = useState();
-    const [acceptedRequests, setAcceptedRequests] = useState([-1, 0]);
-    const [clickedButtons, setClickedButtons] = useState([-1, 0]);
 
     const getFriendRequests = () => {
         let config = {
@@ -33,79 +31,110 @@ export default function FriendRequests() {
         getFriendRequests();
     }, []);
 
-    const acceptFriendRequest = (id) => {
-        setClickedButtons([...clickedButtons, id]);
-        let config = {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: token,
-            },
-        };
-        axios
-            .put(
-                "http://localhost:8000/api/friends/request/accept/",
-                JSON.stringify({ id: id }),
-                config
-            )
-            .then(function (response) {
-                setAcceptedRequests([...acceptedRequests, id]);
-            })
-            .catch(function (error) {
-                console.log(error.response.data);
-            });
-    };
-
-    const declineFriendRequest = (id) => {};
 
     return friendRequests ? (
-        <div className="card">
+        <div className="friend-req card">
             <h6>Friend Requests</h6>
-            {friendRequests.map((person, index) => (
-                <div key={index} className="d-flex user">
-                    <img
-                        className="rounded-circle"
-                        src={BACKEND_SERVER_DOMAIN + person.avatar}
-                        alt="profile picture"
-                    />
-                    <div>
-                        <h6>
-                            <Link to={"/u/"+person.slug}>
-                                {person.first_name} {person.last_name}
-                            </Link>
-                        </h6>
-                        <span>{person.tagline}</span>
-                        <div className="d-flex">
-                            <button
-                                onClick={() =>
-                                    acceptFriendRequest(person.request_id)
-                                }
-                                disabled={
-                                    Object.values(clickedButtons).indexOf(
-                                        person.request_id
-                                    ) !== -1
-                                }
-                                className="btn btn-sm btn-outline-primary"
-                            >
-                                {Object.values(acceptedRequests).indexOf(
-                                    person.request_id
-                                ) !== -1
-                                    ? "Accepted"
-                                    : "Accept"}
-                            </button>
-                            <button
-                                onClick={() =>
-                                    declineFriendRequest(person.request_id)
-                                }
-                                className="btn btn-sm btn-outline-danger"
-                            >
-                                Decline
-                            </button>
-                        </div>
-                    </div>
-                </div>
+            {friendRequests.map((person) => (
+                <FriendReq person={person} user={user} index ={person.id}/>
             ))}
         </div>
     ) : (
         <div></div>
     );
+}
+
+export function FriendReq({person, user}) {
+    const [isDeleted,setIsDeleted] = useState(false);
+    const [isAccepted,setIsAccepted] = useState(false);
+
+    let acceptBtn = React.useRef();
+    let declineBtn = React.useRef();
+
+    const acceptFriendRequest = () => {
+        acceptBtn.current.setAttribute("disabled", "disabled");
+        let config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: user.token,
+            },
+        };
+        axios
+            .put(
+                BACKEND_SERVER_DOMAIN+"/api/friends/request/accept/",
+                JSON.stringify({ id: person.request_id }),
+                config
+            )
+            .then(function (response) {
+                setIsAccepted(true)
+            })
+            .catch(function (error) {
+                console.log(error.response.data);
+                acceptBtn.current.removeAttribute("disabled", "disabled");
+            });
+    };
+
+    const declineFriendRequest = () => {
+        declineBtn.current.setAttribute("disabled", "disabled");
+        let config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: user.token,
+            },
+        };
+        axios
+            .delete(
+                BACKEND_SERVER_DOMAIN+"/api/friends/request/delete/"+person.request_id,
+                config,
+                {}
+            )
+            .then(function (response) {
+                setIsDeleted(true)
+            })
+            .catch(function (error) {
+                console.log(error.response.data);
+                declineBtn.current.removeAttribute("disabled", "disabled");
+            });
+    };
+
+    return (
+        <div className="d-flex user">
+            <img
+                className="rounded-circle"
+                src={BACKEND_SERVER_DOMAIN + person.avatar}
+                alt="profile picture"
+            />
+            <div>
+                <h6>
+                    <Link to={"/u/"+person.slug}>
+                        {person.first_name} {person.last_name}
+                    </Link>
+                </h6>
+                <span>{person.tagline}</span>
+                <div className="d-flex">
+                    {!isDeleted ? 
+                        <button
+                            onClick={acceptFriendRequest}
+                            ref={acceptBtn}
+                            className="btn btn-sm btn-outline-primary"
+                        >
+                            {isAccepted
+                                ? "Accepted"
+                                : "Accept"}
+                        </button> 
+                        : ""
+                    }
+                    <button
+                        onClick={declineFriendRequest}
+                        ref={declineBtn}
+                        className="btn btn-sm btn-outline-danger"
+                    >
+                        {isDeleted
+                                ? "Request Declined"
+                                : "Decline"}
+                    </button>
+                </div>
+            </div>
+        </div>
+    )
 }

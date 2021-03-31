@@ -159,13 +159,13 @@ def acceptFriendRequest(request):
 # Log Out function, requires token
 # -----------------------------------------------
 @api_view(['DELETE'])
-def deleteFriendRequest(request):
+def deleteFriendRequest(request,pk):
     person_id = getPersonID(request)
     # If person_id type is Response that means we have errored
     if type(person_id) is Response:
         return person_id
 
-    friend_request = FriendRequest.objects.get(id=request.data['id'])
+    friend_request = FriendRequest.objects.get(pk=pk)
     if (friend_request.from_user == person_id or friend_request.to_user == person_id):
         friend_request.delete()
         return Response(data=json.loads('{"action": "success"}'),status=status.HTTP_200_OK)

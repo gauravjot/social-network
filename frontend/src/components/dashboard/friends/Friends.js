@@ -45,6 +45,7 @@ export default function Friends() {
                         <LeftSidebar active={2}/>
                     </div>
                     <div className="col-lg-6 col-12 timeline">
+                        <FriendRequests />
                         <div class="card">
                         <h6>Friends</h6>
                             {(friends) ? (
@@ -68,7 +69,6 @@ export default function Friends() {
                         </div>
                     </div>
                     <div className="col-lg-3 col-12 rightsidebar">
-                        <FriendRequests />
                         <SuggestFriends />
                     </div>
                 </div>

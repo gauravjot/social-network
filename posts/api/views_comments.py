@@ -79,7 +79,7 @@ def postNewComment(request, post_id):
                     noti=1,
                     person_for=p_for,
                     person_from=person,
-                    about=0,
+                    about=post.id,
                     created=datetime.now().timestamp()
                 )
                 notification.save()
@@ -115,7 +115,7 @@ def actionsComment(request,post_id,pk):
                 noti=2,
                 person_for=comment.person_id,
                 person_from=person_id,
-                about=0,
+                about=comment.post_id,
                 created=datetime.now().timestamp()
             )
             notification.save()

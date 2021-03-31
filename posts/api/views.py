@@ -115,8 +115,8 @@ def postOperations(request, pk):
 def getPost(post_key):
     try:
         data = Posts.objects.get(pk=post_key)
-        postsSerializer = PostsSerializer(data)
-        return Response(data=postsSerializer.data,status=status.HTTP_200_OK)
+        post_by = PersonSerializer(Person.objects.get(pk=data.person_id)).data
+        return Response(data={**PostsSerializer(Posts.objects.get(pk=data.id)).data,"person":post_by},status=status.HTTP_200_OK)
     except Posts.DoesNotExist:
         return Response(errorResponse("Post not found!"),status=status.HTTP_404_NOT_FOUND)
 
@@ -142,7 +142,7 @@ def likePost(request, post_key):
             noti=0,
             person_for=post.person_id,
             person_from=person_id,
-            about=0,
+            about=post.id,
             created=datetime.now().timestamp()
         )
     notification.save()
