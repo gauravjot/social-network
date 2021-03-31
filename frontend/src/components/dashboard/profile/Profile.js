@@ -67,7 +67,7 @@ export default function Profile() {
                             (profileData) ? 
                                 (<div>
                                     <div className="card profile-user">
-                                        <img className="cover-image"/>
+                                        <img className="cover-image" src="//unsplash.it/901/300"/>
                                         <div className="d-flex">
                                             <img className="rounded-circle avatar" src={BACKEND_SERVER_DOMAIN + profileData.user.avatar} />
                                             <div className="user-details">

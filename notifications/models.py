@@ -11,7 +11,7 @@ class Notification(models.Model):
     person_for = models.IntegerField()
     person_from = models.IntegerField()
 
-    # about: _> 0: post, 1: friend
+    # about: _> friend or post
     about = models.IntegerField()
 
     created = models.FloatField()

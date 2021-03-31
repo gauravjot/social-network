@@ -1655,6 +1655,7 @@ input:focus {
                 max-height: 300px;
                 background: $clr-light-accent;
                 border-radius: 0.5rem;
+                object-fit: cover;
             }
             .d-flex {
                 margin: -2.5rem 1rem 0 2rem;

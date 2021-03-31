@@ -1750,6 +1750,8 @@ input:focus {
   max-height: 300px;
   background: #1e1e26;
   border-radius: 0.5rem;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .profile-page .timeline .profile-user .d-flex {
