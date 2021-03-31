@@ -15,6 +15,7 @@ from posts.models import Comment, Posts
 from .serializers import CommentSerializer
 from account.api.serializers import PersonSerializer
 import json
+from notifications.models import Notification
 
 # Get all post comments
 # By default it requires user to be logged in and be friends with post author
@@ -70,6 +71,21 @@ def postNewComment(request, post_id):
     })
     if commentSerializer.is_valid():
         commentSerializer.save()
+        try:
+            # make a notification to send
+            p_for = post.person_id if request.data['comment_parent']=="0" else Comment.objects.get(pk=int(request.data['comment_parent'])).person_id
+            if p_for != person:
+                notification = Notification(
+                    noti=1,
+                    person_for=p_for,
+                    person_from=person,
+                    about=0,
+                    created=datetime.now().timestamp()
+                )
+                notification.save()
+        except Comment.DoesNotExist:
+            print("errored")
+            pass
         return Response(data={**commentSerializer.data,'person':PersonSerializer(Person.objects.get(id=person)).data}, status=status.HTTP_201_CREATED)
     return Response(commentSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -83,6 +99,7 @@ def actionsComment(request,post_id,pk):
         return person_id
 
     if request.method == 'PUT':
+        # Liking a comment
         comment = Comment.objects.get(pk=pk)
         if comment.comment_likes:
             if person_id in comment.comment_likes['persons']:
@@ -92,6 +109,16 @@ def actionsComment(request,post_id,pk):
         else:
             comment.comment_likes = dict(persons=[(person_id)])
         comment.save()
+        # make a notification to send
+        if comment.person_id != person_id:
+            notification = Notification(
+                noti=2,
+                person_for=comment.person_id,
+                person_from=person_id,
+                about=0,
+                created=datetime.now().timestamp()
+            )
+            notification.save()
         return Response(json.loads('{"action":"success"}'),status=status.HTTP_200_OK)
     elif request.method == 'DELETE':
         try:

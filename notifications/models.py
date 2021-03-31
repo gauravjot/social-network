@@ -3,9 +3,9 @@ from django.db import models
 # Create your models here.
 class Notification(models.Model):
     # seen: 0 (not-seen) or 1 (seen)
-    seen = models.IntegerField()
+    seen = models.IntegerField(default=0)
 
-    # noti: notification type _> 0: like, 1: comment, 2: new post, 3: friend req
+    # noti: notification type _> 0: post like, 1: new comment, 2: comment like, 3: new friend req, 4: friend request accepted
     noti = models.IntegerField()
 
     person_for = models.IntegerField()
@@ -13,6 +13,8 @@ class Notification(models.Model):
 
     # about: _> 0: post, 1: friend
     about = models.IntegerField()
+
+    created = models.FloatField()
 
     def __str__(self):
         return "Notification #"+str(self.pk)+" __for "+str(self.person_for)+" __from "+str(self.person_from)

@@ -23,6 +23,7 @@ urlpatterns = [
     path('',include('account.api.urls')),
     path('',include('posts.api.urls')),
     path('',include('friends.api.urls')),
+    path('',include('notifications.api.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -11,6 +11,7 @@ from account.models import Person, Token
 
 from .serializers import FriendSerializer, FriendRequestSerializer
 from friends.models import Friend, FriendRequest
+from notifications.models import Notification
 
 import json
 from helpers.api_error_response import errorResponse
@@ -98,6 +99,15 @@ def sendFriendRequest(request):
                 friendRequestSerializer = FriendRequestSerializer(data=req_dict)
                 if friendRequestSerializer.is_valid():
                     friendRequestSerializer.save()
+                    # make a notification to send
+                    notification = Notification(
+                        noti=3,
+                        person_for=req_dict['to_user'],
+                        person_from=req_dict['from_user'],
+                        about=1,
+                        created=datetime.now().timestamp()
+                    )
+                    notification.save()
                     return Response(data=friendRequestSerializer.data,status=status.HTTP_201_CREATED)
                 else:
                     return Response(friendRequestSerializer.errors,status=status.HTTP_400_BAD_REQUEST)
@@ -131,6 +141,15 @@ def acceptFriendRequest(request):
                     duplicate_request.delete()
                 except FriendRequest.DoesNotExist:
                     return res
+                # make a notification to send
+                notification = Notification(
+                    noti=4,
+                    person_for=friend_request.from_user,
+                    person_from=person_id,
+                    about=1,
+                    created=datetime.now().timestamp()
+                )
+                notification.save()
                 return res
         return Response(errorResponse("Unable to accept friend request."),status=status.HTTP_400_BAD_REQUEST)
     except FriendRequest.DoesNotExist:

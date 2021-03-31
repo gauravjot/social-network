@@ -12,6 +12,7 @@ from posts.api.serializers import PostsSerializer
 from posts.models import Posts
 from friends.models import Friend
 from account.models import Person
+from notifications.models import Notification
 
 import json
 from datetime import datetime, time
@@ -135,6 +136,16 @@ def likePost(request, post_key):
     else:
         post.likes = dict(persons=[(person_id)])
     post.save()
+    # make a notification to send
+    if post.person_id != person_id:
+        notification = Notification(
+            noti=0,
+            person_for=post.person_id,
+            person_from=person_id,
+            about=0,
+            created=datetime.now().timestamp()
+        )
+    notification.save()
     return Response(json.loads('{"action":"success"}'),status=status.HTTP_200_OK)
 
 # Edit a post, Auth: REQUIRED
