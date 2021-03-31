@@ -104,7 +104,7 @@ def sendFriendRequest(request):
                         noti=3,
                         person_for=req_dict['to_user'],
                         person_from=req_dict['from_user'],
-                        about=1,
+                        about=0,
                         created=datetime.now().timestamp()
                     )
                     notification.save()
@@ -132,6 +132,15 @@ def acceptFriendRequest(request):
                     'since':datetime.now().timestamp()})
             if friendSerilizer.is_valid():
                 friendSerilizer.save()
+                # make a notification to send
+                notification = Notification(
+                    noti=4,
+                    person_for=friend_request.from_user,
+                    person_from=person_id,
+                    about=0,
+                    created=datetime.now().timestamp()
+                )
+                notification.save()
                 friend_request.delete()
                 # Let's check if users had cross friend requested each other
                 # in that case we need to delete the other request as well
@@ -141,15 +150,6 @@ def acceptFriendRequest(request):
                     duplicate_request.delete()
                 except FriendRequest.DoesNotExist:
                     return res
-                # make a notification to send
-                notification = Notification(
-                    noti=4,
-                    person_for=friend_request.from_user,
-                    person_from=person_id,
-                    about=1,
-                    created=datetime.now().timestamp()
-                )
-                notification.save()
                 return res
         return Response(errorResponse("Unable to accept friend request."),status=status.HTTP_400_BAD_REQUEST)
     except FriendRequest.DoesNotExist:
