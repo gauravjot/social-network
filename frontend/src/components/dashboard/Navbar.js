@@ -6,6 +6,7 @@ import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import { BACKEND_SERVER_DOMAIN } from "../../settings";
 import { timeSince } from "../../utils/timesince";
+import ThemeToggle from "../global/ThemeToggle"
 
 export default function Navbar() {
     const user = useSelector((state) => state.user);
@@ -350,6 +351,9 @@ export default function Navbar() {
                                             </div>
                                         </li>
                                         <li className="align-end">
+                                            <div className="nav-theme-toggler">
+                                                <ThemeToggle />
+                                            </div>
                                             <button onClick={logOut}>
                                                 Logout
                                                 <i className="fas fa-sign-out-alt"></i>

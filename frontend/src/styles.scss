@@ -5,13 +5,46 @@ $theme-colors: (
     "success": #28a745,
     //success, info
 );
+
 :root {
     --breakpoint-xs: 0;
     --breakpoint-sm: 576px;
     --breakpoint-md: 768px;
     --breakpoint-lg: 992px;
     --breakpoint-xl: 1200px;
+
+    --rgb-clr-grey:138, 138, 148;
+    --rgb-clr-accent: 0, 117, 255;
+    --clr-accent: rgb(var(--rgb-clr-accent));
+    --clr-grey: rgb(var(--rgb-clr-grey));
+
+    --rgb-clr-white: 255,255,255;
+    --rgb-clr-text: 81,81,92;
+    --rgb-clr-black: 0,0,0;
+    --rgb-clr-light-accent: 247,247,249;
+    --rgb-clr-light-accent-darkened:234,238,242;
+
+    --clr-white: rgb(var(--rgb-clr-white));
+    --clr-text: rgb(var(--rgb-clr-text));
+    --clr-black: rgb(var(--rgb-clr-black));
+    --clr-light-accent: rgb(var(--rgb-clr-light-accent));
+    --clr-light-accent-darkened:rgb(var(--rgb-clr-light-accent-darkened));
 }
+
+.darkmode {
+    --rgb-clr-white: 19, 19, 20;
+    --rgb-clr-text: 220, 220, 220;
+    --rgb-clr-black: 255,255,255;
+    --rgb-clr-light-accent: 30, 30, 37;
+    --rgb-clr-light-accent-darkened:25, 25, 32;
+
+    --clr-white: rgb(var(--rgb-clr-white));
+    --clr-text: rgb(var(--rgb-clr-text));
+    --clr-black: rgb(var(--rgb-clr-black));
+    --clr-light-accent: rgb(var(--rgb-clr-light-accent));
+    --clr-light-accent-darkened:rgb(var(--rgb-clr-light-accent-darkened));
+}
+
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@400;500;600;700;900&display=swap");
 
 // Overwrites
@@ -19,19 +52,7 @@ $theme-colors: (
     @return map-get($theme-colors, $key);
 }
 
-// $clr-accent: #0075ff;
-// $clr-white: #ffffff;
-// $clr-text: #51515c;
-// $clr-black: #000000;
-// $clr-light-accent: #f7f7f9;
-// $clr-grey: #8a8a94;
 
-$clr-accent: #0075ff;
-$clr-white: #131314;
-$clr-text: #dcdcdc;
-$clr-black: #ffffff;
-$clr-light-accent: darken(#fafafb, 85%);
-$clr-grey: #8a8a94;
 
 html {
     font-size: 17px;
@@ -46,13 +67,13 @@ html {
 body {
     margin: auto;
     line-height: 2rem;
-    background-color: $clr-white;
+    background-color: var(--clr-white);
     background-image: linear-gradient(
         to right,
-        $clr-white 50%,
-        $clr-light-accent 60%
+        var(--clr-white) 50%,
+        var(--clr-light-accent) 60%
     );
-    color: $clr-text;
+    color: var(--clr-text);
     font-size: 1rem;
     font-weight: 500;
     font-family: "Roboto", "Noto Sans", "Open Sans", "Helvetica Neue",
@@ -87,7 +108,7 @@ h6 {
 }
 
 a {
-    color: $clr-accent;
+    color: var(--clr-accent);
     text-decoration: none;
 
     &:focus {
@@ -101,11 +122,42 @@ input:focus {
     outline: none;
 }
 
+.darkmode-toggle {
+    background-color: var(--clr-light-accent);
+    display: inline-block;
+    border-radius:50px;
+    width:3rem;
+    height:2rem;
+    font-size: .8rem;
+    line-height: 1.8rem;
+    position: relative;
+    box-shadow:0 0 .5rem .1rem rgba(var(--rgb-clr-light-accent-darkened),.2);
+    border:.1rem solid var(--clr-light-accent-darkened);
+    cursor: pointer;
+    button {
+        width:1.6rem;
+        height: 1.6rem;
+        border:none;
+        background:var(--clr-accent);
+        color:var(--clr-white);
+        border-radius: 50px;
+        padding:0;
+        position: absolute;
+        top:0.1rem;
+        left:.1rem;
+        transition: all .5ms ease;
+    }
+
+    .enabled {
+        left:1.2rem;
+    }
+}
+
 .btn-light-accent {
-    color: $clr-accent !important;
+    color: var(--clr-accent) !important;
 
     i {
-        color: $clr-accent !important;
+        color: var(--clr-accent) !important;
     }
 }
 
@@ -117,35 +169,35 @@ input:focus {
 }
 
 .form-label {
-    color: $clr-text;
+    color: var(--clr-text);
 }
 
 .form-control {
-    background: rgba($clr-light-accent, 0.4);
-    color: $clr-black;
-    border: 0.1rem solid rgba($clr-grey, 0.3);
+    background: rgba(var(--rgb-clr-light-accent), 0.4);
+    color: var(--clr-black);
+    border: 0.1rem solid rgba(var(--rgb-clr-grey), 0.3);
     border-radius: 0.75rem;
     padding: 0.6em 1em;
 
     &:focus {
-        background: $clr-white;
-        color: $clr-black;
-        border-color: $clr-accent;
+        background: var(--clr-white);
+        color: var(--clr-black);
+        border-color: var(--clr-accent);
         outline: 0;
         box-shadow: 0;
     }
 }
 
 .dropdown-menu {
-    background-color: $clr-white;
-    color: $clr-text;
-    border: 1px solid rgba($clr-grey, 0.15);
+    background-color: var(--clr-white);
+    color: var(--clr-text);
+    border: 1px solid rgba(var(--rgb-clr-grey), 0.15);
     border-radius: 0.5rem;
-    box-shadow: 0 0 0.5rem 0.25rem $clr-light-accent;
+    box-shadow: 0 0 0.5rem 0.25rem var(--clr-light-accent);
     min-width: 8rem;
 
     .dropdown-item {
-        color: rgba($clr-black, 0.9);
+        color: rgba(var(--rgb-clr-black), 0.9);
         font-size: 0.8rem;
         padding: 0.3rem 1rem;
         font-weight: 600;
@@ -153,18 +205,18 @@ input:focus {
 
         &:hover,
         &:focus {
-            background-color: rgba($clr-grey, 0.15);
+            background-color: rgba(var(--rgb-clr-grey), 0.15);
         }
     }
 }
 
 .card {
-    background-color: $clr-white;
+    background-color: var(--clr-white);
     padding: 1rem;
     border-radius: 1rem;
     margin: 1rem 0 1.5rem 0;
     border: none;
-    box-shadow: 0 0 5px 1px rgba($clr-grey, 0.05);
+    box-shadow: 0 0 5px 1px rgba(var(--rgb-clr-grey), 0.05);
 }
 
 .card-btn {
@@ -179,17 +231,17 @@ input:focus {
     font-family: "Poppins";
     font-weight: 600;
     text-align: center;
-    color: $clr-black;
+    color: var(--clr-black);
     border: none;
     padding: 0.25rem 0;
-    background-color: rgba($clr-light-accent, 0.5);
+    background-color: rgba(var(--rgb-clr-light-accent), 0.5);
 
     a {
         color: #000;
     }
 
     &:hover {
-        background-color: rgba($clr-light-accent, 0.75);
+        background-color: rgba(var(--rgb-clr-light-accent), 0.75);
         text-decoration: underline;
     }
 }
@@ -218,8 +270,8 @@ input:focus {
 
 .card-effect {
     border-radius: 1rem;
-    border: 1px rgba($clr-accent, 0) solid;
-    box-shadow: 0 0 100px 20px rgba($clr-accent, 0.1);
+    border: 1px rgba(var(--rgb-clr-accent), 0) solid;
+    box-shadow: 0 0 100px 20px rgba(var(--rgb-clr-accent), 0.1);
 }
 
 .error-bg input,
@@ -261,16 +313,16 @@ input:focus {
 }
 
 .bg-social-icons {
-    box-shadow: inset 0 0 4rem 1rem rgba($clr-light-accent, 0.7);
+    box-shadow: inset 0 0 4rem 1rem rgba(var(--rgb-clr-light-accent), 0.7);
     position: relative;
-    background: $clr-light-accent url(../src/assets/images/bg-4.png);
+    background: var(--clr-light-accent) url(../src/assets/images/bg-4.png);
     background-size: 250px;
     z-index: 1;
 
     &::before {
         content: "";
         position: absolute;
-        background-color: rgba($clr-light-accent, 0.5);
+        background-color: rgba(var(--rgb-clr-light-accent), 0.5);
         top: 0px;
         right: 0px;
         bottom: 0px;
@@ -285,7 +337,7 @@ input:focus {
     display: grid;
     place-content: center;
     min-height: 100vh;
-    background-color: $clr-light-accent;
+    background-color: var(--clr-light-accent);
 
     .intro-panel {
         margin: 0rem 1rem 2rem;
@@ -299,7 +351,7 @@ input:focus {
             margin: 0.5em 0 1em 0;
             line-height: 2.5rem;
             font-weight: 400;
-            color: $clr-text;
+            color: var(--clr-text);
             letter-spacing: 0.03rem;
         }
 
@@ -307,14 +359,14 @@ input:focus {
             font-family: "Poppins";
             font-weight: 300;
             letter-spacing: 0.01rem;
-            color: rgba($clr-black, 0.7);
+            color: rgba(var(--rgb-clr-black), 0.7);
 
             b {
                 font-weight: 500;
-                border-bottom: 0.1rem $clr-accent solid;
+                border-bottom: 0.1rem var(--clr-accent) solid;
                 letter-spacing: 0.03rem;
                 padding: 0 0.1rem;
-                color: $clr-black;
+                color: var(--clr-black);
             }
         }
     }
@@ -337,14 +389,14 @@ input:focus {
     }
 
     .tos-text-signup {
-        background-color: rgba($clr-light-accent, 0.5);
+        background-color: rgba(var(--rgb-clr-light-accent), 0.5);
         text-align: center;
         font-weight: 500;
         border-radius: 0 0 1rem 1rem;
         margin: -1.55rem;
         margin-top: 1rem;
         line-height: 1.2rem;
-        color: rgba($clr-black, 0.5);
+        color: rgba(var(--rgb-clr-black), 0.5);
         font-size: 0.8rem;
         padding: 1em;
 
@@ -378,25 +430,25 @@ input:focus {
 
     .choose-avatar {
         text-align: left;
-        color: $clr-grey;
+        color: var(--clr-grey);
 
         & > i {
             margin-right: 0.5rem;
-            color: rgba($clr-black, 0.7);
+            color: rgba(var(--rgb-clr-black), 0.7);
             font-size: 1rem;
         }
 
         &:focus {
-            border-color: $clr-accent;
-            background-color: $clr-white;
-            color: $clr-black;
+            border-color: var(--clr-accent);
+            background-color: var(--clr-white);
+            color: var(--clr-black);
         }
     }
 }
 
 .login {
     padding: 0 1rem;
-    background-color: $clr-light-accent;
+    background-color: var(--clr-light-accent);
 
     h3 {
         font-weight: 600;
@@ -431,9 +483,9 @@ input:focus {
 }
 
 .navbar {
-    background: $clr-white;
-    border-bottom: 1px rgba($clr-grey, 0.15) solid;
-    box-shadow: 0 0 1px 0 rgba($clr-grey, 0.1);
+    background: var(--clr-white);
+    border-bottom: 1px rgba(var(--rgb-clr-grey), 0.15) solid;
+    box-shadow: 0 0 1px 0 rgba(var(--rgb-clr-grey), 0.1);
     padding: 0.4rem 0;
     position: fixed;
     width: 100%;
@@ -471,7 +523,7 @@ input:focus {
                 border: 0px;
                 padding: 0.8rem;
                 margin-top: 0.3rem;
-                color: $clr-text;
+                color: var(--clr-text);
 
                 .navbar-toggler-icon {
                     background-size: 80%;
@@ -491,9 +543,9 @@ input:focus {
             }
 
             & > form {
-                border: 1px rgba($clr-grey, 0.1) solid;
+                border: 1px rgba(var(--rgb-clr-grey), 0.1) solid;
                 border-radius: 0.5rem;
-                background-color: $clr-light-accent;
+                background-color: var(--clr-light-accent);
                 font-size: 0.8rem;
                 margin: 0.5rem 1.5rem;
 
@@ -504,14 +556,14 @@ input:focus {
                 input {
                     border: 0px;
                     background: transparent;
-                    color: $clr-black;
+                    color: var(--clr-black);
                     padding: 0 0.6rem;
                     width: 100%;
                     transition: background-color ease-out 250ms;
 
                     &:focus {
                         outline: 0;
-                        background-color: rgba($clr-grey, 0.05);
+                        background-color: rgba(var(--rgb-clr-grey), 0.05);
                     }
                 }
                 button {
@@ -519,7 +571,7 @@ input:focus {
                     background-color: transparent;
                     padding: 0 0.7rem;
                     max-height: 2rem;
-                    color: $clr-grey;
+                    color: var(--clr-grey);
                     font-size: 0.9rem;
                     transition: color ease-out 250ms,
                         background-color ease-out 250ms;
@@ -529,11 +581,11 @@ input:focus {
                     &:focus,
                     &:hover {
                         outline: 0;
-                        color: $clr-black;
+                        color: var(--clr-black);
                     }
 
                     &:focus {
-                        background-color: rgba($clr-black, 0.08);
+                        background-color: rgba(var(--rgb-clr-black), 0.08);
                     }
                 }
             }
@@ -544,13 +596,19 @@ input:focus {
 
             ul > li {
                 font-size: 0.9rem;
-                padding: 0 1.5rem;
-                margin: 0.5rem 0;
+                padding: 0 .5rem;
+                margin: auto .5rem;
                 text-align: end;
+                line-height: 0;
+
+                @media(max-height:992px) {
+                    padding:.5rem 1rem;
+                    margin:.5rem;
+                }
 
                 & > button,
                 a {
-                    color: $clr-text;
+                    color: var(--clr-text);
                     position: relative;
                     background-color: transparent;
                     border: none;
@@ -566,8 +624,9 @@ input:focus {
                         display: block;
                         height: 1px;
                         width: 0px;
-                        background-color: $clr-white;
+                        background-color: var(--clr-white);
                         position: absolute;
+                        margin-top: .5rem;
                         left: 0;
                         right: 0;
                         transition: width ease-in-out 250ms,
@@ -576,14 +635,21 @@ input:focus {
 
                     &:hover,
                     &:focus {
-                        color: $clr-black;
+                        color: var(--clr-black);
                         text-decoration: none;
 
                         &::after {
-                            background-color: $clr-black;
+                            background-color: var(--clr-black);
                             width: 100%;
                         }
                     }
+                }
+
+                .nav-theme-toggler {
+                    display:inline-block;
+                    line-height: 0;
+                    transform: scale(.8);
+                    margin-right:1rem;
                 }
             }
 
@@ -613,9 +679,9 @@ input:focus {
         .list {
             display: block;
             position: absolute;
-            background: $clr-white;
-            box-shadow: 10px 7px 15px -1px darken($clr-light-accent, 4%);
-            border:1px rgba($clr-grey,.3) solid;
+            background: var(--clr-white);
+            box-shadow: 10px 7px 15px -1px var(--clr-light-accent-darkened);
+            border:1px rgba(var(--rgb-clr-grey),.3) solid;
             border-radius: .5rem;
             top:2.5rem;
             right:1rem;
@@ -647,13 +713,14 @@ input:focus {
             position: relative;
             width: 2rem;
             height: 2rem;
-            background: transparent;
+            background-color: transparent;
             border: none;
-            color: $clr-text;
+            color: var(--clr-text);
+            transition: background-color .5s ease;
+            border-radius: 50%;
             i {
                 font-size: 1.2rem !important;
                 margin-left: 0 !important;
-                margin-top: 0.5rem;
             }
             span {
                 position: absolute;
@@ -661,7 +728,7 @@ input:focus {
                 right: -0.5rem;
                 line-height: 0.7rem;
                 font-size: 0.8rem;
-                background: $clr-accent;
+                background: var(--clr-accent);
                 color: #fff;
                 padding: 0.15rem 0.175rem 0.05rem;
                 border-radius: 0.25rem;
@@ -669,8 +736,7 @@ input:focus {
 
             &:hover,
             &:focus {
-                background: rgba($clr-grey, 0.3) !important;
-                border-radius: 50%;
+                background-color: rgba(var(--rgb-clr-grey), 0.3) !important;
                 &::after {
                     display: none !important;
                 }
@@ -678,12 +744,12 @@ input:focus {
         }
 
         .notif {
-            color:$clr-text;
+            color:var(--clr-text);
             display: block;
-            border-bottom:1px solid $clr-white !important;
-            border-top:1px solid rgba($clr-grey,.15) !important;
+            border-bottom:1px solid var(--clr-white) !important;
+            border-top:1px solid rgba(var(--rgb-clr-grey),.15) !important;
             padding:.75rem 1rem;
-            background-color: rgba($clr-grey,.05) !important;
+            background-color: rgba(var(--rgb-clr-grey),.05) !important;
 
             &:last-child {
                 border-bottom: none !important;
@@ -706,11 +772,11 @@ input:focus {
                 }
 
                 .uname {
-                    color:$clr-black;
+                    color:var(--clr-black);
                     font-weight: bold;
                 }
                 .when {
-                    color:$clr-grey;
+                    color:var(--clr-grey);
                     font-size:.75rem;
                 }
 
@@ -727,7 +793,7 @@ input:focus {
 
             &:hover,
             &:focus {
-                background: rgba($clr-grey, 0.15) !important;
+                background: rgba(var(--rgb-clr-grey), 0.15) !important;
                 &::after {
                     display: none !important;
                 }
@@ -735,13 +801,16 @@ input:focus {
         }
 
         .seen {
-            background: rgba($clr-grey,.2) !important;
+            background: rgba(var(--rgb-clr-grey),.2) !important;
         }
     }
 }
 
 .align-end {
-    text-align: end !important;
+    display:flex;
+    place-content: flex-end;
+    padding-top:0 !important;
+    padding-bottom:0 !important;
 }
 .navbar-spacer {
     height: 3.9rem;
@@ -764,8 +833,8 @@ input:focus {
 
     .user {
         margin: 1rem 0;
-        background-color: $clr-light-accent;
-        border: 1px rgba($clr-grey, 0.1) solid;
+        background-color: var(--clr-light-accent);
+        border: 1px rgba(var(--rgb-clr-grey), 0.1) solid;
         border-radius: 0.8rem;
         padding: 0.7rem 0.5rem;
         gap: 0.5rem;
@@ -801,11 +870,11 @@ input:focus {
                 font-size: 0.9rem;
                 font-weight: 500;
                 letter-spacing: 0.03rem;
-                color: $clr-black;
+                color: var(--clr-black);
             }
             span {
                 font-size: 0.8rem;
-                color: $clr-grey;
+                color: var(--clr-grey);
                 line-height: 1.2rem;
             }
         }
@@ -821,7 +890,7 @@ input:focus {
             width: 100%;
             text-align: start;
             border-radius: 0.5rem;
-            color: $clr-black;
+            color: var(--clr-black);
             font-family: "Poppins";
             font-weight: 500;
             font-size: 0.85rem;
@@ -829,11 +898,10 @@ input:focus {
             padding: 0.2rem 1rem;
             margin: 0.4rem 0;
             box-sizing: border-box;
-            transition: color ease-in-out 250ms;
 
             & > i {
                 margin-right: 1rem;
-                color: $clr-grey;
+                color: var(--clr-grey);
                 font-size: 1.2rem;
                 width: 1.2rem;
                 height: 1.2rem;
@@ -841,24 +909,24 @@ input:focus {
             }
 
             &:hover {
-                color: $clr-accent;
+                color: var(--clr-accent);
                 & > i {
-                    color: $clr-accent;
+                    color: var(--clr-accent);
                 }
             }
 
             &:focus {
-                background-color: rgba($clr-grey, 0.08);
+                background-color: rgba(var(--rgb-clr-grey), 0.08);
             }
         }
 
         & > .active {
-            color: $clr-accent !important;
-            box-shadow: 10px 7px 15px -1px darken($clr-light-accent, 4%);
-            background-color: $clr-light-accent;
+            color: var(--clr-accent) !important;
+            box-shadow: 10px 7px 15px -1px var(--clr-light-accent-darkened);
+            background-color: var(--clr-light-accent);
 
             & > i {
-                color: $clr-accent !important;
+                color: var(--clr-accent) !important;
             }
         }
     }
@@ -870,7 +938,7 @@ input:focus {
             text-transform: uppercase;
             font-size: 0.8rem;
             letter-spacing: 0.1rem;
-            color: $clr-grey;
+            color: var(--clr-grey);
             margin: 2rem 0 1rem 0;
         }
 
@@ -882,7 +950,7 @@ input:focus {
 
         .techs a {
             display: table;
-            color: $clr-black;
+            color: var(--clr-black);
             margin: 0.5rem 0.5em;
             font-family: "Poppins";
             font-size: 0.85rem;
@@ -894,7 +962,7 @@ input:focus {
                 display: block;
                 height: 1px;
                 width: 0px;
-                background-color: $clr-white;
+                background-color: var(--clr-white);
                 position: absolute;
                 left: 0;
                 right: 0;
@@ -903,10 +971,10 @@ input:focus {
             }
 
             &:hover {
-                color: $clr-black;
+                color: var(--clr-black);
 
                 &::after {
-                    background-color: $clr-black;
+                    background-color: var(--clr-black);
                     width: 100%;
                 }
             }
@@ -936,7 +1004,7 @@ input:focus {
                 height: 1rem;
                 margin-right: 1rem;
                 font-size: 1rem;
-                color: $clr-grey;
+                color: var(--clr-grey);
             }
         }
     }
@@ -955,12 +1023,12 @@ input:focus {
 }
 
 .timeline {
-    background-color: $clr-light-accent;
+    background-color: var(--clr-light-accent);
     padding: 0 1rem;
     min-height: 100vh;
 
     & > .create-post {
-        background-color: $clr-white;
+        background-color: var(--clr-white);
         border-radius: 1rem;
         padding: 1rem 1rem 0 1rem;
         margin: 1rem 0 1.5rem 0;
@@ -987,12 +1055,11 @@ input:focus {
                 border: none;
                 margin: 0 0.5rem;
                 padding: 0.5rem 1rem;
-                background-color: $clr-white;
-                color: $clr-black;
+                background-color: var(--clr-white);
+                color: var(--clr-black);
                 letter-spacing: 0.02rem;
                 font-size: 0.9rem;
                 line-height: 1.6rem;
-                transition: background-color ease-in-out 250ms;
                 border-radius: 1rem;
                 min-height: 3rem;
                 resize: none;
@@ -1000,7 +1067,7 @@ input:focus {
                 &:focus,
                 &:hover {
                     outline: none;
-                    background-color: rgba($clr-grey, 0.15);
+                    background-color: rgba(var(--rgb-clr-grey), 0.15);
                 }
             }
 
@@ -1011,7 +1078,7 @@ input:focus {
                 font-size: 1.4rem;
                 width: 3rem;
                 height: 3rem;
-                color: $clr-grey;
+                color: var(--clr-grey);
                 border-radius: 50%;
                 transition: background-color ease-in-out 250ms,
                     color ease-in-out 250ms;
@@ -1025,8 +1092,8 @@ input:focus {
 
                 &:focus,
                 &:hover {
-                    color: $clr-black;
-                    background-color: rgba($clr-grey, 0.2);
+                    color: var(--clr-black);
+                    background-color: rgba(var(--rgb-clr-grey), 0.2);
                     outline: none;
                 }
             }
@@ -1088,10 +1155,10 @@ input:focus {
                 h6 {
                     font-size: 0.9rem;
                     font-weight: 500;
-                    color: $clr-black;
+                    color: var(--clr-black);
                     margin-top: 0.25rem;
                     a {
-                        color: $clr-black;
+                        color: var(--clr-black);
                         &:hover {
                             text-decoration: underline;
                         }
@@ -1099,14 +1166,14 @@ input:focus {
                 }
                 span {
                     font-size: 0.8rem;
-                    color: $clr-grey;
+                    color: var(--clr-grey);
                     margin-top: 0.25rem;
                     line-height: 1rem;
                 }
             }
 
             .more-options {
-                color: $clr-grey;
+                color: var(--clr-grey);
                 width: fit-content;
 
                 .post-actions {
@@ -1122,8 +1189,8 @@ input:focus {
 
                     &:hover,
                     &:focus {
-                        color: $clr-black;
-                        background-color: rgba($clr-grey, 0.2);
+                        color: var(--clr-black);
+                        background-color: rgba(var(--rgb-clr-grey), 0.2);
                     }
                 }
 
@@ -1143,14 +1210,14 @@ input:focus {
 
         .url {
             & > div {
-                border: 1px solid rgba($clr-grey, 0.2);
+                border: 1px solid rgba(var(--rgb-clr-grey), 0.2);
                 padding: 0.5rem;
                 border-radius: 0.5rem;
                 margin-top: 0.75rem;
 
                 .utitle {
                     font-weight: bold;
-                    color: rgba($clr-text, 0.85s);
+                    color: rgba(var(--rgb-clr-text), 0.85);
                     font-size: 0.85rem;
                     line-height: 1.2rem;
                     margin-bottom: 0.25rem;
@@ -1162,7 +1229,7 @@ input:focus {
                 }
                 .udescription {
                     font-size: 0.8rem;
-                    color: $clr-grey;
+                    color: var(--clr-grey);
                     line-height: 1.2rem;
                     white-space: nowrap;
                     overflow: hidden;
@@ -1170,7 +1237,7 @@ input:focus {
                 }
                 .uurl {
                     font-size: 0.8rem;
-                    color: $clr-grey;
+                    color: var(--clr-grey);
                     line-height: 1.2rem;
                     white-space: nowrap;
                     overflow: hidden;
@@ -1181,7 +1248,7 @@ input:focus {
             &:hover,
             &:focus {
                 & > div {
-                    background-color: rgba($clr-grey, 0.05);
+                    background-color: rgba(var(--rgb-clr-grey), 0.05);
                 }
                 text-decoration: none !important;
                 .utitle {
@@ -1191,7 +1258,7 @@ input:focus {
         }
 
         & > .post-picture {
-            background-color: rgba($clr-grey, 0.05);
+            background-color: rgba(var(--rgb-clr-grey), 0.05);
             min-height: 10rem;
             max-height: 35rem;
             object-fit: contain;
@@ -1201,13 +1268,13 @@ input:focus {
         & > .post-actions {
             gap: 1.5rem;
             margin-top: 1rem;
-            border-top: 1px rgba($clr-grey, 0.07) solid;
+            border-top: 1px rgba(var(--rgb-clr-grey), 0.07) solid;
             padding: 1rem 0 0 0;
 
             & button {
                 background-color: transparent;
                 border: none;
-                color: $clr-text;
+                color: var(--clr-text);
                 text-align: start;
                 font-size: 0.85rem;
                 border-radius: 0.5rem;
@@ -1215,30 +1282,30 @@ input:focus {
                 white-space: nowrap;
 
                 & > i {
-                    color: $clr-grey;
+                    color: var(--clr-grey);
                     margin-right: 0.5rem;
                     font-size: 1rem;
                 }
 
                 &:hover,
                 &:focus {
-                    background-color: rgba($clr-grey, 0.07);
-                    color: $clr-black;
+                    background-color: rgba(var(--rgb-clr-grey), 0.07);
+                    color: var(--clr-black);
 
                     & > i {
-                        color: $clr-text;
+                        color: var(--clr-text);
                     }
                 }
 
                 &:focus {
-                    box-shadow: 0 0 0 1px rgba($clr-grey, 0.2);
+                    box-shadow: 0 0 0 1px rgba(var(--rgb-clr-grey), 0.2);
                 }
             }
         }
 
         & > .post-comment {
             margin-top: 1rem;
-            background-color: darken($clr-light-accent, 2%);
+            background-color: var(--clr-light-accent-darkened);
             border-radius: 1.3rem;
             padding: 0.2rem;
 
@@ -1255,7 +1322,7 @@ input:focus {
                     border: none;
                     width: 100%;
                     font-size: 0.9rem;
-                    color: $clr-text;
+                    color: var(--clr-text);
                     background: transparent;
                     border-radius: 0.5rem;
                     padding: 0 0.75rem;
@@ -1266,7 +1333,7 @@ input:focus {
                 & > button {
                     background: transparent;
                     border: none;
-                    color: $clr-grey;
+                    color: var(--clr-grey);
                     padding: 0 0.7rem;
                     border-radius: 50%;
                     font-size: 0.95rem;
@@ -1274,8 +1341,8 @@ input:focus {
 
                     &:focus,
                     &:hover {
-                        color: $clr-black;
-                        background: rgba($clr-grey, 0.1);
+                        color: var(--clr-black);
+                        background: rgba(var(--rgb-clr-grey), 0.1);
                     }
 
                     &:active {
@@ -1320,7 +1387,7 @@ input:focus {
                     display: block;
                     max-width: 20ch;
                     font-size: 0.85rem;
-                    color: $clr-grey;
+                    color: var(--clr-grey);
                     margin-top: 0.125rem;
                     line-height: 1.2rem;
     
@@ -1335,7 +1402,7 @@ input:focus {
                     line-height: 1.2rem;
     
                     a {
-                        color: $clr-black;
+                        color: var(--clr-black);
                         &:hover {
                             text-decoration: underline;
                         }
@@ -1382,7 +1449,7 @@ input:focus {
         line-height: 1.2rem;
         margin-left: -2rem;
         padding-left: 0.75rem;
-        border-left: 0.1rem rgba($clr-grey, 0.15) solid;
+        border-left: 0.1rem rgba(var(--rgb-clr-grey), 0.15) solid;
 
         @media (max-width: 1200px) {
             margin-left: -2rem;
@@ -1395,7 +1462,7 @@ input:focus {
             margin-left: 0.5em;
             display: inline-block;
             min-width: 35%;
-            background-color: rgba($clr-grey, 0.1);
+            background-color: rgba(var(--rgb-clr-grey), 0.1);
             border-radius: 1rem;
             padding: 0.5rem 0.75rem;
 
@@ -1404,11 +1471,11 @@ input:focus {
                     font-weight: 500;
                     font-size: 0.8rem;
                 }
-                color: rgba($clr-text, 0.75);
+                color: rgba(var(--rgb-clr-text), 0.75);
 
                 &:hover,
                 &:focus {
-                    color: $clr-black;
+                    color: var(--clr-black);
                     text-decoration: underline;
                 }
             }
@@ -1432,26 +1499,26 @@ input:focus {
                 font-size: 0.8rem;
                 background: transparent;
                 border: none;
-                color: $clr-text;
+                color: var(--clr-text);
                 margin-right: 0.125rem;
                 border-radius: 0.5rem;
                 padding: 0.25rem 0.5rem;
                 & > i {
-                    color: $clr-grey;
+                    color: var(--clr-grey);
                     margin-right: 0.25rem;
                 }
                 &:hover,
                 &:focus {
-                    background-color: rgba($clr-grey, 0.07);
-                    color: $clr-black;
+                    background-color: rgba(var(--rgb-clr-grey), 0.07);
+                    color: var(--clr-black);
 
                     & > i {
-                        color: $clr-text;
+                        color: var(--clr-text);
                     }
                 }
 
                 &:focus {
-                    box-shadow: 0 0 0 1px rgba($clr-grey, 0.2);
+                    box-shadow: 0 0 0 1px rgba(var(--rgb-clr-grey), 0.2);
                 }
             }
 
@@ -1466,7 +1533,7 @@ input:focus {
 
         .timesince {
             font-size: 0.75rem;
-            color: rgba($clr-text, 0.75);
+            color: rgba(var(--rgb-clr-text), 0.75);
             margin-left: 0.25rem;
         }
 
@@ -1478,14 +1545,14 @@ input:focus {
             display: none;
 
             & > div {
-                background-color: darken($clr-light-accent, 2%);
+                background-color: var(--clr-light-accent-darkened);
                 border-radius: 1.3rem;
 
                 & > input {
                     border: none;
                     width: 100%;
                     font-size: 0.9rem;
-                    color: $clr-text;
+                    color: var(--clr-text);
                     background: transparent;
                     border-radius: 0.5rem;
                     padding: 0.5rem 0.75rem;
@@ -1494,7 +1561,7 @@ input:focus {
                 & > button {
                     background: transparent;
                     border: none;
-                    color: $clr-grey;
+                    color: var(--clr-grey);
                     padding: 0 0.7rem;
                     border-radius: 50%;
                     font-size: 0.95rem;
@@ -1502,8 +1569,8 @@ input:focus {
 
                     &:focus,
                     &:hover {
-                        color: $clr-black;
-                        background: rgba($clr-grey, 0.1);
+                        color: var(--clr-black);
+                        background: rgba(var(--rgb-clr-grey), 0.1);
                     }
 
                     &:active {
@@ -1558,7 +1625,7 @@ input:focus {
                 display: block;
                 max-width: 20ch;
                 font-size: 0.8rem;
-                color: $clr-grey;
+                color: var(--clr-grey);
                 margin-top: 0.125rem;
                 line-height: 1rem;
 
@@ -1573,7 +1640,7 @@ input:focus {
                 line-height: 1.2rem;
 
                 a {
-                    color: rgba($clr-black, 0.8);
+                    color: rgba(var(--rgb-clr-black), 0.8);
                     &:hover {
                         text-decoration: underline;
                     }
@@ -1595,7 +1662,7 @@ input:focus {
     }
 
     .back-hover:hover {
-        background-color: $clr-light-accent;
+        background-color: var(--clr-light-accent);
     }
 }
 
@@ -1605,7 +1672,7 @@ input:focus {
         font-weight: 500;
         letter-spacing: 0.03rem;
         line-height: 1.6rem;
-        color: $clr-black;
+        color: var(--clr-black);
         margin-bottom: 1.5rem;
     }
 }
@@ -1628,7 +1695,7 @@ input:focus {
         letter-spacing: 0.03rem;
         line-height: 1.6rem;
         a {
-            color: $clr-black;
+            color: var(--clr-black);
             &:hover {
                 text-decoration: underline;
             }
@@ -1640,7 +1707,7 @@ input:focus {
         line-height: 1.4rem;
         display: block;
         white-space: nowrap;
-        color:$clr-grey;
+        color:var(--clr-grey);
         overflow: hidden;
         text-overflow: ellipsis;
     }
@@ -1653,7 +1720,7 @@ input:focus {
                 width: 100%;
                 height: 20vh;
                 max-height: 300px;
-                background: $clr-light-accent;
+                background: var(--clr-light-accent);
                 border-radius: 0.5rem;
                 object-fit: cover;
             }
@@ -1666,8 +1733,8 @@ input:focus {
                 min-width: 7.5rem;
                 min-height: 7.5rem;
                 object-fit: cover;
-                border: 0.2rem $clr-white solid;
-                background-color: $clr-light-accent;
+                border: 0.2rem var(--clr-white) solid;
+                background-color: var(--clr-light-accent);
             }
 
             .user-details {
@@ -1676,10 +1743,10 @@ input:focus {
                     font-size: 1.1rem;
                     font-style: bold;
                     margin-bottom: 0.2rem;
-                    color: $clr-black;
+                    color: var(--clr-black);
                 }
                 p {
-                    color: $clr-grey;
+                    color: var(--clr-grey);
                     line-height: 1.2rem;
                     font-size: 0.9rem;
                 }
@@ -1692,11 +1759,11 @@ input:focus {
 
                 li {
                     font-size: 0.9rem;
-                    color: rgba($clr-text, 0.8);
+                    color: rgba(var(--rgb-clr-text), 0.8);
                     line-height: 1.6rem;
 
                     i {
-                        color: $clr-text;
+                        color: var(--clr-text);
                         margin-right: 0.5rem;
                         font-size: 1rem;
                     }
@@ -1716,10 +1783,10 @@ input:focus {
         .recent-activity {
             line-height: 1.3rem;
             padding: 0.5rem 0 0.25rem 0;
-            border-bottom: 1px solid $clr-light-accent;
+            border-bottom: 1px solid var(--clr-light-accent);
             .what {
                 font-size: 0.75rem;
-                color: $clr-grey;
+                color: var(--clr-grey);
             }
             .content {
                 font-size: 0.85rem;
@@ -1732,7 +1799,7 @@ input:focus {
             }
             .when {
                 font-size: 0.75rem;
-                color: rgba($clr-text, 0.85);
+                color: rgba(var(--rgb-clr-text), 0.85);
             }
         }
     }
@@ -1740,7 +1807,7 @@ input:focus {
 
 h6 > span {
     font-size: 0.8rem;
-    color: rgba($clr-text, 0.8);
+    color: rgba(var(--rgb-clr-text), 0.8);
 }
 .sorry {
     text-align: center;
@@ -1748,19 +1815,19 @@ h6 > span {
     font-family: "Poppins";
     margin: 4rem 1rem;
     line-height: 3rem;
-    color: $clr-grey;
+    color: var(--clr-grey);
 }
 
 .sorry-sm {
     text-align: center;
     line-height: 1rem;
     font-size: 0.8rem;
-    color: $clr-grey;
+    color: var(--clr-grey);
 }
 
 @media (max-width: 992px) {
     body {
-        background-color: $clr-light-accent;
+        background-color: var(--clr-light-accent);
         background-image: none;
     }
     .container {

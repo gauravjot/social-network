@@ -2,7 +2,7 @@ import React from "react";
 import SignUp from "./SignUp";
 import { Helmet } from "react-helmet";
 import logo from '../../assets/images/logo.png'
-import connections from '../../assets/images/connections-2.png'
+import ThemeToggle from '../global/ThemeToggle'
 
 function Index() {
     return (
@@ -11,7 +11,7 @@ function Index() {
                 <title>Welcome to socialnetwork!</title>
             </Helmet>
             <div className="container">
-                <div className="row g-3">
+                <div className="row">
                     <div className="col-xl-7 col-lg-6 col-md-12">
                         <div className="intro-panel">
                             <span className="d-none d-lg-block">
@@ -25,6 +25,7 @@ function Index() {
                         </div>
                     </div>
                     <div className="col-xl-5 col-lg-6 col-md-12">
+                        <div className="text-right px-3"><ThemeToggle /></div>
                         <SignUp />
                     </div>
                 </div>
