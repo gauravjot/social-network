@@ -11,7 +11,3 @@ export const GET_POST = 'GET_POST';
 export const DELETE_POST = 'DELETE_POST';
 export const SET_POSTS = 'SET_POSTS';
 export const REMOVE_ALL_POSTS = 'REMOVE_ALL_POSTS';
-
-// Friends Reducer
-export const EMPTY_FRIENDS = 'EMPTY_FRIENDS';
-export const SET_FRIENDS = 'SET_FRIENDS';
