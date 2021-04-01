@@ -131,13 +131,15 @@ def likePost(request, post_key):
     if post.likes:
         if person_id in post.likes['persons']:
             post.likes['persons'].remove(person_id)
+            isLiked = False
         else:
             post.likes['persons'].append(person_id)
+            isLiked = True
     else:
         post.likes = dict(persons=[(person_id)])
     post.save()
     # make a notification to send
-    if post.person_id != person_id:
+    if post.person_id != person_id and isLiked:
         notification = Notification(
             noti=0,
             person_for=post.person_id,
@@ -145,7 +147,7 @@ def likePost(request, post_key):
             about=post.id,
             created=datetime.now().timestamp()
         )
-    notification.save()
+        notification.save()
     return Response(json.loads('{"action":"success"}'),status=status.HTTP_200_OK)
 
 # Edit a post, Auth: REQUIRED
