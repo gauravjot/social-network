@@ -17,13 +17,13 @@ export default function Navbar() {
     const history = useHistory();
 
     if (Object.keys(user).length === 0) {
+
         history.push("/login");
     }
 
     const logOut = () => {
         dispatch(logoutUser());
         dispatch(removeAllPosts());
-        dispatch(emptyFriends());
         history.push("/login");
     };
 

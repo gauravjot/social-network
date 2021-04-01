@@ -117,7 +117,6 @@ function SignUp() {
                 )
                 .then(function (response) {
                     dispatch(setUser(response.data));
-                    dispatch(setFriends({}));
                     history.push("/dashboard");
                 })
                 .catch(function (error) {

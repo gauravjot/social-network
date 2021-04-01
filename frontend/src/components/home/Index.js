@@ -3,8 +3,16 @@ import SignUp from "./SignUp";
 import { Helmet } from "react-helmet";
 import logo from '../../assets/images/logo.png'
 import ThemeToggle from '../global/ThemeToggle'
+import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Index() {
+    const user = useSelector((state) => state.user);
+    const history = useHistory();
+    
+    if (user.token !== undefined) {
+        history.push("/dashboard");
+    }
     return (
         <section className="home bg-social-icons">
             <Helmet>

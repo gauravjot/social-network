@@ -182,7 +182,7 @@ const TimelinePost = ({ user, post, expanded}) => {
                 {(embedUrls) ? (embedUrls.map((url, index) => (
                     <a className="url" href={url.url} key={index} target="_blank">
                         <div>
-                            <div className="utitle"><i class="fas fa-external-link-alt"></i> {url.title}</div>
+                            <div className="utitle"><i className="fas fa-external-link-alt"></i> {url.title}</div>
                             {(url.description) ? <div className="udescription">{url.description}</div> : ""}
                             <div className="uurl">{url.url}</div>
                         </div>
@@ -222,13 +222,14 @@ const TimelinePost = ({ user, post, expanded}) => {
                 showComments && typeof comments == "object" ?
                     <div className="each-comment parent-comment">
                         {comments.slice().map((comment, index) => (
-                            <div>{(comment.comment_parent == 0) ?
-                                    <CommentComponent key={comment.id} 
+                            <div key={comment.id}>{(comment.comment_parent == 0) ?
+                                    <CommentComponent 
                                         comment={comment}
                                         user={user}
                                         allComments={splicedArray(comments,index)}/>
                             : ''}
-                            {(Number(index+1) == Number(comments.length) && isLoadingComments) ? setIsLoadingComments(false) : ''}</div>                       
+                            {(Number(index+1) == Number(comments.length) && isLoadingComments) ? setIsLoadingComments(false) : ''}
+                            </div>                       
                         ))}
                     </div>
                 : <div></div>

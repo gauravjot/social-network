@@ -119,19 +119,24 @@ input:focus {
   width: 1.6rem;
   height: 1.6rem;
   border: none;
-  background: var(--clr-accent);
+  background-color: var(--clr-accent);
   color: var(--clr-white);
   border-radius: 50px;
   padding: 0;
   position: absolute;
+  margin: 0 0.1rem;
   top: 0.1rem;
-  left: .1rem;
-  -webkit-transition: all .5ms ease;
-  transition: all .5ms ease;
+  left: 0;
+  -webkit-transition: background-color .2s ease;
+  transition: background-color .2s ease;
 }
 
 .darkmode-toggle .enabled {
-  left: 1.2rem;
+  left: 1rem;
+}
+
+.darkmode-toggle:hover button {
+  background-color: #66acff;
 }
 
 .btn-light-accent {
@@ -622,13 +627,6 @@ input:focus {
   line-height: 0;
 }
 
-@media (max-height: 992px) {
-  .navbar > .container > .row .row > div ul > li {
-    padding: .5rem 1rem;
-    margin: .5rem;
-  }
-}
-
 .navbar > .container > .row .row > div ul > li > button,
 .navbar > .container > .row .row > div ul > li a {
   color: var(--clr-text);
@@ -681,12 +679,21 @@ input:focus {
   margin-right: 1rem;
 }
 
+@media (max-width: 1200px) {
+  .navbar > .container > .row .row > div ul li {
+    padding: 0;
+    margin: .5rem;
+  }
+}
+
 @media (max-width: 992px) {
   .navbar > .container > .row .row > div ul {
     width: 100%;
   }
   .navbar > .container > .row .row > div ul li {
     text-align: start;
+    padding: .5rem 1rem;
+    margin: .5rem;
   }
 }
 
@@ -1730,11 +1737,17 @@ input:focus {
   overflow: hidden;
   white-space: nowrap;
   display: block;
-  max-width: 20ch;
+  max-width: 25ch;
   font-size: 0.8rem;
   color: var(--clr-grey);
   margin-top: 0.125rem;
   line-height: 1rem;
+}
+
+@media (max-width: 1400px) {
+  .rightsidebar .user div span {
+    max-width: 20ch;
+  }
 }
 
 @media (max-width: 1200px) {
@@ -1765,6 +1778,9 @@ input:focus {
           transform: scale(0.95);
   border-radius: 0.5rem;
   padding: 0.175em 0.625em;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
 }
 
 @media (max-width: 1200px) {

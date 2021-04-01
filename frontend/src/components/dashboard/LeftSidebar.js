@@ -40,16 +40,16 @@ function LeftSidebar({active=1}) {
                     responses to React.js. Know more:
                 </p>
                 <div className="techs">
-                    <a href="https://github.com/gauravjot/social-network">
+                    <a href="https://github.com/gauravjot/social-network" target="_blank">
                         <i className="fab fa-github"></i>Project Github
                     </a>
-                    <a href="https://www.djangoproject.com/">
+                    <a href="https://www.djangoproject.com/" target="_blank">
                         <i className="fab fa-python python"></i>Django
                     </a>
-                    <a href="https://reactjs.org/">
+                    <a href="https://reactjs.org/" target="_blank">
                         <i className="fab fa-react reactjs"></i>React.js
                     </a>
-                    <a href="https://www.postgresql.org/">
+                    <a href="https://www.postgresql.org/" target="_blank">
                         <i className="fas fa-database sql"></i>PostgreSQL
                     </a>
                 </div>
