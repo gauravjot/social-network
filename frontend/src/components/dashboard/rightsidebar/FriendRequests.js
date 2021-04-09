@@ -9,6 +9,7 @@ export default function FriendRequests() {
     const user = useSelector((state) => state.user);
     const token = user.token;
     const [friendRequests, setFriendRequests] = useState();
+    const [isLoading, setIsLoading] = useState(true)
 
     const getFriendRequests = () => {
         let config = {
@@ -21,9 +22,11 @@ export default function FriendRequests() {
             .get(BACKEND_SERVER_DOMAIN + "/api/friends/requests/", config)
             .then(function (response) {
                 setFriendRequests(response.data["requests"]);
+                setIsLoading(false)
             })
             .catch(function (err) {
                 console.log(err.response.data);
+                setIsLoading(false)
             });
     };
 
@@ -32,15 +35,17 @@ export default function FriendRequests() {
     }, []);
 
 
-    return friendRequests ? (
-        <div className="friend-req card">
-            <h6>Friend Requests</h6>
-            {friendRequests.map((person) => (
-                <FriendReq person={person} user={user} index ={person.id}/>
-            ))}
+    return !isLoading ? (friendRequests ? (
+        <div>
+            <h6 className="mt-3">Friend Requests</h6>
+            <div className="friend-req card">
+                {friendRequests.map((person) => (
+                    <FriendReq person={person} user={user} index ={person.id}/>
+                ))}
+            </div>
         </div>
-    ) : (
-        <div></div>
+    ) : ("")) : (
+        <div className="slim-loading-bar"></div>
     );
 }
 

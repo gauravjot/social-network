@@ -142,7 +142,7 @@ const TimelinePost = ({ user, post, expanded}) => {
                 <img
                     className="rounded-circle"
                     src={BACKEND_SERVER_DOMAIN + post.person.avatar}
-                    alt="profile picture"
+                    alt={post.person.first_name + "'s avatar"}
                 />
                 <div>
                     <h6>
@@ -190,7 +190,7 @@ const TimelinePost = ({ user, post, expanded}) => {
                 ))) : ""}
             </div>
             {post.post_image ? (
-                <img src={BACKEND_SERVER_DOMAIN +post.post_image} className="rounded post-picture" />
+                <img src={BACKEND_SERVER_DOMAIN +post.post_image} className="rounded post-picture" alt={post.person.first_name + "'s post picture"} />
             ) : (
                 ""
             )}
@@ -235,7 +235,7 @@ const TimelinePost = ({ user, post, expanded}) => {
                 : <div></div>
             }
             <div className="post-comment">
-                <div className="d-flex user">
+                <div className="d-flex">
                     <input type="text" ref={commentField} placeholder="Write your comment..." />
                     <button onClick={() => postComment(0)}>
                         <i className="far fa-paper-plane"></i>

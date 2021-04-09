@@ -8,14 +8,19 @@ import { setUser } from "../../redux/actions";
 import { useHistory } from "react-router-dom";
 import { BACKEND_SERVER_DOMAIN } from "../../settings";
 import { Link } from "react-router-dom";
+import FinishSignUp from './FinishSignUp'
+import {themeApply} from '../global/ThemeApply'
 
 function LogIn() {
     const dispatch = useDispatch();
     const history = useHistory();
 
+    themeApply();
+    
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [apiResponse, setAPIResponse] = useState();
+    const [isSecondStageSignUpPending,setIsSecondStageSignUpPending] = useState(false)
 
     const handleEmail = ({ target }) => {
         setEmail(target.value);
@@ -51,8 +56,11 @@ function LogIn() {
             )
             .then(function (response) {
                 dispatch(setUser(response.data));
-                history.push("/dashboard");
-                
+                if (response.data.avatar != null) {
+                    history.push("/dashboard");
+                } else {
+                    setIsSecondStageSignUpPending(true)
+                }
             })
             .catch(function (error) {
                 setAPIResponse(
@@ -74,35 +82,39 @@ function LogIn() {
             <div className="container">
                 <div className="col-lg-5 col-md-12 col-sm-12">
                     <img src={logo} className="logo" />
-                    <div className="card">
-                        <h3>Log in</h3>
-                        {apiResponse}
-                        <InputField
-                            label="Email"
-                            onChange={handleEmail}
-                            name="email"
-                            type="email"
-                            placeholder="you@company.com"
-                        />
-                        <InputField
-                            label="Password"
-                            onChange={handlePassword}
-                            name="password"
-                            type="password"
-                        />
-                        <button
-                            type="submit"
-                            ref={btnRef}
-                            onClick={handleLogIn}
-                            className="btn btn-primary"
-                        >
-                            Log in!
-                        </button>
-                        <span>
-                            or would you like to <Link to="#">Reset Password</Link>{" "}
-                            or <Link to="/">Sign Up</Link>
-                        </span>
-                    </div>
+                    {
+                        (isSecondStageSignUpPending) ? <FinishSignUp /> 
+                        :
+                        <div className="card">
+                            <h3>Log in</h3>
+                            {apiResponse}
+                            <InputField
+                                label="Email"
+                                onChange={handleEmail}
+                                name="email"
+                                type="email"
+                                placeholder="you@company.com"
+                            />
+                            <InputField
+                                label="Password"
+                                onChange={handlePassword}
+                                name="password"
+                                type="password"
+                            />
+                            <button
+                                type="submit"
+                                ref={btnRef}
+                                onClick={handleLogIn}
+                                className="btn btn-primary btn-main"
+                            >
+                                Log in!
+                            </button>
+                            <span>
+                                or would you like to <Link to="#">Reset Password</Link>{" "}
+                                or <Link to="/">Sign Up</Link>
+                            </span>
+                        </div>
+                    }
                 </div>
             </div>
         </section>

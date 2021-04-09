@@ -2,6 +2,7 @@ import Index from './components/home/Index';
 import LogIn from './components/home/LogIn';
 import Dashboard from './components/dashboard/Index';
 import Friends from './components/dashboard/friends/Friends';
+import FindFriends from './components/dashboard/friends/FindFriends';
 import Profile from './components/dashboard/profile/Profile'
 import PostPage from './components/dashboard/post/PostPage'
 import {
@@ -16,6 +17,7 @@ function App() {
   return (
     <Router>
       <Switch>
+        <Route path='/findfriends' exact component={FindFriends} />
         <Route path='/friends' exact component={Friends} />
         <Route path='/dashboard' exact component={Dashboard} />
         <Route path='/login' exact component={LogIn} />

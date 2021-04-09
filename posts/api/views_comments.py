@@ -76,7 +76,7 @@ def postNewComment(request, post_id):
             p_for = post.person_id if request.data['comment_parent']=="0" else Comment.objects.get(pk=int(request.data['comment_parent'])).person_id
             if p_for != person:
                 notification = Notification(
-                    noti=1,
+                    noti=1 if request.data['comment_parent']=="0" else 5,
                     person_for=p_for,
                     person_from=person,
                     about=post.id,

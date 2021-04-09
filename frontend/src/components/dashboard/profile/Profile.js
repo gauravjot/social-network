@@ -8,11 +8,22 @@ import { BACKEND_SERVER_DOMAIN } from '../../../settings'
 import { useSelector } from 'react-redux';
 import Posts from "../post/Posts";
 import { timeSince } from "../../../utils/timesince";
+import InputField from '../../../utils/InputField'
 
 export default function Profile() {
     const {slug} = useParams();
     const user = useSelector((state) => state.user);
     const [profileData, setProfileData] = React.useState();
+    const [avatar, setAvatar] = React.useState();
+    const [cover, setCover] = React.useState();
+    const [tagline, setTagline] = React.useState("");
+    const [home, setHome] = React.useState("");
+    const [work, setWork] = React.useState("")
+
+    let fakeCoverPictureBtnRef = React.useRef();
+    let realCoverPictureBtnRef = React.useRef();
+    let fakeProfilePictureBtnRef = React.useRef();
+    let realProfilePictureBtnRef = React.useRef();
 
     const getData = () => {
         let config = { headers: {
@@ -22,6 +33,11 @@ export default function Profile() {
         axios.get(BACKEND_SERVER_DOMAIN + '/api/person/' + slug, config)
             .then(function (response) {
                 setProfileData(response.data);
+                setAvatar(response.data.user.avatar)
+                setCover(response.data.user.cover)
+                setTagline(response.data.user.tagline)
+                setHome(response.data.user.hometown)
+                setWork(response.data.user.work)
             })
             .catch(function (err) {
                 console.log(err);
@@ -31,14 +47,14 @@ export default function Profile() {
     React.useEffect(() => {
         window.scrollTo(0, 0);
         getData();
-    },[])
+    },[slug])
 
     function birthday(date) {
         let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         let d = new Date(date),
-            month = '' + months[d.getMonth()],
-            day = '' + d.getDate() + ",",
-            year = d.getFullYear();
+            month = '' + months[d.getUTCMonth()],
+            day = '' + d.getUTCDate() + ",",
+            year = d.getUTCFullYear();
     
         return [month, day, year].join(' ');
     }
@@ -48,6 +64,40 @@ export default function Profile() {
         let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         let ndate = new Date(date);
         return months[ndate.getMonth()] + " " + ndate.getFullYear();
+    }
+
+    const handleAvatar = ({ target }) => {
+        if (target.value) {
+            fakeProfilePictureBtnRef.current.textContent = target.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
+            setAvatar(target.files[0]);
+        }
+    };
+
+    const handleCoverPicture = ({ target }) => {
+        if (target.value) {
+            fakeCoverPictureBtnRef.current.textContent = target.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
+            setCover(target.files[0]);
+        }
+    };
+    
+    const handleTagline = ({ target }) => {
+        setTagline(target.value);
+    };
+    
+    const handleWork = ({ target }) => {
+        setWork(target.value);
+    };
+    
+    const handleHome = ({ target }) => {
+        setHome(target.value);
+    };
+
+    const clickChooseCoverPicture = () => {
+        realCoverPictureBtnRef.current.click()
+    }
+
+    const clickChoosePicture = () => {
+        realProfilePictureBtnRef.current.click()
     }
 
     return (
@@ -68,17 +118,20 @@ export default function Profile() {
                                 (<div>
                                     <div className="card profile-user">
                                         <img className="cover-image" src="//unsplash.it/901/300"/>
+                                        {(profileData.user.id == user.id) ? <button className="edit"  data-toggle="modal" data-target="#exampleModal"><i className="fas fa-pen"></i></button> : ""}
                                         <div className="d-flex">
-                                            <img className="rounded-circle avatar" src={BACKEND_SERVER_DOMAIN + profileData.user.avatar} />
+                                            <img className="rounded-circle avatar" src={BACKEND_SERVER_DOMAIN + profileData.user.avatar} alt={profileData.user.first_name+"'s avatar"} />
                                             <div className="user-details">
                                                 <h6>{profileData.user.first_name} {profileData.user.last_name}</h6>
                                                 <p>{profileData.user.tagline}</p>
-                                                </div> 
+                                                {(profileData.user.hometown)? <p><i className="fas fa-map-marker-alt"></i> {profileData.user.hometown}</p> :""}
+                                            </div> 
                                         </div>
                                         <ul>
-                                            <li><i class="fas fa-birthday-cake"></i> Born on {birthday(profileData.user.birthday)}</li>
-                                            <li><i class="far fa-calendar-alt"></i> Member since {memberSince(profileData.user.created)}</li>
-                                        </ul>   
+                                            {(profileData.user.work)? <li><i className="fas fa-briefcase"></i> {profileData.user.work}</li> :""}
+                                            <li><i className="fas fa-birthday-cake"></i> Born on {birthday(profileData.user.birthday)}</li>
+                                            <li><i className="far fa-calendar-alt"></i> Member since {memberSince(profileData.user.created)}</li>
+                                            </ul>   
                                     </div>
                                     <div className="row">
                                         <div className="col-lg-8 col-md-12">
@@ -92,7 +145,7 @@ export default function Profile() {
                                                     <div>
                                                         {profileData.friends.slice(0,5).map((friend) => (
                                                         <div className="d-flex user" key={friend.id}>
-                                                            <img src={BACKEND_SERVER_DOMAIN + friend.avatar} className="rounded-circle"/>
+                                                            <img src={BACKEND_SERVER_DOMAIN + friend.avatar} className="rounded-circle"  alt={friend.first_name + "'s avatar"}/>
                                                             <div>
                                                                 <h6><Link to={"/u/"+friend.slug}>{friend.first_name} {friend.last_name}</Link></h6>
                                                                 <span>{friend.tagline}</span>
@@ -119,6 +172,66 @@ export default function Profile() {
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                        <div class="modal-body">
+                                            <h5 className="mt-2 mb-2">Edit Profile</h5>
+                                            <label className="form-label">Profile Picture&nbsp; <i className="far fa-file-image "></i></label>
+                                            <button className="choose-avatar form-control" ref={fakeProfilePictureBtnRef} onClick={clickChoosePicture}>
+                                                choose profile picture
+                                            </button>
+                                            <input
+                                                className="d-none"
+                                                type="file"
+                                                name="avatar"
+                                                accept="image/*"
+                                                ref={realProfilePictureBtnRef}
+                                                onChange={handleAvatar}
+                                            />
+                                            <label className="form-label">Cover Image&nbsp; <i className="far fa-file-image "></i></label>
+                                            <button className="choose-avatar form-control" ref={fakeCoverPictureBtnRef} onClick={clickChooseCoverPicture}>
+                                                choose cover image
+                                            </button>
+                                            <input
+                                                className="d-none"
+                                                type="file"
+                                                name="cover"
+                                                accept="image/*"
+                                                ref={realCoverPictureBtnRef}
+                                                onChange={handleCoverPicture}
+                                            />
+                                            <InputField
+                                                type="text"
+                                                name="tagline"
+                                                label="Tagline"
+                                                onChange={handleTagline}
+                                                value={tagline}
+                                                />
+                                            <InputField
+                                                type="text"
+                                                name="work"
+                                                label="Work"
+                                                onChange={handleWork}
+                                                value={work}
+                                                />
+                                            <InputField
+                                                type="text"
+                                                name="hometown"
+                                                label="Hometown"
+                                                onChange={handleHome}
+                                                value={home}
+                                                />
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </div>
+
                                 </div>) :
                                 <div className="slim-loading-bar"></div>
                         }

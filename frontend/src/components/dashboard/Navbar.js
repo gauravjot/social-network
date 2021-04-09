@@ -1,5 +1,5 @@
 import React from "react";
-import { logoutUser, removeAllPosts, emptyFriends } from "../../redux/actions";
+import { logoutUser, removeAllPosts} from "../../redux/actions";
 import logo from "../../assets/images/logo.png";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
@@ -7,6 +7,11 @@ import axios from "axios";
 import { BACKEND_SERVER_DOMAIN } from "../../settings";
 import { timeSince } from "../../utils/timesince";
 import ThemeToggle from "../global/ThemeToggle"
+
+
+
+//TODO: noti type 5, replied to a comment
+
 
 export default function Navbar() {
     const user = useSelector((state) => state.user);
@@ -49,7 +54,10 @@ export default function Navbar() {
                 });
             })
             .catch(function (err) {
-                console.log(err);
+                console.log(err.response);
+                if (err.response.status ==  400) {
+                    logOut();
+                }
             });
     }, []);
 
@@ -242,6 +250,12 @@ export default function Navbar() {
                                             <Link to={"/friends"}>
                                                 <i className="fas fa-user-friends"></i>
                                                 &nbsp;&nbsp;&nbsp; Friends
+                                            </Link>
+                                        </li>
+                                        <li className="d-md-block d-lg-none">
+                                            <Link to={"/findfriends"}>
+                                                <i className="fas fa-search"></i>
+                                                &nbsp;&nbsp;&nbsp; Find Friends
                                             </Link>
                                         </li>
                                         <li className="d-md-block d-lg-none">

@@ -190,15 +190,17 @@ def getFriendSuggestions(request):
 
     # Apend people we have already sent friend request into friends_ids to avoid those suggestions
     try:
-        fr = FriendRequest.objects.get(Q(from_user=person_id) | Q(to_user=person_id))
-        if fr.to_user == person_id:
-            friends_ids.append(fr.from_user)
-        else:
-            friends_ids.append(fr.to_user)
+        freqs = FriendRequest.objects.filter(Q(from_user=person_id) | Q(to_user=person_id))
+        for fr in freqs:
+            if fr.to_user == person_id:
+                friends_ids.append(fr.from_user)
+            else:
+                friends_ids.append(fr.to_user)
     except FriendRequest.DoesNotExist:
         pass
 
-    persons = list(Person.objects.filter(~Q(id__in=friends_ids)))
+    # limiting the suggestions to 25 to prevent sending whole database
+    persons = list(Person.objects.filter(~Q(id__in=friends_ids))[:25])
     if len(persons) > 0:
         # getting 10 random ids from people we are not friends with
         # and then serializing them and returning them

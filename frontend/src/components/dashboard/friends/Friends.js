@@ -13,6 +13,7 @@ import Navbar from "../Navbar";
 export default function Friends() {
     const [friends, setFriends] = React.useState();
     const user = useSelector((state) => state.user);
+    const [isLoading, setIsLoading] = React.useState(true)
 
     React.useEffect(() => {
         window.scrollTo(0, 0);
@@ -26,9 +27,11 @@ export default function Friends() {
             .get(BACKEND_SERVER_DOMAIN + "/api/friends", config)
             .then((res) => {
                 setFriends(res.data)
+                setIsLoading(false)
             })
             .catch(function(error) {
                 console.log(error)
+                setIsLoading(false)
             });
     },[])
 
@@ -46,9 +49,9 @@ export default function Friends() {
                     </div>
                     <div className="col-lg-6 col-12 timeline">
                         <FriendRequests />
+                        <h6 className="mt-3">Friends</h6>
                         <div class="card">
-                        <h6>Friends</h6>
-                            {(friends) ? (
+                            {(!isLoading) ? (friends) ? (
                                 <div className="friends-list">
                                     {friends
                                         .slice()
@@ -65,7 +68,7 @@ export default function Friends() {
                                 <div class="sorry">
                                     Add some friends and they will show up here!
                                 </div>
-                            )}
+                            ) : (<div className="slim-loading-bar"></div>)}
                         </div>
                     </div>
                     <div className="col-lg-3 col-12 rightsidebar">

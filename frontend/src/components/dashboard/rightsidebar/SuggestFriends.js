@@ -8,9 +8,8 @@ import { Link } from 'react-router-dom';
 export default function SuggestFriends() {
     const user = useSelector((state) => state.user);
     const token = user.token;
-    const [suggestions, setSuggestions] = useState([]);
-    const [sentRequests, setSentRequests] = useState([-1, 0]);
-    const [clickedButtons, setClickedButtons] = useState([-1, 0]);
+    const [suggestions, setSuggestions] = useState();
+    const [isLoading, setIsLoading] = useState(true)
 
     const getSuggestions = () => {
         let config = {
@@ -22,10 +21,12 @@ export default function SuggestFriends() {
         axios
             .get(BACKEND_SERVER_DOMAIN + "/api/friends/suggestions", config)
             .then(function (response) {
-                setSuggestions(response.data["friend_suggestions"]);
+                setSuggestions(response.data["friend_suggestions"].slice(0,3));
+                setIsLoading(false)
             })
             .catch(function (err) {
                 console.log(err.response.data);
+                setIsLoading(false)
             });
     };
 
@@ -33,8 +34,27 @@ export default function SuggestFriends() {
         getSuggestions();
     }, []);
 
+    return !isLoading ? suggestions ? (
+        <div>
+            <h6 className="mt-3">Friend Suggestions</h6>
+            <div className="card friend-suggestions">
+                {suggestions.map((person, index) => (
+                    <SuggestedFriendItem key={index} token={token} person={person}/>
+                ))}
+                <Link to={"/findfriends"} className="card-btn">Find more Friends</Link>
+            </div>
+        </div>
+    ) : ("") : (
+        <div className="slim-loading-bar"></div>
+    );
+}
+
+export function SuggestedFriendItem({token, person}) {
+    const [isReqSent, setIsReqSent] = React.useState(false)
+    let btnRef = React.useRef()
+
     const sendFriendRequest = (id) => {
-        setClickedButtons([...clickedButtons, id]);
+        btnRef.current.setAttribute("disabled", "disabled");
         let config = {
             headers: {
                 "Content-Type": "application/json",
@@ -48,50 +68,38 @@ export default function SuggestFriends() {
                 config
             )
             .then(function (response) {
-                setSentRequests([...sentRequests, id]);
+                setIsReqSent(true)
             })
             .catch(function (error) {
-                console.log(error.response.data);
+                console.log(error);
+                btnRef.current.removeAttribute("disabled", "disabled");
             });
     };
 
-    return suggestions ? (
-        <div className="card">
-            <h6>Friend Suggestions</h6>
-            {suggestions.map((person, index) => (
-                <div className="d-flex user" key={index}>
-                    <img
-                        className="rounded-circle"
-                        src={BACKEND_SERVER_DOMAIN + person.avatar}
-                        alt="profile picture"
-                    />
-                    <div>
-                        <h6>
-                            <Link to={"/u/"+person.slug}>
-                                {person.first_name} {person.last_name}
-                            </Link>
-                        </h6>
-                        <span>{person.tagline}</span>
-                        <button
-                            onClick={() => sendFriendRequest(person.id)}
-                            className="btn btn-sm btn-outline-primary"
-                            disabled={
-                                Object.values(clickedButtons).indexOf(
-                                    person.id
-                                ) !== -1
-                            }
-                        >
-                            {Object.values(sentRequests).indexOf(person.id) !==
-                            -1
-                                ? "Request Sent"
-                                : "Add as Friend"}
-                        </button>
-                    </div>
-                </div>
-            ))}
-            <button className="card-btn">Find more Friends</button>
+    return (
+        <div className="d-flex user">
+            <img
+                className="rounded-circle"
+                src={BACKEND_SERVER_DOMAIN + person.avatar}
+                alt={person.first_name +"'s avatar"}
+            />
+            <div>
+                <h6>
+                    <Link to={"/u/"+person.slug}>
+                        {person.first_name} {person.last_name}
+                    </Link>
+                </h6>
+                <span>{person.tagline}</span>
+                <button
+                    onClick={() => sendFriendRequest(person.id)}
+                    className="btn btn-sm btn-outline-primary"
+                    ref={btnRef}
+                >
+                    {isReqSent
+                        ? "Request Sent"
+                        : "Add as Friend"}
+                </button>
+            </div>
         </div>
-    ) : (
-        <div></div>
-    );
+    )
 }

@@ -2,45 +2,29 @@ import React, { useState, useRef } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setUser, setFriends } from "../../redux/actions";
-import { useHistory } from "react-router-dom";
+import { setUser } from "../../redux/actions";
 
 import InputField from "../../utils/InputField";
 import { isValidDate } from "../../utils/CheckValidDate";
 import { BACKEND_SERVER_DOMAIN } from "../../settings";
 
-function SignUp() {
+function SignUp({secondStep}) {
     const dispatch = useDispatch();
-    const history = useHistory();
 
     const [first_name, setFirstName] = useState("");
     const [last_name, setLastName] = useState("");
-    const [avatar, setAvatar] = useState();
     const [email, setEmail] = useState("");
     const [birthday, setBirthday] = useState("");
     const [password, setPassword] = useState("");
-    const [tagline, setTagline] = useState("");
 
     const [confirmPassword, setConfirmPassword] = useState(undefined);
     const [apiResponse, setAPIResponse] = useState();
-
-    let realProfilePictureBtnRef = useRef();
-    let fakeProfilePictureBtnRef = useRef();
 
     const handleFirstName = ({ target }) => {
         setFirstName(target.value);
     };
     const handleLastName = ({ target }) => {
         setLastName(target.value);
-    };
-    const handleAvatar = ({ target }) => {
-        if (target.value) {
-            fakeProfilePictureBtnRef.current.textContent = target.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
-            setAvatar(target.files[0]);
-        }
-    };
-    const handleTagline = ({ target }) => {
-        setTagline(target.value);
     };
     const handleEmail = ({ target }) => {
         setEmail(target.value);
@@ -59,15 +43,11 @@ function SignUp() {
         }
     };
 
-    const clickChoosePicture = () => {
-        realProfilePictureBtnRef.current.click();
-    }
-
 
     let btnRef = useRef();
     const handleSignUp = () => {
 
-        if (!first_name || !last_name || !email || !tagline || !password || !birthday || !avatar) {
+        if (!first_name || !last_name || !email || !password || !birthday) {
             setAPIResponse(
                 <div class="fw-bold text-uppercase text-danger text-sm">
                     Oops! Fields may not be blank.
@@ -94,18 +74,16 @@ function SignUp() {
 
         setAPIResponse("");
 
-        var formData = new FormData();
-        formData.append("first_name", first_name);
-        formData.append("last_name", last_name);
-        formData.append("email", email);
-        formData.append("tagline", tagline);
-        formData.append("password", password);
-        formData.append("birthday", birthday);
-        formData.append("avatar", avatar);
+        let formData = {
+            "first_name":first_name,
+            "last_name":last_name,
+            "email":email,
+            "password":password,
+            "birthday":birthday}
         
         let config = {
             headers: {
-                "Content-Type": "multipart/form-data",
+                "Content-Type": "application/json",
             },
         };
         if (isValidDate(birthday)) {
@@ -116,8 +94,9 @@ function SignUp() {
                     config
                 )
                 .then(function (response) {
+                    // First Step of Sign up is success!!!
                     dispatch(setUser(response.data));
-                    history.push("/dashboard");
+                    secondStep()
                 })
                 .catch(function (error) {
                     let output_error;
@@ -147,7 +126,7 @@ function SignUp() {
         } else {
             setAPIResponse(
                 <div class="fw-bold text-uppercase text-danger text-sm">
-                    error: Too young, has to be over age 13 :(
+                    Sorry, You have to be of age 13 or over.
                 </div>
             );
             if (btnRef.current) {
@@ -173,6 +152,7 @@ function SignUp() {
                             onChange={handleFirstName}
                             name="first_name"
                             type="text"
+                            placeholder="John/Ashley"
                         />
                     </div>
                     <div className="col-md-6">
@@ -181,18 +161,10 @@ function SignUp() {
                             onChange={handleLastName}
                             name="last_name"
                             type="text"
+                            placeholder="Doe"
                         />
                     </div>
-                    <div className="col-12">
-                        <InputField
-                            label="Tagline"
-                            onChange={handleTagline}
-                            name="tagline"
-                            type="text"
-                            placeholder="I do cool stuff."
-                        />
-                    </div>
-                    <div className="col-md-6">
+                    <div className="col-md-12">
                         <InputField
                             label="Email"
                             onChange={handleEmail}
@@ -201,7 +173,7 @@ function SignUp() {
                             placeholder="you@company.com"
                         />
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-12">
                         <InputField
                             label="Birthday"
                             onChange={handleBirthday}
@@ -230,27 +202,13 @@ function SignUp() {
                         </div>
                     </div>
                     <div className="col-12">
-                        <label className="form-label">Profile Picture&nbsp; <i className="far fa-file-image "></i></label>
-                        <button className="choose-avatar form-control" ref={fakeProfilePictureBtnRef} onClick={clickChoosePicture}>
-                            choose an image here
-                        </button>
-                        <input
-                            className="d-none"
-                            type="file"
-                            name="avatar"
-                            accept="image/*"
-                            ref={realProfilePictureBtnRef}
-                            onChange={handleAvatar}
-                        />
-                    </div>
-                    <div className="col-12">
                         <button
                             type="submit"
                             ref={btnRef}
                             onClick={handleSignUp}
                             className="btn btn-primary btn-signup"
                         >
-                            Let's Go!
+                            Next
                         </button>
                         {apiResponse}
                     </div>

@@ -55,7 +55,7 @@ def personInfo(request, slug):
 
 # Sign Up function
 # -----------------------------------------------
-@api_view(['POST'])
+@api_view(['POST','PUT'])
 @csrf_exempt
 def signup(request):
     if request.method == 'POST':
@@ -79,6 +79,24 @@ def signup(request):
             return Response(data={**tokenResponse(token),**personSerializer.data},status=status.HTTP_201_CREATED)
         else:
             return Response(data=personSerializer.errors,status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == 'PUT':
+        person = getPersonID(request)
+        if type(person) is Response:
+            return person
+
+        try:
+            person_object = Person.objects.get(pk=person)
+            person_object.tagline = request.data['tagline']
+            person_object.avatar = request.data['avatar']
+            person_object.hometown = request.data['hometown']
+            person_object.work = request.data['work']
+            person_object.save()
+
+            token = Token.objects.get(account=person).token
+
+            return Response(data={**tokenResponse(token),**PersonSerializer(person_object).data},status=status.HTTP_200_OK)
+        except Person.DoesNotExist:
+            return Response(data=errorResponse(INVALID_REQUEST),status=status.HTTP_400_BAD_REQUEST)
 
 # Log In function, requires email and password
 # -----------------------------------------------
