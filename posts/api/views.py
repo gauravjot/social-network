@@ -137,6 +137,7 @@ def likePost(request, post_key):
             isLiked = True
     else:
         post.likes = dict(persons=[(person_id)])
+        isLiked = True
     post.save()
     # make a notification to send
     if post.person_id != person_id and isLiked:
