@@ -9,8 +9,13 @@ import { useSelector } from 'react-redux';
 import Posts from "../post/Posts";
 import { timeSince } from "../../../utils/timesince";
 import InputField from '../../../utils/InputField'
+import { useDispatch } from "react-redux";
+import { setUser } from "../../../redux/actions";
+import { useHistory } from "react-router-dom";
 
 export default function Profile() {
+    const dispatch = useDispatch();
+    const history = useHistory();
     const {slug} = useParams();
     const user = useSelector((state) => state.user);
     const [profileData, setProfileData] = React.useState();
@@ -34,7 +39,7 @@ export default function Profile() {
             .then(function (response) {
                 setProfileData(response.data);
                 setAvatar(response.data.user.avatar)
-                setCover(response.data.user.cover)
+                setCover(response.data.user.cover_image)
                 setTagline(response.data.user.tagline)
                 setHome(response.data.user.hometown)
                 setWork(response.data.user.work)
@@ -100,6 +105,47 @@ export default function Profile() {
         realProfilePictureBtnRef.current.click()
     }
 
+    let editProfileBtnRef = React.useRef()
+    const editProfile = () => {
+
+        editProfileBtnRef.current.textContent = "Saving..."
+        editProfileBtnRef.current.setAttribute("disabled", "disabled");
+
+        var formData = new FormData();
+        formData.append("avatar", avatar);
+        formData.append("work", work);
+        formData.append("hometown", home);
+        formData.append("tagline", tagline);
+        formData.append("cover", cover);
+        
+        let config = {
+            headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: user.token
+            },
+        };
+        axios
+            .put(
+                BACKEND_SERVER_DOMAIN + "/api/person/edit",
+                formData,
+                config
+            )
+            .then(function (response) {
+                console.log(response.data)
+                dispatch(setUser(response.data));
+                editProfileBtnRef.current.textContent = "Done!"
+                editProfileBtnRef.current.removeAttribute("class","btn-primary")
+                editProfileBtnRef.current.setAttribute("class","btn btn-success")
+                history.go(0)
+            })
+            .catch(function (error) {
+                console.log(error)
+                editProfileBtnRef.current.textContent = "Try Again"
+                editProfileBtnRef.current.setAttribute("class","btn btn-danger")
+                editProfileBtnRef.current.removeAttribute("disabled");
+            });
+    }
+
     return (
         <section className="profile-page">
             <Helmet>
@@ -117,7 +163,7 @@ export default function Profile() {
                             (profileData) ? 
                                 (<div>
                                     <div className="card profile-user">
-                                        <img className="cover-image" src="//unsplash.it/901/300"/>
+                                        <img className="cover-image" src={BACKEND_SERVER_DOMAIN + profileData.user.cover_image}/>
                                         {(profileData.user.id == user.id) ? <button className="edit"  data-toggle="modal" data-target="#exampleModal"><i className="fas fa-pen"></i></button> : ""}
                                         <div className="d-flex">
                                             <img className="rounded-circle avatar" src={BACKEND_SERVER_DOMAIN + profileData.user.avatar} alt={profileData.user.first_name+"'s avatar"} />
@@ -136,7 +182,7 @@ export default function Profile() {
                                     <div className="row">
                                         <div className="col-lg-8 col-md-12">
                                             <h6 className="ml-3 mt-1">Posts</h6>
-                                            <Posts token={user.token} userposts={profileData.posts.reverse()} />
+                                            <Posts key={1} token={user.token} userposts={profileData.posts.slice().reverse()} />
                                         </div>
                                         <div className="col-lg-4 col-md-12 rightsidebar">
                                             <h6 className="ml-3 mt-1">Friends <span>{(profileData.friends.length) ? "("+profileData.friends.length+")": ""}</span></h6>
@@ -161,7 +207,7 @@ export default function Profile() {
                                                 {(profileData.comments.length) ? 
                                                     profileData.comments.map((comment) => (
                                                         <div className="recent-activity" key={comment.id}>
-                                                            <div className="what">posted a comment</div>
+                                                            <div className="what">posted comment on a <Link to={"/post/"+comment.post_id}>post</Link></div>
                                                             <div>
                                                                 <span className="content">{comment.comment_text}</span>
                                                                 <span className="when">- {timeSince(comment.created)}</span>
@@ -226,7 +272,7 @@ export default function Profile() {
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                            <button type="button" class="btn btn-primary" ref={editProfileBtnRef} onClick={editProfile}>Save changes</button>
                                         </div>
                                         </div>
                                     </div>

@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 import pytz
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
+from django.core.files.uploadedfile import InMemoryUploadedFile
 
 from rest_framework import status
 from rest_framework.response import Response
@@ -135,6 +136,44 @@ def logout(request):
     deleteToken(token)
     return Response(data=json.loads('{"action": "success"}'),status=status.HTTP_200_OK)
 
+# Edit profile, requires token
+# -----------------------------------------------
+@api_view(['PUT'])
+def editProfile(request):
+    person = getPersonID(request)
+    if type(person) is Response:
+        return person
+    
+    try:
+        person_object = Person.objects.get(pk=person)
+        person_object.tagline = request.data['tagline']
+        person_object.avatar = remove_prefix(request.data['avatar'], "/media")
+        person_object.hometown = request.data['hometown']
+        person_object.work = request.data['work']
+        person_object.cover_image = remove_prefix(request.data['cover'], "/media")
+        person_object.save()
+
+        return Response(data={**tokenResponse(request.headers['Authorization'].split()[-1]),**PersonSerializer(person_object).data},status=status.HTTP_200_OK)
+    except Person.DoesNotExist:
+        return Response(data=errorResponse(INVALID_REQUEST),status=status.HTTP_400_BAD_REQUEST)
+
+# Search people, requires token
+# -----------------------------------------------
+@api_view(['GET'])
+def searchPersons(request):
+    # this is keep it only accessible to logged in users
+    person = getPersonID(request)
+    if type(person) is Response:
+        return person
+
+    query = Person.objects.filter(Q(first_name__contains=request.data['query']) | Q(last_name__contains=request.data['query']))
+    results = PersonSerializer(query, many=True)
+    if results:
+        return Response(data=results.data,status=status.HTTP_200_OK)
+    else:
+        return Response(errorResponse("No search results!"),status=status.HTTP_404_NOT_FOUND)
+    
+
 # Helper Functions
 # -----------------------------------------------
 def getPersonID(request):
@@ -169,3 +208,9 @@ def hashPwd(password):
 
 def genToken():
     return token_hex(24)
+
+def remove_prefix(text, prefix):
+    if type(text) is not InMemoryUploadedFile:
+        if text.startswith(prefix):
+            return text[len(prefix):]
+    return text

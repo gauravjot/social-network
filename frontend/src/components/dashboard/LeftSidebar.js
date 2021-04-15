@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { BACKEND_SERVER_DOMAIN } from "../../settings";
 
-function LeftSidebar({active=1}) {
+function LeftSidebar({active=0}) {
     const user = useSelector((state) => state.user);
 
     return (

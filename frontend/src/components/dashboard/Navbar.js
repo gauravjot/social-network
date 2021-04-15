@@ -55,8 +55,13 @@ export default function Navbar() {
             })
             .catch(function (err) {
                 console.log(err.response);
-                if (err.response.status ==  400) {
-                    logOut();
+                try{
+                    if (err.response.status ==  400) {
+                        logOut();
+                    }
+                }
+                catch(err) {
+                    console.log(err)
                 }
             });
     }, []);

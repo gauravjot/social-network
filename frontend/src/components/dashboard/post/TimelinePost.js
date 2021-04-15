@@ -138,7 +138,7 @@ const TimelinePost = ({ user, post, expanded}) => {
 
     return (
         <article className="post card">
-            <div className="d-flex user">
+            <div className="d-flex userbar">
                 <img
                     className="rounded-circle"
                     src={BACKEND_SERVER_DOMAIN + post.person.avatar}
