@@ -1496,6 +1496,22 @@ img {
   width: 1rem;
 }
 
+.timeline .post .likedBy {
+  font-size: .7rem;
+  padding: 0 .5rem;
+  color: var(--clr-grey);
+}
+
+.timeline .post .likedBy a {
+  font-size: .8rem;
+  color: var(--clr-text);
+}
+
+.timeline .post .likedBy a:hover {
+  color: var(--clr-black);
+  text-decoration: underline;
+}
+
 .timeline .post .post-content {
   margin: 1rem 0 0.5rem;
   line-height: 1.5rem;

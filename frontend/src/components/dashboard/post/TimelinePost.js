@@ -7,8 +7,8 @@ import { Link } from 'react-router-dom';
 import {getMetadata} from 'page-metadata-parser';
 
 const TimelinePost = ({ user, post, expanded}) => {
-    const [isLiked, setIsLiked] = useState();
-    const [likesCount, setLikesCount] = useState();
+    const [isLiked, setIsLiked] = useState(false);
+    const [likesCount, setLikesCount] = useState(0);
     const [comments, setComments] = useState();
     const [showComments, setShowComments] = useState(false);
     const [isLoadingComments,setIsLoadingComments] = useState(false);
@@ -16,8 +16,10 @@ const TimelinePost = ({ user, post, expanded}) => {
     let btnRef = useRef();
 
     useEffect(() => {
-        setIsLiked(post.likes.persons && post.likes.persons.includes(user.id));
-        setLikesCount((post.likes.persons != null) ? post.likes.persons.length : 0);
+        if(post.likes) {
+            setIsLiked(post.likes.person_ids && post.likes.person_ids.includes(user.id));
+            setLikesCount((post.likes.person_ids && post.likes.person_ids != null) ? post.likes.person_ids.length : 0);
+        }
         let urlRegEx = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
         const urls = [...post.post_text.matchAll(urlRegEx)]
         let links = []
@@ -216,6 +218,18 @@ const TimelinePost = ({ user, post, expanded}) => {
                     <i className="far fa-share-square"></i>Share
                 </button>
             </div>
+                { (post.likes) ? 
+                    <div className="likedBy">Liked by&nbsp;
+                            {post.likes.persons.slice(0,2).map((person, index)=> (
+                                <span>
+                                    <Link to={"/u/"+person.slug} key={person.id}>
+                                        {person.first_name} {person.last_name}
+                                    </Link>
+                                    {(post.likes.persons.length > 1 && index==0) ?", ":""}
+                                </span>
+                            ))} {(post.likes.persons.length > 2) ? " and more": ""}
+                    </div> : ""
+                }
             <div className={(isLoadingComments) ? "slim-loading-bar":""}></div>
             
             {

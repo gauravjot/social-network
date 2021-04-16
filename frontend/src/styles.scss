@@ -1408,6 +1408,22 @@ img {
             }
         }
 
+        .likedBy {
+            font-size:.7rem;
+            padding: 0 .5rem;
+            color: var(--clr-grey);
+
+            a {
+                font-size: .8rem;
+                color: var(--clr-text);
+
+                &:hover {
+                    color:var(--clr-black);
+                    text-decoration: underline;
+                }
+            }
+        }
+
         .post-content {
             margin: 1rem 0 0.5rem;
             line-height: 1.5rem;
