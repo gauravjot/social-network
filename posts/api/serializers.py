@@ -13,7 +13,7 @@ class PostsSerializer(serializers.ModelSerializer):
             people = []
             for person in obj.likes['persons']:
                 people.append(PersonSerializer(Person.objects.get(pk=person)).data)
-            return dict(persons=people)
+            return dict(persons=people,person_ids=obj.likes['persons'])
 
     class Meta:
         model = Posts
