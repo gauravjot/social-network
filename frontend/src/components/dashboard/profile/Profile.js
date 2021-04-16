@@ -146,6 +146,30 @@ export default function Profile() {
             });
     }
 
+    let sendFriendReqBtn = React.useRef();
+    const sendFriendReq = (id) => {
+        sendFriendReqBtn.current.setAttribute("disabled", "disabled");
+        let config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: user.token,
+            },
+        };
+        axios
+            .post(
+                BACKEND_SERVER_DOMAIN + "/api/friends/request/send/",
+                JSON.stringify({ to_user: id }),
+                config
+            )
+            .then(function (response) {
+                sendFriendReqBtn.current.textContent = "Request Sent"
+            })
+            .catch(function (error) {
+                console.log(error);
+                sendFriendReqBtn.current.removeAttribute("disabled", "disabled");
+            });
+    }
+
     return (
         <section className="profile-page">
             <Helmet>
@@ -171,13 +195,28 @@ export default function Profile() {
                                                 <h6>{profileData.user.first_name} {profileData.user.last_name}</h6>
                                                 <p>{profileData.user.tagline}</p>
                                                 {(profileData.user.hometown)? <p><i className="fas fa-map-marker-alt"></i> {profileData.user.hometown}</p> :""}
+                                                {(profileData.isFriend == false) ?
+                                                    (
+                                                        (profileData.isFriendReqSent == false) ?
+                                                            (
+                                                                <button className="btn btn-sm btn-primary" onClick={() => sendFriendReq(profileData.user.id)} ref={sendFriendReqBtn}>
+                                                                    <i className="fas fa-user-plus"></i> Send Friend Request
+                                                                </button>
+                                                            )
+                                                        : <button className="btn btn-sm btn-outline-primary" disabled="disabled">
+                                                            <i className="fas fa-user-clock"></i> Friend Request Pending
+                                                        </button>
+                                                    ) : (profileData.isFriend == true) ?
+                                                    <button className="btn btn-sm btn-outline-success" disabled="disabled">
+                                                        <i className="fas fa-check"></i> Friends
+                                                    </button> : ""}
                                             </div> 
                                         </div>
                                         <ul>
                                             {(profileData.user.work)? <li><i className="fas fa-briefcase"></i> {profileData.user.work}</li> :""}
                                             <li><i className="fas fa-birthday-cake"></i> Born on {birthday(profileData.user.birthday)}</li>
                                             <li><i className="far fa-calendar-alt"></i> Member since {memberSince(profileData.user.created)}</li>
-                                            </ul>   
+                                        </ul>   
                                     </div>
                                     <div className="row">
                                         <div className="col-lg-8 col-md-12">

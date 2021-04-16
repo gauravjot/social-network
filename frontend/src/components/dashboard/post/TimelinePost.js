@@ -5,6 +5,7 @@ import CommentComponent from "./Comment";
 import axios from "axios";
 import { Link } from 'react-router-dom';
 import {getMetadata} from 'page-metadata-parser';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const TimelinePost = ({ user, post, expanded}) => {
     const [isLiked, setIsLiked] = useState(false);
@@ -141,7 +142,8 @@ const TimelinePost = ({ user, post, expanded}) => {
     return (
         <article className="post card">
             <div className="d-flex userbar">
-                <img
+                <LazyLoadImage
+                    loading="lazy"
                     className="rounded-circle"
                     src={BACKEND_SERVER_DOMAIN + post.person.avatar}
                     alt={post.person.first_name + "'s avatar"}
@@ -192,7 +194,7 @@ const TimelinePost = ({ user, post, expanded}) => {
                 ))) : ""}
             </div>
             {post.post_image ? (
-                <img src={BACKEND_SERVER_DOMAIN +post.post_image} className="rounded post-picture" alt={post.person.first_name + "'s post picture"} />
+                <LazyLoadImage src={BACKEND_SERVER_DOMAIN +post.post_image} className="rounded post-picture" alt={post.person.first_name + "'s post picture"} />
             ) : (
                 ""
             )}
@@ -218,18 +220,18 @@ const TimelinePost = ({ user, post, expanded}) => {
                     <i className="far fa-share-square"></i>Share
                 </button>
             </div>
-                { (post.likes) ? 
-                    <div className="likedBy">Liked by&nbsp;
-                            {post.likes.persons.slice(0,2).map((person, index)=> (
-                                <span>
-                                    <Link to={"/u/"+person.slug} key={person.id}>
-                                        {person.first_name} {person.last_name}
-                                    </Link>
-                                    {(post.likes.persons.length > 1 && index==0) ?", ":""}
-                                </span>
-                            ))} {(post.likes.persons.length > 2) ? " and more": ""}
-                    </div> : ""
-                }
+            { (post.likes) ? 
+                <div className="likedBy">Liked by&nbsp;
+                        {post.likes.persons.slice(0,2).map((person, index)=> (
+                            <span>
+                                <Link to={"/u/"+person.slug} key={person.id}>
+                                    {person.first_name} {person.last_name}
+                                </Link>
+                                {(post.likes.persons.length > 1 && index==0) ?", ":""}
+                            </span>
+                        ))} {(post.likes.persons.length > 2) ? " and "+(likesCount-2)+" others": ""}
+                </div> : ""
+            }
             <div className={(isLoadingComments) ? "slim-loading-bar":""}></div>
             
             {

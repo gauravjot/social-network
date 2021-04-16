@@ -749,9 +749,11 @@ img {
                 background-color: var(--clr-light-accent);
                 font-size: 0.8rem;
                 margin: 0.5rem 1.5rem;
+                position: relative;
 
                 @media (max-width: 992px) {
                     margin-top: 1rem;
+                    font-size:.95rem;
                 }
 
                 input {
@@ -787,6 +789,39 @@ img {
 
                     &:focus {
                         background-color: rgba(var(--rgb-black), 0.08);
+                    }
+                }
+
+                .searchResults {
+                    position:absolute;
+                    margin-top:2rem;
+                    background:var(--clr-light-accent);
+                    width:100%;
+                    border-bottom-left-radius: .5rem;
+                    border-bottom-right-radius: .5rem;
+                    border-left: 1px rgba(var(--rgb-grey), 0.1) solid;
+                    border-right: 1px rgba(var(--rgb-grey), 0.1) solid;
+                    border-bottom: 1px rgba(var(--rgb-grey), 0.1) solid;
+                    border-top:1px rgba(var(--rgb-grey), 0.1) solid;
+                    z-index:1;
+
+                    a {
+                        padding-left:.5rem;
+                        padding-right:.5rem;
+                        display:block;
+
+                        &:hover,&:focus {
+                            background:rgba(var(--rgb-white),.5);
+                            text-decoration: none;
+                        }
+                    }
+
+                    a + a {
+                        border-top:1px rgba(var(--rgb-grey), 0.1) solid;
+                    }
+
+                    h6 {
+                        color:var(--clr-text);
                     }
                 }
             }
@@ -1409,9 +1444,10 @@ img {
         }
 
         .likedBy {
-            font-size:.7rem;
+            font-size:.75rem;
             padding: 0 .5rem;
             color: var(--clr-grey);
+            margin-top: .25rem;
 
             a {
                 font-size: .8rem;
@@ -1928,7 +1964,7 @@ img {
             .user-details {
                 margin: 3.5rem 0 0 1rem;
                 h6 {
-                    font-size: 1.1rem;
+                    font-size: 1.25rem;
                     font-style: bold;
                     color: var(--clr-black);
                 }
@@ -1936,7 +1972,7 @@ img {
                     color: rgba(var(--rgb-text),.9);
                     line-height: 1.2rem;
                     font-size: 0.9rem;
-                    margin-top:.2rem;
+                    margin-top:.35rem;
 
                     i {
                         font-size:.75rem;
@@ -1950,6 +1986,17 @@ img {
                     font-size:.85rem;
                     margin-top:0;
                     line-height: 1.2rem;
+                }
+
+                button {
+                    margin-top:.5rem;
+                    padding:.2rem .75rem;
+                    border-radius:.5rem;
+
+                    i {
+                        margin-right:.125rem;
+                        font-size:.8rem;
+                    }
                 }
             }
 

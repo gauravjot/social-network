@@ -63,7 +63,7 @@ export function SuggestedFriendItem({token, person}) {
         };
         axios
             .post(
-                "http://localhost:8000/api/friends/request/send/",
+                BACKEND_SERVER_DOMAIN + "/api/friends/request/send/",
                 JSON.stringify({ to_user: id }),
                 config
             )

@@ -779,11 +779,13 @@ img {
   background-color: var(--clr-light-accent);
   font-size: 0.8rem;
   margin: 0.5rem 1.5rem;
+  position: relative;
 }
 
 @media (max-width: 992px) {
   .navbar > .container > .row .row > div > form {
     margin-top: 1rem;
+    font-size: .95rem;
   }
 }
 
@@ -822,6 +824,39 @@ img {
 
 .navbar > .container > .row .row > div > form button:focus {
   background-color: rgba(var(--rgb-black), 0.08);
+}
+
+.navbar > .container > .row .row > div > form .searchResults {
+  position: absolute;
+  margin-top: 2rem;
+  background: var(--clr-light-accent);
+  width: 100%;
+  border-bottom-left-radius: .5rem;
+  border-bottom-right-radius: .5rem;
+  border-left: 1px rgba(var(--rgb-grey), 0.1) solid;
+  border-right: 1px rgba(var(--rgb-grey), 0.1) solid;
+  border-bottom: 1px rgba(var(--rgb-grey), 0.1) solid;
+  border-top: 1px rgba(var(--rgb-grey), 0.1) solid;
+  z-index: 1;
+}
+
+.navbar > .container > .row .row > div > form .searchResults a {
+  padding-left: .5rem;
+  padding-right: .5rem;
+  display: block;
+}
+
+.navbar > .container > .row .row > div > form .searchResults a:hover, .navbar > .container > .row .row > div > form .searchResults a:focus {
+  background: rgba(var(--rgb-white), 0.5);
+  text-decoration: none;
+}
+
+.navbar > .container > .row .row > div > form .searchResults a + a {
+  border-top: 1px rgba(var(--rgb-grey), 0.1) solid;
+}
+
+.navbar > .container > .row .row > div > form .searchResults h6 {
+  color: var(--clr-text);
 }
 
 .navbar > .container > .row .row > div .collapse {
@@ -1497,9 +1532,10 @@ img {
 }
 
 .timeline .post .likedBy {
-  font-size: .7rem;
+  font-size: .75rem;
   padding: 0 .5rem;
   color: var(--clr-grey);
+  margin-top: .25rem;
 }
 
 .timeline .post .likedBy a {
@@ -2053,7 +2089,7 @@ img {
 }
 
 .profile-page .timeline .profile-user .user-details h6 {
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   font-style: bold;
   color: var(--clr-black);
 }
@@ -2062,7 +2098,7 @@ img {
   color: rgba(var(--rgb-text), 0.9);
   line-height: 1.2rem;
   font-size: 0.9rem;
-  margin-top: .2rem;
+  margin-top: .35rem;
 }
 
 .profile-page .timeline .profile-user .user-details p i {
@@ -2077,6 +2113,17 @@ img {
   font-size: .85rem;
   margin-top: 0;
   line-height: 1.2rem;
+}
+
+.profile-page .timeline .profile-user .user-details button {
+  margin-top: .5rem;
+  padding: .2rem .75rem;
+  border-radius: .5rem;
+}
+
+.profile-page .timeline .profile-user .user-details button i {
+  margin-right: .125rem;
+  font-size: .8rem;
 }
 
 .profile-page .timeline .profile-user ul {
