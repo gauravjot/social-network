@@ -1,6 +1,6 @@
 import React from 'react';
-import SuggestFriends from './SuggestFriends';
-import FriendRequests from './FriendRequests';
+import SuggestFriends from './friends/SuggestFriends';
+import FriendRequests from './friends/FriendRequests';
 
 export default function RightSidebar() {
     return (

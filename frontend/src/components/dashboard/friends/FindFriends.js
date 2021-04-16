@@ -1,14 +1,13 @@
 import React from 'react'
 import axios from "axios";
 import { BACKEND_SERVER_DOMAIN } from "../../../settings";
-import { Link } from 'react-router-dom';
 import { Helmet } from "react-helmet";
 import { useSelector } from "react-redux";
 
 import LeftSidebar from "../LeftSidebar";
 import Navbar from "../Navbar";
 
-import {SuggestedFriendItem} from '../rightsidebar/SuggestFriends'
+import {SuggestedFriendItem} from './SuggestFriends'
 
 export default function FindFriends() {
     const [suggestions, setSuggestions] = React.useState();

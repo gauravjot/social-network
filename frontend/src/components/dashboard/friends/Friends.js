@@ -1,8 +1,8 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 import { useSelector } from "react-redux";
-import SuggestFriends from "../rightsidebar/SuggestFriends";
-import FriendRequests from "../rightsidebar/FriendRequests";
+import SuggestFriends from "./SuggestFriends";
+import FriendRequests from "./FriendRequests";
 import axios from "axios";
 
 import LeftSidebar from "../LeftSidebar";
