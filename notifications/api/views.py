@@ -1,4 +1,6 @@
+import datetime
 import json
+from django.db.models import Q
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -20,7 +22,8 @@ def getNotifications(request):
     if type(person_id) is Response:
         return person_id
 
-    notifications = Notification.objects.filter(person_for=person_id).filter(seen=0).values()
+    # Get notifications which are at most a day old; or are not seen yet unrelated to time
+    notifications = Notification.objects.filter(person_for=person_id).filter(Q(seen=0) | Q(created__range=((datetime.datetime.now() - datetime.timedelta(days=1)).timestamp(),datetime.datetime.now().timestamp()))).values()
     res = []
     for notif in notifications:
         person_by = PersonSerializer(Person.objects.get(pk=notif['person_from'])).data
