@@ -188,13 +188,19 @@ def editProfile(request):
 # Search people, requires token
 # -----------------------------------------------
 @api_view(['GET'])
-def searchPersons(request):
+def searchPersons(request, query):
     # this is keep it only accessible to logged in users
     person = getPersonID(request)
     if type(person) is Response:
         return person
 
-    query = Person.objects.filter(Q(first_name__contains=request.data['query']) | Q(last_name__contains=request.data['query']))
+    query = query.replace("+"," ")
+    # might not be the best solution
+    query = Person.objects.filter(
+        Q(first_name__icontains=query.split()[0]) 
+        | Q(last_name__icontains=query.split()[-1])
+        | Q(first_name__icontains=query.split()[-1]) 
+        | Q(last_name__icontains=query.split()[0]))
     results = PersonSerializer(query, many=True)
     if results:
         return Response(data=results.data,status=status.HTTP_200_OK)

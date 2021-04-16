@@ -7,5 +7,5 @@ urlpatterns = [
     path('api/person/login', login),
     path('api/person/logout', logout),
     path('api/person/edit', editProfile),
-    path('api/person/search', searchPersons)
+    path('api/person/search/<query>', searchPersons)
 ]
