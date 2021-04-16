@@ -281,6 +281,7 @@ export function Notifications({ showNotifications, notifications }) {
                     .reverse()
                     .map((notif) => (
                         <Link
+                            key={notif.id}
                             className={notif.seen == 1 ? "notif seen" : "notif"}
                             to={
                                 notif.noti == 1

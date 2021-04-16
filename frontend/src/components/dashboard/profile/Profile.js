@@ -187,7 +187,7 @@ export default function Profile() {
                             (profileData) ? 
                                 (<div>
                                     <div className="card profile-user">
-                                        <img className="cover-image" src={BACKEND_SERVER_DOMAIN + profileData.user.cover_image}/>
+                                        <img className="cover-image" src={BACKEND_SERVER_DOMAIN + ((profileData.user.cover_image) ? profileData.user.cover_image : "/static/images/placeholder_cover.jpg")}/>
                                         {(profileData.user.id == user.id) ? <button className="edit"  data-toggle="modal" data-target="#exampleModal"><i className="fas fa-pen"></i></button> : ""}
                                         <div className="d-flex">
                                             <img className="rounded-circle avatar" src={BACKEND_SERVER_DOMAIN + profileData.user.avatar} alt={profileData.user.first_name+"'s avatar"} />
@@ -258,10 +258,10 @@ export default function Profile() {
                                         </div>
                                     </div>
 
-                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                        <div class="modal-body">
+                                    <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div className="modal-dialog">
+                                        <div className="modal-content">
+                                        <div className="modal-body">
                                             <h5 className="mt-2 mb-2">Edit Profile</h5>
                                             <label className="form-label">Profile Picture&nbsp; <i className="far fa-file-image "></i></label>
                                             <button className="choose-avatar form-control" ref={fakeProfilePictureBtnRef} onClick={clickChoosePicture}>
@@ -309,9 +309,9 @@ export default function Profile() {
                                                 value={home}
                                                 />
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary" ref={editProfileBtnRef} onClick={editProfile}>Save changes</button>
+                                        <div className="modal-footer">
+                                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="button" className="btn btn-primary" ref={editProfileBtnRef} onClick={editProfile}>Save changes</button>
                                         </div>
                                         </div>
                                     </div>
