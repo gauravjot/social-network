@@ -12,7 +12,7 @@ from .serializers import PersonSerializer
 from account.models import Person, Token
 from posts.models import Comment, Posts
 from posts.api.serializers import CommentSerializer, PostsSerializer
-from friends.models import Friend
+from friends.models import Friend, FriendRequest
 
 import json
 import bcrypt
@@ -31,15 +31,17 @@ def personInfo(request, slug):
     try:
         data = Person.objects.get(slug=slug)
         wanted_person = data.id
+        #user
         personSerializer = PersonSerializer(data)
         #comments
         comments = CommentSerializer(Comment.objects.filter(person_id=wanted_person).order_by('-pk')[:3].values(), many=True).data
+        #posts
         posts = Posts.objects.filter(person_id=wanted_person).order_by('pk').values()
         posts_final = []
         for post in posts:
             post_by = PersonSerializer(Person.objects.get(pk=post['person_id'])).data
             posts_final.append({**PostsSerializer(Posts.objects.get(pk=post['id'])).data,"person":post_by})
-        
+        # friends
         try:
             data = Friend.objects.filter(Q(user_a=wanted_person) | Q(user_b=wanted_person))
             friends = [entry.user_a if entry.user_a is not wanted_person else entry.user_b for entry in data]
@@ -50,7 +52,33 @@ def personInfo(request, slug):
         except Friend.DoesNotExist:
             friends = []
             
-        return Response({"user":personSerializer.data, "friends":friends, "posts":posts_final, "comments":comments}, status=status.HTTP_200_OK)
+        # isFriend: Check if person requesting this info is friends with the person
+        # we only check if wanted person and requesting person are different
+        isFriend = None
+        if requesting_person is not wanted_person:
+            try:
+                Friend.objects.get(Q(user_a=requesting_person) & Q(user_b=wanted_person) | Q(user_a=wanted_person) & Q(user_b=requesting_person))
+                isFriend =  True
+            except Friend.DoesNotExist:
+                isFriend = False
+
+        # isFriendReqSent: Check if the requesting person has already sent a friend req to wanted person
+        # we only check if they are not already friends
+        isFriendReqSent = None
+        if isFriend is False:
+            try:
+                FriendRequest.objects.get(Q(from_user=requesting_person) & Q(to_user=wanted_person))
+                isFriendReqSent = True
+            except FriendRequest.DoesNotExist:
+                isFriendReqSent = False
+
+        return Response({
+            "user":personSerializer.data, 
+            "friends":friends, 
+            "posts":posts_final, 
+            "comments":comments,
+            "isFriend":isFriend,
+            "isFriendReqSent": isFriendReqSent}, status=status.HTTP_200_OK)
     except Person.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
