@@ -1,7 +1,20 @@
 from rest_framework import serializers
 from posts.models import Posts, Comment
 
+from account.models import Person
+from account.api.serializers import PersonSerializer
+
 class PostsSerializer(serializers.ModelSerializer):
+
+    likes = serializers.SerializerMethodField()
+
+    def get_likes(self,obj):
+        if obj.likes and obj.likes['persons']:
+            people = []
+            for person in obj.likes['persons']:
+                people.append(PersonSerializer(Person.objects.get(pk=person)).data)
+            return dict(persons=people)
+
     class Meta:
         model = Posts
         fields = ['id', 'person_id','post_text','post_image','likes', 'created', 'updated']
