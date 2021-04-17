@@ -39,29 +39,33 @@ function CreatePost({user, newPost}) {
         if(btnRef.current){
             btnRef.current.setAttribute("disabled", "disabled");
         }
-        let formData = new FormData();
-        formData.append("post_text", postText);
-        formData.append("post_image", postImage);
-        let config = { headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: user.token,   
-        }}
-        axios.post('http://localhost:8000/api/post/new',formData, config)
-            .then(function (response) {
-                // Post has been made successfully
-                setPostText("");
-                textAreaRef.current.style.height = 'auto'
-                setPostImage(null);
-                newPost({...response.data,"person":user});
-                setAPIResponse("");
-                showBtn.current.classList.remove("show-btn");
-                })
-            .catch(function (error) {
-                setAPIResponse(<span className="fw-bold text-uppercase text-danger text-sm">{error}</span>);
-                if(btnRef.current){
-                    btnRef.current.removeAttribute("disabled");
-                }
-            });
+        if (postText && postText.length >0) {
+            let formData = new FormData();
+            formData.append("post_text", postText);
+            formData.append("post_image", postImage);
+            let config = { headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization: user.token,   
+            }}
+            axios.post(BACKEND_SERVER_DOMAIN + '/api/post/new',formData, config)
+                .then(function (response) {
+                    // Post has been made successfully
+                    setPostText("");
+                    textAreaRef.current.style.height = 'auto'
+                    setPostImage(null);
+                    newPost({...response.data,"person":user});
+                    setAPIResponse("");
+                    showBtn.current.classList.remove("show-btn");
+                    })
+                .catch(function (error) {
+                    setAPIResponse(<span className="fw-bold text-uppercase text-danger text-sm">Unable to post. Post text is required!</span>);
+                    if(btnRef.current){
+                        btnRef.current.removeAttribute("disabled");
+                    }
+                });
+        } else {
+            setAPIResponse(<span className="fw-bold text-uppercase text-danger text-sm">Post text is required!</span>);
+        }
     }
     return(
         <section className="create-post">

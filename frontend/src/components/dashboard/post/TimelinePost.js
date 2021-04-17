@@ -14,31 +14,36 @@ const TimelinePost = ({ user, post, expanded}) => {
     const [showComments, setShowComments] = useState(false);
     const [isLoadingComments,setIsLoadingComments] = useState(false);
     const [embedUrls,setEmbedUrls] = useState();
+    const [isDeleted, setIsDeleted] = useState(false);
     let btnRef = useRef();
 
     useEffect(() => {
-        if(post.likes) {
-            setIsLiked(post.likes.person_ids && post.likes.person_ids.includes(user.id));
-            setLikesCount((post.likes.person_ids && post.likes.person_ids != null) ? post.likes.person_ids.length : 0);
-        }
-        let urlRegEx = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-        const urls = [...post.post_text.matchAll(urlRegEx)]
-        let links = []
-        if (urls) {
-            urls.map(async (url, index) => {
-                const domino = require('domino');
-                const response = await fetch(url[0]);
-                const html = await response.text();
-                const doc = domino.createWindow(html).document;
-                const metadata = getMetadata(doc, url);
-                links.push({"title":metadata.title,
-                    "description":metadata.description,
-                    "url":url[0]})
-                if (urls.length == index+1) setEmbedUrls(links);
-            })
-        }
-        if (expanded) {
-            commentsToggle()
+        if(!isDeleted) {
+            if(post.likes) {
+                setIsLiked(post.likes.person_ids && post.likes.person_ids.includes(user.id));
+                setLikesCount((post.likes.person_ids && post.likes.person_ids != null) ? post.likes.person_ids.length : 0);
+            }
+            let urlRegEx = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+            const urls = [...post.post_text.matchAll(urlRegEx)]
+            let links = []
+            if (urls) {
+                urls.map(async (url, index) => {
+                    const domino = require('domino');
+                    const response = await fetch(url[0], {
+                        mode: 'no-cors' // 'cors' by default
+                    });
+                    const html = await response.text();
+                    const doc = domino.createWindow(html).document;
+                    const metadata = getMetadata(doc, url);
+                    links.push({"title":metadata.title,
+                        "description":metadata.description,
+                        "url":url[0]})
+                    if (urls.length == index+1) setEmbedUrls(links);
+                })
+            }
+            if (expanded) {
+                commentsToggle()
+            }
         }
     }, []);
 
@@ -103,7 +108,7 @@ const TimelinePost = ({ user, post, expanded}) => {
                 'Content-Type': 'multipart/form-data',
                 Authorization: user.token,   
             }}
-            axios.post('http://localhost:8000/api/'+post.id+'/comments/new/',formData, config)
+            axios.post(BACKEND_SERVER_DOMAIN+'/api/'+post.id+'/comments/new/',formData, config)
                 .then(function (response) {
                     // Post has been made successfully
                     if (comments) 
@@ -130,7 +135,27 @@ const TimelinePost = ({ user, post, expanded}) => {
     }
 
     const deletePost = () => {
-        return
+        let config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: user.token,
+            },
+        };
+        axios
+            .delete(
+                BACKEND_SERVER_DOMAIN +
+                    "/api/post/" +
+                    post.id,
+                config
+            )
+            .then(function (response) {
+                if (response.data.action) {
+                    setIsDeleted(true);
+                }
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
     }
 
     function splicedArray(array,index) {
@@ -139,7 +164,7 @@ const TimelinePost = ({ user, post, expanded}) => {
         return nArr;
     }
 
-    return (
+    return (!isDeleted) ? (
         <article className="post card">
             <div className="d-flex userbar">
                 <LazyLoadImage
@@ -223,7 +248,7 @@ const TimelinePost = ({ user, post, expanded}) => {
             { (post.likes) ? 
                 <div className="likedBy">Liked by&nbsp;
                         {post.likes.persons.slice(0,2).map((person, index)=> (
-                            <span>
+                            <span key={person.id}>
                                 <Link to={"/u/"+person.slug} key={person.id}>
                                     {person.first_name} {person.last_name}
                                 </Link>
@@ -240,6 +265,7 @@ const TimelinePost = ({ user, post, expanded}) => {
                         {comments.slice().map((comment, index) => (
                             <div key={comment.id}>{(comment.comment_parent == 0) ?
                                     <CommentComponent 
+                                        key={comment.id}
                                         comment={comment}
                                         user={user}
                                         allComments={splicedArray(comments,index)}/>
@@ -259,7 +285,7 @@ const TimelinePost = ({ user, post, expanded}) => {
                 </div>
             </div>
         </article>
-    );
+    ) : <article className="post card text-center text-muted">Post is removed.</article>;
 };
 
 export default TimelinePost;

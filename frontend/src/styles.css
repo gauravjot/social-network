@@ -829,7 +829,7 @@ img {
 .navbar > .container > .row .row > div > form .searchResults {
   position: absolute;
   margin-top: 2rem;
-  background: var(--clr-light-accent);
+  background: var(--clr-white);
   width: 100%;
   border-bottom-left-radius: .5rem;
   border-bottom-right-radius: .5rem;
@@ -847,7 +847,7 @@ img {
 }
 
 .navbar > .container > .row .row > div > form .searchResults a:hover, .navbar > .container > .row .row > div > form .searchResults a:focus {
-  background: rgba(var(--rgb-white), 0.5);
+  background: var(--clr-light-accent);
   text-decoration: none;
 }
 

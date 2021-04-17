@@ -29,7 +29,7 @@ export default function FindFriends() {
                 setIsLoading(false)
             })
             .catch(function (err) {
-                console.log(err.response.data);
+                console.log(err);
                 setIsLoading(false)
             });
     }, [])
@@ -52,10 +52,10 @@ export default function FindFriends() {
                             {
                                 (isLoading) ?
                                     <div className="slim-loading-bar"></div>
-                                : 
-                                suggestions.map((person, index) => (
+                                : (suggestions) ?suggestions.map((person, index) => (
                                         <SuggestedFriendItem key={index} token={user.token} person={person}/>
                                     ))
+                                : <div className="sorry">Unable to find people</div>
                             }
                         </div>
                     </div>

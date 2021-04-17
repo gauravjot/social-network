@@ -134,7 +134,7 @@ export default function CommentComponent({
             };
             axios
                 .post(
-                    "http://localhost:8000/api/" + comment.post_id + "/comments/new/",
+                    BACKEND_SERVER_DOMAIN + "/api/" + comment.post_id + "/comments/new/",
                     formData,
                     config
                 )

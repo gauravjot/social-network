@@ -25,7 +25,7 @@ export default function SuggestFriends() {
                 setIsLoading(false)
             })
             .catch(function (err) {
-                console.log(err.response.data);
+                console.log(err);
                 setIsLoading(false)
             });
     };

@@ -795,7 +795,7 @@ img {
                 .searchResults {
                     position:absolute;
                     margin-top:2rem;
-                    background:var(--clr-light-accent);
+                    background:var(--clr-white);
                     width:100%;
                     border-bottom-left-radius: .5rem;
                     border-bottom-right-radius: .5rem;
@@ -811,7 +811,7 @@ img {
                         display:block;
 
                         &:hover,&:focus {
-                            background:rgba(var(--rgb-white),.5);
+                            background:var(--clr-light-accent);
                             text-decoration: none;
                         }
                     }
