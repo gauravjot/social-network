@@ -177,7 +177,7 @@ def deletePost(request, post_key):
     if type(person_id) is Response:
         return person_id
     post = Posts.objects.get(pk=post_key)
-    if post.person == person_id:
+    if post.person_id == person_id:
         post.delete()
         Comment.objects.filter(post_id=post.id).delete()
         return Response(json.loads('{"action":"success"}'),status=status.HTTP_200_OK)
