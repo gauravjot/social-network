@@ -9,7 +9,7 @@ from rest_framework.decorators import api_view
 from account.models import Token
 from account.api.serializers import PersonSerializer
 from posts.api.serializers import PostsSerializer
-from posts.models import Posts
+from posts.models import Comment, Posts
 from friends.models import Friend
 from account.models import Person
 from notifications.models import Notification
@@ -179,6 +179,7 @@ def deletePost(request, post_key):
     post = Posts.objects.get(pk=post_key)
     if post.person == person_id:
         post.delete()
+        Comment.objects.filter(post_id=post.id).delete()
         return Response(json.loads('{"action":"success"}'),status=status.HTTP_200_OK)
     else:
         return Response(errorResponse(UNAUTHORIZED),status=status.HTTP_401_UNAUTHORIZED)
