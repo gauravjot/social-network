@@ -35,7 +35,7 @@ export default function Profile() {
             'Content-Type': 'application/json',
             Authorization: user.token,   
         }};
-        axios.get(BACKEND_SERVER_DOMAIN + '/api/person/' + slug, config)
+        axios.get(BACKEND_SERVER_DOMAIN + '/api/person/u/' + slug +"/", config)
             .then(function (response) {
                 setProfileData(response.data);
                 setAvatar(response.data.user.avatar)
@@ -126,7 +126,7 @@ export default function Profile() {
         };
         axios
             .put(
-                BACKEND_SERVER_DOMAIN + "/api/person/edit",
+                BACKEND_SERVER_DOMAIN + "/api/person/edit/",
                 formData,
                 config
             )

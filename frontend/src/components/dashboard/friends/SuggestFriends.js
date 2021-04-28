@@ -19,7 +19,7 @@ export default function SuggestFriends() {
             },
         };
         axios
-            .get(BACKEND_SERVER_DOMAIN + "/api/friends/suggestions", config)
+            .get(BACKEND_SERVER_DOMAIN + "/api/friends/suggestions/", config)
             .then(function (response) {
                 setSuggestions(response.data["friend_suggestions"].slice(0,3));
                 setIsLoading(false)

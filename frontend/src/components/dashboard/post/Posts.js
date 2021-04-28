@@ -16,7 +16,7 @@ function Posts({token, userposts}) {
             'Content-Type': 'application/json',
             Authorization: token,   
         }};
-        axios.get(BACKEND_SERVER_DOMAIN + '/api/posts', config)
+        axios.get(BACKEND_SERVER_DOMAIN + '/api/posts/', config)
             .then(function (response) {
                 dispatch(setPosts(response.data.reverse()));
             })

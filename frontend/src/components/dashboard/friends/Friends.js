@@ -24,7 +24,7 @@ export default function Friends() {
             },
         };
         axios
-            .get(BACKEND_SERVER_DOMAIN + "/api/friends", config)
+            .get(BACKEND_SERVER_DOMAIN + "/api/friends/", config)
             .then((res) => {
                 setFriends(res.data)
                 setIsLoading(false)

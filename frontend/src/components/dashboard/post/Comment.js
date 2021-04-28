@@ -61,7 +61,7 @@ export default function CommentComponent({
                     "/api/" +
                     comment.post_id +
                     "/comments/" +
-                    comment.id,
+                    comment.id +"/",
                 {},
                 config
             )
@@ -96,7 +96,7 @@ export default function CommentComponent({
                     "/api/" +
                     comment.post_id +
                     "/comments/" +
-                    comment.id,
+                    comment.id + "/",
                 config
             )
             .then(function (response) {

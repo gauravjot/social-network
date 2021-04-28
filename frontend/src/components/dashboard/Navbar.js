@@ -71,7 +71,7 @@ export default function Navbar() {
                 },
             };
             axios
-                .get(BACKEND_SERVER_DOMAIN + "/api/person/search/"+target.value.replace(" ","+"), config)
+                .get(BACKEND_SERVER_DOMAIN + "/api/person/search/"+target.value.replace(" ","+")+"/", config)
                 .then(function (response) {
                     setSearchResults(response.data)
                 })

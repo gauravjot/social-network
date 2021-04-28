@@ -89,7 +89,7 @@ function SignUp({secondStep}) {
         if (isValidDate(birthday)) {
             axios
                 .post(
-                    BACKEND_SERVER_DOMAIN + "/api/person/signup",
+                    BACKEND_SERVER_DOMAIN + "/api/person/signup/",
                     formData,
                     config
                 )

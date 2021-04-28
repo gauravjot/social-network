@@ -19,7 +19,7 @@ export default function PostPage() {
             'Content-Type': 'application/json',
             Authorization: user.token,   
         }};
-        axios.get(BACKEND_SERVER_DOMAIN + '/api/post/'+post_id, config)
+        axios.get(BACKEND_SERVER_DOMAIN + '/api/post/'+post_id+"/", config)
             .then(function (response) {
                 setPost(response.data);
             })

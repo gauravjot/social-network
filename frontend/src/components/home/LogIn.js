@@ -50,7 +50,7 @@ function LogIn() {
         };
         axios
             .post(
-                BACKEND_SERVER_DOMAIN + "/api/person/login",
+                BACKEND_SERVER_DOMAIN + "/api/person/login/",
                 JSON.stringify({ email: email, password: password }),
                 config
             )

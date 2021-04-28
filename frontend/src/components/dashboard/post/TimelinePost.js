@@ -58,7 +58,7 @@ const TimelinePost = ({ user, post, expanded}) => {
             },
         };
         axios
-            .put(BACKEND_SERVER_DOMAIN + "/api/post/" + post.id, {}, config)
+            .put(BACKEND_SERVER_DOMAIN + "/api/post/" + post.id + "/", {}, config)
             .then(function (response) {
                 let like = isLiked ? false : true;
                 setIsLiked(like);
@@ -145,7 +145,7 @@ const TimelinePost = ({ user, post, expanded}) => {
             .delete(
                 BACKEND_SERVER_DOMAIN +
                     "/api/post/" +
-                    post.id,
+                    post.id + "/",
                 config
             )
             .then(function (response) {

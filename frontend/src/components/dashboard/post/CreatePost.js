@@ -47,7 +47,7 @@ function CreatePost({user, newPost}) {
                 'Content-Type': 'multipart/form-data',
                 Authorization: user.token,   
             }}
-            axios.post(BACKEND_SERVER_DOMAIN + '/api/post/new',formData, config)
+            axios.post(BACKEND_SERVER_DOMAIN + '/api/post/new/',formData, config)
                 .then(function (response) {
                     // Post has been made successfully
                     setPostText("");
