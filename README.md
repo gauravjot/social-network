@@ -52,3 +52,6 @@ Feel free to fork and make pull requests. Thank you to everyone who invests thei
 
 ##### Mobile support.
 ![Mobile support](screenshots/mobile.jpg)
+
+## Database Structure
+![Databases Tables](screenshots/db_structure.png)
